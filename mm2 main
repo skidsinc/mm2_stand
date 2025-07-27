@@ -11,6 +11,8 @@ local whitelist = {}
 local prefix = "."
 
 getgenv().loop_fling = false
+getgenv().flinging = false
+getgenv().banging = false
  
 getgenv().forced_stop = false
 
@@ -190,6 +192,51 @@ local function cmd_who(arg)
 end
 
 
+local function cmd_bang(arg)
+  print("cmd")
+  local target = GetPlayer(arg)[1]
+  if target and target ~= LocalPlayer.Name then
+    print("a")
+    if getgenv().banging == true then
+      getgenv().banging = false
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_bangg * CFrame.new(0,2,0)
+      task.wait(0.4)
+    end
+    task.wait(0.1)
+    if target and target ~= LocalPlayer.Name then
+      getgenv().banging = true
+      getgenv().before_bang = LocalPlayer.Character.HumanoidRootPart.CFrame
+      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+      task.wait(0.2)
+      
+      local bang_z = 0
+      local dir = 1
+      
+      send_msg("Ohhh yeaaah")
+      while getgenv().banging == true do 
+        task.wait()
+        bang_z += (0.1*dir)
+        if bang_z > 2.2 or bang_z < 0.2 then
+          dir = dir*-1
+        end
+        spawn(function()
+          LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,bang_z)
+        end)
+      end
+      for i = 1,5 do
+      task.wait(0.05)
+        LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+        LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_bang
+      end
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      task.wait(0.1)
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_bang * CFrame.new(0,2,0)
+    end
+  end
+end
+
+
 local function cmd_fling(arg)
   local target = GetPlayer(arg)[1]
   if getgenv().flinging == true then
@@ -257,6 +304,7 @@ local function cmd_gun(arg)
     else 
       for i = 1,5 do 
         twen = tweento(gunpos)
+        task.wait(0.05)
       end
       
       if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
@@ -304,9 +352,19 @@ local function main_cmds(msg, id)
   	  LocalPlayer.Character.HumanoidRootPart.CFrame = host.Character.HumanoidRootPart.CFrame
   	  
   	elseif cmd[1] == "fling" and cmd[2] then
+      getgenv().banging = false
   	  if getgenv().loop_fling == false then
 	      cmd_fling(cmd[2])
 	    end
+	    
+	  elseif cmd[1] == "fun" or cmd[1] == "hug" then
+	    getgenv().flinging = false
+	    if getgenv().loop_fling == false then
+	      cmd_bang(cmd[2])
+	    end
+	    
+	  elseif cmd[1] == "unfun" or cmd[1] == "unhug" then
+	    getgenv().banging = false
 	    
 	  elseif cmd[1] == "who" or cmd[1] == "roles" then
 	    cmd_who(cmd[2])
@@ -352,8 +410,13 @@ local function main_cmds(msg, id)
 	  elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
 	    cmd_loopfling(cmd[2])
 	    
+	  elseif cmd[1] == "stop" then
+	    getgenv().loop_fling = false
+      getgenv().flinging = false
+      getgenv().banging = false
 	    
-	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling" or cmd[1] == "stop") then
+	    
+	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling") then
 	    getgenv().loop_fling = false
 	    
 	    
