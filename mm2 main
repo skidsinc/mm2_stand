@@ -1,4 +1,4 @@
-print("it executed v2")
+print("it executed v1")
 
 
 local Players = game:GetService("Players")
@@ -380,7 +380,7 @@ spawn(function()
   while task.wait() do
     if getgenv().jerking == false then continue end
   
-    local isR15 = r15(speaker)
+    local isR15 = r15(LocalPlayer)
     if not track then
       local anim = Instance.new("Animation")
       anim.AnimationId = not isR15 and "rbxassetid://72042024" or "rbxassetid://698251653"
