@@ -123,11 +123,11 @@ local function cmd_loopfling(arg)
     spawn(function()
       repeat game:GetService("RunService").Heartbeat:Wait()
         wa += 1
-        if wa == 3 then
+        if wa == 2 then
           spawn(function()
             t_vel = game.Players[target].Character.Humanoid.MoveDirection
-            c_x = (t_vel.X*math.random(5,8)) + math.random(-2,2)
-            c_z = (t_vel.Z*math.random(5,8)) + math.random(-2,2)
+            c_x = (t_vel.X*math.random(7,9)) + math.random(-2,2)
+            c_z = (t_vel.Z*math.random(7,9)) + math.random(-2,2)
             LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-1,1), c_z )
           end)
           wa = 0
@@ -171,6 +171,7 @@ local function cmd_who(arg)
     end
   else
     send_msg("The murderer is: "..murder.Name)
+    task.wait(0.2)
     if gunDropped == false then
       send_msg("The sherrif is: "..sheriff.Name)
     else
@@ -197,11 +198,11 @@ local function cmd_fling(arg)
     spawn(function()
       repeat game:GetService("RunService").Heartbeat:Wait()
         wa += 1
-        if wa == 3 then
+        if wa == 2 then
           spawn(function()
             t_vel = game.Players[target].Character.Humanoid.MoveDirection
-            c_x = (t_vel.X*math.random(5,8)) + math.random(-3,3)
-            c_z = (t_vel.Z*math.random(5,8)) + math.random(-3,3)
+            c_x = (t_vel.X*math.random(7,9)) + math.random(-1,1)
+            c_z = (t_vel.Z*math.random(7,9)) + math.random(-1,1)
             LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-2,2), c_z )
           end)
           wa = 0
@@ -226,6 +227,40 @@ local function cmd_prefix(arg)
   if arg ~= "" then
     prefix = arg
     send_msg("Prefix changed to: "..prefix)
+  end
+end
+
+local function cmd_gun(arg)
+  local target = arg
+  if target then
+    local normalZone = workspace:FindFirstChild("Normal")
+    local gunDropped = false
+    local gunpos = ""
+    if normalZone then
+      local gun = normalZone:FindFirstChild("GunDrop")
+      if gun and gunDropped == false then
+        gunDropped = true
+        gunpos = gun.Position
+      end
+    end
+    if gunDropped == false then
+      send_msg("The gun isnt dropped")
+    else 
+      for i = 1,5 do 
+        twen = tweento(CFrame.new(gunpos.X, gunpos.Y, gunpos.Z))
+      end
+      
+      if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
+        send_msg("Picked up gun...")
+        for i = 1,3 do 
+          tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+        end
+        LocalPlayer.Character.Humanoid.Health = 0
+      else 
+        send_msg("Unable to pick up the gun")
+      end
+    end
+    
   end
 end
 
@@ -267,6 +302,9 @@ local function main_cmds(msg, id)
 	  elseif cmd[1] == "who" or cmd[1] == "roles" then
 	    cmd_who(cmd[2])
 	    
+	  elseif cmd[1] == "gun" then
+	    cmd_gun(host)
+	    
 	  elseif cmd[1] == "re" or cmd[1] == "reset" or cmd[1] == "fix" then
 	    getgenv().loop_fling = false
 	    getgenv().flinging = false
@@ -278,7 +316,7 @@ local function main_cmds(msg, id)
 	    cmd_loopfling(cmd[2])
 	    
 	    
-	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling") then
+	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling" or cmd[1] == "stop") then
 	    getgenv().loop_fling = false
 	    
 	    
