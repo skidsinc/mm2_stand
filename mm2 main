@@ -6,6 +6,17 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local LocalPlayer = Players.LocalPlayer
 local TweenService = game:GetService("TweenService")
 
+getgenv().in_game = false
+
+ReplicatedStorage.Remotes.Gameplay.RoleSelect.OnClientEvent:Connect(function(role, ...)
+  print("loaded")
+	getgenv().in_game = true
+end)
+LocalPlayer.CharacterAdded:Connect(function(char)
+  print("died")
+  getgenv().in_game = false
+end)
+
 local hosts = {LocalPlayer.UserId, 2977240591}
 local whitelist = {}
 local prefix = "."
@@ -21,6 +32,9 @@ local function r15(plr)
 		return true
 	end
 end
+
+
+
 
 local function tweento(targetCFrame)
 	local player = LocalPlayer
@@ -43,6 +57,34 @@ local function tweento(targetCFrame)
 
 	local tween = TweenService:Create(hrp, tweenInfo, goal)
 	tween:Play()
+end
+
+local function tweento_a(targetCFrame)
+	local player = LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+	local hrp = character:WaitForChild("HumanoidRootPart")
+
+	local currentCFrame = hrp.CFrame
+	local distance = (currentCFrame.Position - targetCFrame.Position).Magnitude
+	local speed = 50
+	local dur = distance/20
+	if dur > 4 then
+	  dur = 4
+	end
+
+	local tweenInfo = TweenInfo.new(
+		dur,
+		Enum.EasingStyle.Quad,
+		Enum.EasingDirection.Out
+	)
+
+	local goal = {
+		CFrame = targetCFrame
+	}
+
+	local tween = TweenService:Create(hrp, tweenInfo, goal)
+	tween:Play()
+	return dur
 end
 
 local function send_msg(msg)
@@ -216,17 +258,36 @@ local function cmd_bang(arg)
       while getgenv().banging == true do 
         task.wait()
         if dir == 1 then
-          bang_z += 0.15
+          bang_z += 0.25
         else 
-          bang_z -= 0.15
+          bang_z -= 0.25
         end 
-        if bang_z > 6 then
+        if bang_z > 4 then
           dir = -1
         elseif bang_z < 1 then
           dir = 1 
         end
         spawn(function()
+          
           LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,bang_z)
+          
+          if not LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
+            local humanoid = LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+          	bangAnim = Instance.new("Animation")
+          	bangAnim.AnimationId = not r15(LocalPlayer) and "rbxassetid://148840371" or "rbxassetid://5918726674"
+          	bangAnim.Name = "dolphin"
+          	bangAnim.Parent = LocalPlayer.Character.Humanoid
+          	bang = humanoid:LoadAnimation(bangAnim)
+          	bang:Play(0.1, 1, 1)
+          	bang:AdjustSpeed(5)
+          	humanoid.Died:Connect(function()
+          		bang:Stop()
+          		bangAnim:Destroy()
+          		bangDied:Disconnect()
+          		bangLoop:Disconnect()
+          	end)
+          end
+        
         end)
       end
       for i = 1,5 do
@@ -377,6 +438,10 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "unfun" or cmd[1] == "unhug" then
 	    getgenv().banging = false
+	    if LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
+	      LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Stop()
+	      LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
+	    end
 	    
 	  elseif cmd[1] == "who" or cmd[1] == "roles" then
 	    cmd_who(cmd[2])
@@ -506,6 +571,31 @@ game:GetService("RunService").Heartbeat:Connect(function()
   end
 end)
 
+spawn(function()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua'))()
+end)
+while task.wait(4) do
+  print("auto loop")
+  spawn(function()
+    if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true then
+      print("asdsa")
+      for i,v in pairs(game.Workspace:GetChildren()) do
+        for j,k in pairs(v:GetChildren()) do
+          if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
+            if k:FindFirstChild("Coin_Server").CoinVisual.Transparency ~= 1 then
+              Cf = k:FindFirstChild("Coin_Server").CFrame * CFrame.new(0,-1,0)
+              local dura = tweento_a(Cf)
+              if dura < 3 then
+                LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(0,50,0)
+              end
+            end
+          end
+        end
+      end
+    end
+  end)
+end
+
 if LocalPlayer.Name == "deth66789" then
   spawn(function()
   for _,v in pairs(workspace:GetDescendants()) do
@@ -522,6 +612,6 @@ if LocalPlayer.Name == "deth66789" then
   
   task.wait(3)
   
-  loadstring(game:HttpGet("https://gist.githubusercontent.com/skidsinc/c2e7829d7632b374d6980b863c9e65b1/raw/1100a85a83e6e8ac9c5ec20148567ddbbdb4452f/gistfile1.txt"))()
+  --loadstring(game:HttpGet("https://gist.githubusercontent.com/skidsinc/c2e7829d7632b374d6980b863c9e65b1/raw/1100a85a83e6e8ac9c5ec20148567ddbbdb4452f/gistfile1.txt"))()
 
 end
