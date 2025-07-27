@@ -132,8 +132,8 @@ local function cmd_loopfling(arg)
         if wa == 2 then
           spawn(function()
             t_vel = game.Players[target].Character.Humanoid.MoveDirection
-            c_x = (t_vel.X*math.random(7,9)) + math.random(-2,2)
-            c_z = (t_vel.Z*math.random(7,9)) + math.random(-2,2)
+            c_x = (t_vel.X*math.random(5,11)) + math.random(-2,2)
+            c_z = (t_vel.Z*math.random(5,11)) + math.random(-2,2)
             LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-1,1), c_z )
           end)
           wa = 0
@@ -208,8 +208,8 @@ local function cmd_fling(arg)
         if wa == 2 then
           spawn(function()
             t_vel = game.Players[target].Character.Humanoid.MoveDirection
-            c_x = (t_vel.X*math.random(7,9)) + math.random(-1,1)
-            c_z = (t_vel.Z*math.random(7,9)) + math.random(-1,1)
+            c_x = (t_vel.X*math.random(5,11))
+            c_z = (t_vel.Z*math.random(5,11))
             LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-2,2), c_z )
           end)
           wa = 0
@@ -411,7 +411,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
       local vel, movel = nil, 0.1
     
       vel = root.Velocity
-      root.Velocity = Vector3.new(20000, 50000, -20000)
+      root.Velocity = Vector3.new(math.random(-20000,20000) 50000, -20000)
       
     
       game:GetService("RunService").RenderStepped:Wait()
