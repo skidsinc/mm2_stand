@@ -162,9 +162,11 @@ local function cmd_who(arg)
     local gunDropped = false
     local gunpos = ""
     for i,v in pairs(game.workspace:GetChildren()) do
-      if v:FindFirstChild("GunDrop") then
-        gunDropped = true
-        gunpos = v:FindFirstChild("GunDrop").CFrame
+      for j,k in pairs(v:GetChildren()) do
+        if k.Name == "GunDrop" then
+            gunDropped = true
+            gunpos = k.CFrame
+        end
       end
     end
   
@@ -243,9 +245,11 @@ local function cmd_gun(arg)
     local gunDropped = false
     local gunpos = ""
     for i,v in pairs(game.workspace:GetChildren()) do
-      if v:FindFirstChild("GunDrop") then
-        gunDropped = true
-        gunpos = v:FindFirstChild("GunDrop").CFrame
+      for j,k in pairs(v:GetChildren()) do
+        if k.Name == "GunDrop" then
+            gunDropped = true
+            gunpos = k.CFrame
+        end
       end
     end
     if gunDropped == false then
@@ -312,9 +316,9 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "jerk" then
 	    getgenv().jerking = true
-	   local track
+	    local track
       while task.wait() and getgenv().jerking == true do
-        if getgenv().jerking == true
+        if getgenv().jerking == true then
       
           local isR15 = r15(LocalPlayer)
           if not track then
@@ -332,6 +336,7 @@ local function main_cmds(msg, id)
             track:Stop()
             track = nil
           end
+          
         end
       end
 	  elseif cmd[1] == "unjerk" or cmd[1] == "normal" then
@@ -409,7 +414,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
       local vel, movel = nil, 0.1
     
       vel = root.Velocity
-      root.Velocity = Vector3.new(math.random(-20000,20000) 50000, -20000)
+      root.Velocity = Vector3.new(math.random(-20000,20000), 50000, -20000)
       
     
       game:GetService("RunService").RenderStepped:Wait()
