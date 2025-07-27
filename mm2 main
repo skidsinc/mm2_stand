@@ -24,7 +24,7 @@ local function tweento(targetCFrame)
 	local speed = 50
 
 	local tweenInfo = TweenInfo.new(
-		0.6,
+		0.3,
 		Enum.EasingStyle.Quad,
 		Enum.EasingDirection.Out
 	)
@@ -98,7 +98,7 @@ local function cmd_unwhitelist(arg)
   if table.find(whitelist, target_id) then
     for i, v in ipairs(whitelist) do
       if v == target_id then
-        table.remove(fruits, i)
+        table.remove(whitelist, i)
         break
       end
     end
@@ -190,10 +190,10 @@ local function cmd_fling(arg)
   task.wait(0.1)
   if target and target ~= LocalPlayer.Name then
     getgenv().flinging = true
-    twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
-    task.wait(0.4)
-    wa = 0
     getgenv().before_fling = LocalPlayer.Character.HumanoidRootPart.CFrame
+    twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+    task.wait(0.2)
+    wa = 0
     spawn(function()
       repeat game:GetService("RunService").Heartbeat:Wait()
         wa += 1
