@@ -176,13 +176,30 @@ local function cmd_who(arg)
     end
   end
   
+  local normalZone = workspace:FindFirstChild("Normal")
+  local gunDropped = false
+  if normalZone then
+    local gun = normalZone:FindFirstChild("GunDrop")
+    if gun and gunDropped == false then
+      gunDropped = true
+    end
+  end
+  
   if arg == "murder" or arg == "murderer" then
     send_msg("The murderer is: "..murder.Name)
   elseif arg == "sherrif" then
-    send_msg("The sherrif is: "..sherrif.Name)
+    if gunDropped == false then
+      send_msg("The sherrif is: "..sherrif.Name)
+    else
+      send_msg("The gun is currently dropped")
+    end
   else
     send_msg("The murderer is: "..murder.Name)
-    send_msg("The sherrif is: "..sherrif.Name)
+        if gunDropped == false then
+      send_msg("The sherrif is: "..sherrif.Name)
+    else
+      send_msg("The gun is currently dropped")
+    end
   end
 end
 
