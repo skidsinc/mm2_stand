@@ -1,4 +1,4 @@
-print("it executed")
+print("it executed v1")
 
 
 local Players = game:GetService("Players")
@@ -66,31 +66,7 @@ local function GetPlayer(input)
 		end
 	elseif strl == "me" then
 		table.insert(found, localPlayer.Name)
-		
-	elseif strl == "murder" or strl == "murderer" then
-  	local murder = "na"
-    for _, p in pairs(game.Players:GetPlayers()) do
-      local items = p.Backpack
-      local character = p.Character
-      if (items and items:FindFirstChild("Knife")) or (character and character:FindFirstChild("Knife")) then
-        murder = p
-      end
-    end
-    if murder ~= "na" then
-      table.insert(found, murder.Name)
-    end
-  elseif strl == "sheriff" then
-  	local sheriff = "na"
-    for _, p in pairs(game.Players:GetPlayers()) do
-      local items = p.Backpack
-      local character = p.Character
-      if (items and items:FindFirstChild("Gun")) or (character and character:FindFirstChild("Gun")) then
-        sheriff = p
-      end
-    end
-    if sheriff ~= "na" then
-      table.insert(found, sheriff.Name)
-    end
+
 	else
 		for _, v in ipairs(players) do
 			if totalFound == 0 and (
@@ -189,14 +165,14 @@ local function cmd_who(arg)
     send_msg("The murderer is: "..murder.Name)
   elseif arg == "sherrif" then
     if gunDropped == false then
-      send_msg("The sherrif is: "..sherrif.Name)
+      send_msg("The sherrif is: "..sheriff.Name)
     else
       send_msg("The gun is currently dropped")
     end
   else
     send_msg("The murderer is: "..murder.Name)
-        if gunDropped == false then
-      send_msg("The sherrif is: "..sherrif.Name)
+    if gunDropped == false then
+      send_msg("The sherrif is: "..sheriff.Name)
     else
       send_msg("The gun is currently dropped")
     end
@@ -237,8 +213,9 @@ local function cmd_fling(arg)
     for i = 1,5 do
       task.wait(0.05)
       LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
-      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_fling * CFrame.new(0,2,0)
+      LocalPlayer.Character.HumanoidRootPart.CFrame =getgenv().before_fling
     end
+    LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
     task.wait(0.1)
     LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
     LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_fling * CFrame.new(0,2,0)
@@ -299,8 +276,12 @@ local function main_cmds(msg, id)
 	    
 	  elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
 	    cmd_loopfling(cmd[2])
+	    
+	    
 	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling") then
 	    getgenv().loop_fling = false
+	    
+	    
   	end
   end
 end
@@ -346,25 +327,30 @@ end)
 
 
 game:GetService("RunService").Heartbeat:Connect(function()
-  if getgenv().loop_fling == false and getgenv().flinging == false then
-    return
-  end
-  local character = game.Players.LocalPlayer.Character
-  local root = character:WaitForChild("HumanoidRootPart")
-  local vel, movel = nil, 0.1
-
-  vel = root.Velocity
-  root.Velocity = Vector3.new(20000, 50000, -20000)
-  
-
-  game:GetService("RunService").RenderStepped:Wait()
-  if character and character.Parent and root and root.Parent then
-      root.Velocity = vel
-  end
-
-  game:GetService("RunService").Stepped:Wait()
-  if character and character.Parent and root and root.Parent then
-    root.Velocity = vel + Vector3.new(0, movel, 0)
-    movel = movel * -1
+  if getgenv().loop_fling == true or getgenv().flinging == true then
+    
+    
+    local character = LocalPlayer.Character
+    if character then
+      
+      
+      local root = character:WaitForChild("HumanoidRootPart")
+      local vel, movel = nil, 0.1
+    
+      vel = root.Velocity
+      root.Velocity = Vector3.new(20000, 50000, -20000)
+      
+    
+      game:GetService("RunService").RenderStepped:Wait()
+      if character and character.Parent and root and root.Parent then
+          root.Velocity = vel
+      end
+    
+      game:GetService("RunService").Stepped:Wait()
+      if character and character.Parent and root and root.Parent then
+        root.Velocity = vel + Vector3.new(0, movel, 0)
+        movel = movel * -1
+      end
+    end
   end
 end)
