@@ -246,24 +246,27 @@ local function cmd_fling(arg)
   end
   task.wait(0.1)
   if target and target ~= LocalPlayer.Name then
-    getgenv().flinging = true
-    getgenv().before_fling = LocalPlayer.Character.HumanoidRootPart.CFrame
-    twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
-    task.wait(0.2)
-    wa = 0
     spawn(function()
-      repeat game:GetService("RunService").Heartbeat:Wait()
-        wa += 1
-        if wa == 2 then
-          spawn(function()
-            t_vel = game.Players[target].Character.Humanoid.MoveDirection
-            c_x = (t_vel.X*math.random(5,11))
-            c_z = (t_vel.Z*math.random(5,11))
-            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-2,2), c_z )
-          end)
-          wa = 0
-        end
-      until getgenv().flinging == false or (not game.Players:FindFirstChild(target))
+
+      getgenv().flinging = true
+      getgenv().before_fling = LocalPlayer.Character.HumanoidRootPart.CFrame
+      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+      task.wait(0.2)
+      wa = 0
+      spawn(function()
+        repeat game:GetService("RunService").Heartbeat:Wait()
+          wa += 1
+          if wa == 2 then
+            spawn(function()
+              t_vel = game.Players[target].Character.Humanoid.MoveDirection
+              c_x = (t_vel.X*math.random(5,11))
+              c_z = (t_vel.Z*math.random(5,11))
+              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-2,2), c_z )
+            end)
+            wa = 0
+          end
+        until getgenv().flinging == false or (not game.Players:FindFirstChild(target))
+      end)
     end)
     task.wait(3)
     getgenv().flinging = false
@@ -479,7 +482,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
       local vel, movel = nil, 0.1
     
       vel = root.Velocity
-      root.Velocity = Vector3.new(-20000, 50000, -20000)
+      root.Velocity = Vector3.new(-20000, -50000, -20000)
       
     
       game:GetService("RunService").RenderStepped:Wait()
