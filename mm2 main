@@ -477,7 +477,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
       local vel, movel = nil, 0.1
     
       vel = root.Velocity
-      root.Velocity = Vector3.new(math.random(-20000,20000), 50000, -20000)
+      root.Velocity = Vector3.new(20000, 50000, -20000)
       
     
       game:GetService("RunService").RenderStepped:Wait()
