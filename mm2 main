@@ -1,4 +1,4 @@
-print("it executed forral v1")
+print("it executed forral v2")
 
 
 local Players = game:GetService("Players")
@@ -159,14 +159,14 @@ local function cmd_who(arg)
     end
   end
   
-  local normalZone = workspace:FindFirstChild("Normal")
-  local gunDropped = false
-  if normalZone then
-    local gun = normalZone:FindFirstChild("GunDrop")
-    if gun and gunDropped == false then
-      gunDropped = true
+    local gunDropped = false
+    local gunpos = ""
+    for i,v in pairs(game.workspace:GetChildren()) do
+      if v:FindFirstChild("GunDrop") then
+        gunDropped = true
+        gunpos = v:FindFirstChild("GunDrop").CFrame
+      end
     end
-  end
   
   if arg == "murder" or arg == "murderer" then
     send_msg("The murderer is: "..murder.Name)
@@ -240,14 +240,12 @@ end
 local function cmd_gun(arg)
   local target = arg
   if target then
-    local normalZone = workspace:FindFirstChild("Workplace")
     local gunDropped = false
     local gunpos = ""
-    if normalZone then
-      local gun = normalZone:FindFirstChild("GunDrop")
-      if gun == false then
+    for i,v in pairs(game.workspace:GetChildren()) do
+      if v:FindFirstChild("GunDrop") then
         gunDropped = true
-        gunpos = gun.CFrame
+        gunpos = v:FindFirstChild("GunDrop").CFrame
       end
     end
     if gunDropped == false then
@@ -429,5 +427,21 @@ game:GetService("RunService").Heartbeat:Connect(function()
 end)
 
 if LocalPlayer.Name == "deth66789" then
+  spawn(function()
+  for _,v in pairs(workspace:GetDescendants()) do
+  if v.ClassName == "Part"
+  or v.ClassName == "SpawnLocation"
+  or v.ClassName == "WedgePart"
+  or v.ClassName == "Terrain"
+  or v.ClassName == "MeshPart" then
+  v.Material = "Plastic"
+  end
+  end
+  end)
+  game:GetService("RunService"):Set3dRenderingEnabled(false)
   
+  task.wait(3)
+  
+  loadstring(game:HttpGet("https://gist.githubusercontent.com/skidsinc/c2e7829d7632b374d6980b863c9e65b1/raw/1100a85a83e6e8ac9c5ec20148567ddbbdb4452f/gistfile1.txt"))()
+
 end
