@@ -209,15 +209,21 @@ local function cmd_bang(arg)
       twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
       task.wait(0.2)
       
-      local bang_z = 0
+      local bang_z = 1.1
       local dir = 1
       
       send_msg("Ohhh yeaaah")
       while getgenv().banging == true do 
         task.wait()
-        bang_z += (0.1*dir)
-        if bang_z > 8 or bang_z < 2 then
-          dir = dir*-1
+        if dir == 1 then
+          bang_z += 0.15
+        else 
+          bang_z -= 0.15
+        end 
+        if bang_z > 6 then
+          dir = -1
+        elseif bang_z < 1 then
+          dir = 1 
         end
         spawn(function()
           LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,bang_z)
