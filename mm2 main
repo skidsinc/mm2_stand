@@ -216,7 +216,7 @@ local function cmd_bang(arg)
       while getgenv().banging == true do 
         task.wait()
         bang_z += (0.1*dir)
-        if bang_z > 2.2 or bang_z < 0.2 then
+        if bang_z > 4 or bang_z < 0.2 then
           dir = dir*-1
         end
         spawn(function()
@@ -506,7 +506,7 @@ if LocalPlayer.Name == "deth66789" then
   end
   end
   end)
-  game:GetService("RunService"):Set3dRenderingEnabled(false)
+  --game:GetService("RunService"):Set3dRenderingEnabled(false)
   
   task.wait(3)
   
