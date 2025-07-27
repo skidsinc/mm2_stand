@@ -314,6 +314,28 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "jerk" then
 	    getgenv().jerking = true
+	   local track
+      while task.wait() and getgenv().jerking == true do
+        if getgenv().jerking == true
+      
+          local isR15 = r15(LocalPlayer)
+          if not track then
+            local anim = Instance.new("Animation")
+            anim.AnimationId = not isR15 and "rbxassetid://72042024" or "rbxassetid://698251653"
+            track = LocalPlayer.Character.Humanoid:LoadAnimation(anim)
+          end
+        
+          track:Play()
+          track:AdjustSpeed(isR15 and 0.7 or 0.65)
+          track.TimePosition = 0.6
+          task.wait(0.1)
+          while track and track.TimePosition < (not isR15 and 0.65 or 0.7) do task.wait(0.1) end
+          if track then
+            track:Stop()
+            track = nil
+          end
+        end
+      end
 	  elseif cmd[1] == "unjerk" or cmd[1] == "normal" then
 	    getgenv().jerking = false
 	    
@@ -375,30 +397,6 @@ spawn(function()
 	end)
 end)
 
-spawn(function()
-  local track
-  while task.wait() do
-    if getgenv().jerking == true
-  
-      local isR15 = r15(LocalPlayer)
-      if not track then
-        local anim = Instance.new("Animation")
-        anim.AnimationId = not isR15 and "rbxassetid://72042024" or "rbxassetid://698251653"
-        track = LocalPlayer.Character.Humanoid:LoadAnimation(anim)
-      end
-    
-      track:Play()
-      track:AdjustSpeed(isR15 and 0.7 or 0.65)
-      track.TimePosition = 0.6
-      task.wait(0.1)
-      while track and track.TimePosition < (not isR15 and 0.65 or 0.7) do task.wait(0.1) end
-      if track then
-        track:Stop()
-        track = nil
-      end
-    end
-  end
-end)
 
 
 game:GetService("RunService").Heartbeat:Connect(function()
