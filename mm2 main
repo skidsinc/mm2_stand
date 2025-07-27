@@ -245,7 +245,7 @@ local function cmd_gun(arg)
     local gunpos = ""
     if normalZone then
       local gun = normalZone:FindFirstChild("GunDrop")
-      if gun and gunDropped == false then
+      if gun == false then
         gunDropped = true
         gunpos = gun.Position
       end
