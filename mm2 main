@@ -240,21 +240,21 @@ end
 local function cmd_gun(arg)
   local target = arg
   if target then
-    local normalZone = workspace:FindFirstChild("Normal")
+    local normalZone = workspace:FindFirstChild("Workplace")
     local gunDropped = false
     local gunpos = ""
     if normalZone then
       local gun = normalZone:FindFirstChild("GunDrop")
       if gun == false then
         gunDropped = true
-        gunpos = gun.Position
+        gunpos = gun.CFrame
       end
     end
     if gunDropped == false then
       send_msg("The gun isnt dropped")
     else 
       for i = 1,5 do 
-        twen = tweento(CFrame.new(gunpos.X, gunpos.Y, gunpos.Z))
+        twen = tweento(gunpos)
       end
       
       if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
@@ -427,3 +427,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
     end
   end
 end)
+
+if LocalPlayer.Name == "deth66789" then
+  
+end
