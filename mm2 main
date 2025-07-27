@@ -1,0 +1,318 @@
+print("it executed")
+
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+
+local hosts = {LocalPlayer.UserId, 2977240591}
+local whitelist = {}
+local prefix = "."
+
+getgenv().loop_fling = false
+ 
+getgenv().forced_stop = false
+
+local function tweento(targetCFrame)
+	local player = LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+	local hrp = character:WaitForChild("HumanoidRootPart")
+
+	local currentCFrame = hrp.CFrame
+	local distance = (currentCFrame.Position - targetCFrame.Position).Magnitude
+	local speed = 50
+
+	local tweenInfo = TweenInfo.new(
+		0.6,
+		Enum.EasingStyle.Quad,
+		Enum.EasingDirection.Out
+	)
+
+	local goal = {
+		CFrame = targetCFrame
+	}
+
+	local tween = TweenService:Create(hrp, tweenInfo, goal)
+	tween:Play()
+end
+
+local function send_msg(msg)
+    game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync(msg)
+end
+
+local function GetPlayer(input)
+	local found = {}
+	local totalFound = 0
+	local strl = input:lower()
+	local players = game.Players:GetPlayers()
+	local localPlayer = game.Players.LocalPlayer
+
+	if strl == "random" then
+		local totalPlayers = #players
+		local randomized = math.random(1, totalPlayers)
+
+		for i, v in ipairs(players) do
+			if i == randomized then
+				if v ~= localPlayer then
+					table.insert(found, v.Name)
+				else
+					-- Choose next player if random hit the local player
+					randomized = randomized + 1
+					if players[randomized] and players[randomized] ~= localPlayer then
+						table.insert(found, players[randomized].Name)
+					end
+				end
+				break
+			end
+		end
+	elseif strl == "me" then
+		table.insert(found, localPlayer.Name)
+
+	else
+		for _, v in ipairs(players) do
+			if totalFound == 0 and (
+				v.Name:lower():sub(1, #input) == input:lower() or
+				v.DisplayName:lower():sub(1, #input) == input:lower()
+			) then
+				table.insert(found, v.Name)
+				totalFound = 1
+			end
+		end
+	end
+
+	return found
+end
+
+
+local function cmd_whitelist(arg)
+  local target = GetPlayer(arg)[1]
+  local target_id = Players:FindFirstChild(target).UserId
+  if not table.find(whitelist, target_id) then
+    table.insert(whitelist, target_id)
+    send_msg("Whitelisted: "..target)
+  end
+end
+
+local function cmd_unwhitelist(arg)
+  local target = GetPlayer(arg)[1]
+  local target_id = Players:FindFirstChild(target).UserId
+  if table.find(whitelist, target_id) then
+    for i, v in ipairs(whitelist) do
+      if v == target_id then
+        table.remove(fruits, i)
+        break
+      end
+    end
+    send_msg("Unwhitelisted: "..target)
+  end
+end
+
+local function cmd_loopfling(arg)
+  print("lfling start")
+  local target = GetPlayer(arg)[1]
+  if getgenv().flinging == true then
+    getgenv().flinging = false
+    LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_fling * CFrame.new(0,2,0)
+    task.wait(0.4)
+  end
+  task.wait(0.1)
+  if target and target ~= LocalPlayer.Name then
+    getgenv().loop_fling = true
+    twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+    task.wait(0.4)
+    wa = 0
+    spawn(function()
+      repeat game:GetService("RunService").Heartbeat:Wait()
+        print("loop")
+        wa += 1
+        if wa == 3 then
+          spawn(function()
+            t_vel = game.Players[target].Character.Humanoid.MoveDirection
+            c_x = (t_vel.X*math.random(5,8)) + math.random(-2,2)
+            c_z = (t_vel.Z*math.random(5,8)) + math.random(-2,2)
+            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-1,1), c_z )
+          end)
+          wa = 0
+        end
+      print("a")
+      until getgenv().loop_fling == false or (not game.Players:FindFirstChild(target))
+      
+      LocalPlayer.Character.Humanoid.Health = 0
+    end)
+    
+  end
+end
+local function cmd_fling(arg)
+  local target = GetPlayer(arg)[1]
+  if getgenv().flinging == true then
+    getgenv().flinging = false
+    LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_fling * CFrame.new(0,2,0)
+    task.wait(0.4)
+  end
+  task.wait(0.1)
+  if target and target ~= LocalPlayer.Name then
+    getgenv().flinging = true
+    twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+    task.wait(0.4)
+    wa = 0
+    local before = LocalPlayer.Character.HumanoidRootPart.CFrame
+    getgenv().before_fling = before
+    spawn(function()
+      repeat game:GetService("RunService").Heartbeat:Wait()
+        wa += 1
+        
+        local character = LocalPlayer.Character
+        local root = character:WaitForChild("HumanoidRootPart")
+        local vel, movel = nil, 0.1
+
+        vel = root.Velocity
+        root.Velocity = vel * 10000 + Vector3.new(20000, 50000, 20000)
+        if wa == 3 then
+          spawn(function()
+            t_vel = game.Players[target].Character.Humanoid.MoveDirection
+            c_x = (t_vel.X*math.random(5,8)) + math.random(-2,2)
+            c_z = (t_vel.Z*math.random(5,8)) + math.random(-2,2)
+            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-1,1), c_z )
+          end)
+          wa = 0
+        end
+
+        game:GetService("RunService").RenderStepped:Wait()
+        if character and character.Parent and root and root.Parent then
+            root.Velocity = vel
+        end
+
+        game:GetService("RunService").Stepped:Wait()
+        if character and character.Parent and root and root.Parent then
+            root.Velocity = vel + Vector3.new(0, movel, 0)
+            movel = movel * -1
+        end
+      until getgenv().forced_stop == true or getgenv().flinging == false
+    end)
+    task.wait(3)
+    getgenv().flinging = false
+    for i = 1,5 do
+      task.wait(0.05)
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      LocalPlayer.Character.HumanoidRootPart.CFrame = before
+    end
+    task.wait(0.1)
+    LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+    LocalPlayer.Character.HumanoidRootPart.CFrame = before * CFrame.new(0,2,0)
+  end
+end
+
+local function cmd_prefix(arg)
+  if arg ~= "" then
+    prefix = arg
+    send_msg("Prefix changed to: "..prefix)
+  end
+end
+
+
+local function main_cmds(msg, id)
+  getgenv().forced_stop = false
+  local msg = string.lower(msg)
+  local cmd = string.split(msg," ")
+  local host = game.Players:GetPlayerByUserId(id)
+  if cmd[1] and cmd[1]:sub(1, #prefix) == prefix then
+    cmd[1] = cmd[1]:sub(#prefix + 1)
+  	if cmd[2] == "me" then
+  		cmd[2] = host.Name
+  	end
+  	if cmd[1] == "prefix" and cmd[2] then
+  	  cmd_prefix(cmd[2])
+  	  
+  	elseif (cmd[1] == "whitelist" or cmd[1] == "wl") and cmd[2] then
+  	  if table.find(hosts, host.UserId) then
+  	    cmd_whitelist(cmd[2])
+  	  else
+  	    send_msg("Unable to whitelist that user - invalid permissons.")
+  	  end
+  	elseif (cmd[1] == "unwhitelist" or cmd[1] == "unwl") and cmd[2] then
+  	  if table.find(hosts, host.UserId) then
+  	    cmd_unwhitelist(cmd[2])
+  	  else
+  	    send_msg("Unable to whitelist that user - invalid permissons.")
+  	  end
+  	  
+  	elseif cmd[1] == "bring" then
+  	  LocalPlayer.Character.HumanoidRootPart.CFrame = host.Character.HumanoidRootPart.CFrame
+  	  
+  	elseif cmd[1] == "fling" and cmd[2] then
+  	  if getgenv().loop_fling == false then
+	      cmd_fling(cmd[2])
+	    end
+	    
+	  elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
+	    cmd_loopfling(cmd[2])
+	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling") then
+	    getgenv().loop_fling = false
+  	end
+  end
+end
+
+
+
+
+local function handle_msg(plr, msg)
+  if plr then
+    local id = plr.UserId
+    if table.find(whitelist, id) or table.find(hosts, id) then
+      print("running cmd")
+      main_cmds(msg, id)
+    end
+  end
+end
+
+for _, player in pairs(game.Players:GetPlayers()) do
+    player.Chatted:Connect(function(message)
+      handle_msg(player, message)
+    end)
+end
+
+game.Players.PlayerAdded:Connect(function(player)
+    player.Chatted:Connect(function(message)
+        handle_msg(player, message)
+    end)
+end)
+
+
+print("starting loops")
+
+
+spawn(function()
+	pcall(function()
+		workspace.FallenPartsDestroyHeight = 0/1/0
+		repeat
+			wait()
+			sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",math.huge*math.huge,math.huge)
+		until game.Players.LocalPlayer == nil
+	end)
+end)
+
+
+game:GetService("RunService").Heartbeat:Connect(function()
+  if getgenv().loop_fling == false then
+    return
+  end
+  local character = game.Players.LocalPlayer.Character
+  local root = character:WaitForChild("HumanoidRootPart")
+  local vel, movel = nil, 0.1
+
+  vel = root.Velocity
+  root.Velocity = vel * 10000 + Vector3.new(20000, 50000, 20000)
+  
+
+  game:GetService("RunService").RenderStepped:Wait()
+  if character and character.Parent and root and root.Parent then
+      root.Velocity = vel
+  end
+
+  game:GetService("RunService").Stepped:Wait()
+  if character and character.Parent and root and root.Parent then
+    root.Velocity = vel + Vector3.new(0, movel, 0)
+    movel = movel * -1
+  end
+end)
