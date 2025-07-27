@@ -571,10 +571,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
   end
 end)
 
-spawn(function()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua'))()
-end)
-while task.wait(4) do
+while task.wait(3.5) do
   print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true then
@@ -584,10 +581,11 @@ while task.wait(4) do
           if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
             if k:FindFirstChild("Coin_Server").CoinVisual.Transparency ~= 1 then
               Cf = k:FindFirstChild("Coin_Server").CFrame * CFrame.new(0,-1,0)
-              local dura = tweento_a(Cf)
-              if dura < 3 then
-                LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(0,50,0)
-              end
+
+              
+              LocalPlayer.Character.HumanoidRootPart.CFrame = Cf
+              task.wait(1)
+              LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(132, 140, 60)
             end
           end
         end
