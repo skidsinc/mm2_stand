@@ -36,6 +36,7 @@ getgenv().bending = false
 getgenv().forced_stop = false
 
 getgenv().render_graphic = true
+getgenv().gun = false
 
 local function r15(plr)
 	if plr.Character:FindFirstChildOfClass('Humanoid').RigType == Enum.HumanoidRigType.R15 then
@@ -430,6 +431,7 @@ local function cmd_prefix(arg)
 end
 
 local function cmd_gun(arg)
+  getgenv().gun = true
   local target = arg
   if target then
     local gunDropped = false
@@ -506,6 +508,7 @@ end
 
 
 local function main_cmds(msg, id)
+  getgenv().gun = false
   getgenv().forced_stop = false
   local msg = string.lower(msg)
   local cmd = string.split(msg," ")
@@ -786,7 +789,7 @@ end)
 while task.wait(2.8) do
   print("auto loop")
   spawn(function()
-    if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
+    if getgenv().loop_fling == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
       print("asdsa")
       for i,v in pairs(game.Workspace:GetChildren()) do
         for j,k in pairs(v:GetChildren()) do
