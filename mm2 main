@@ -735,9 +735,11 @@ spawn(function()
     spawn(function()
       for i,v in pairs(game.Players:GetChildren()) do
         spawn(function()
-          if v.Name ~= LocalPlayer.Name then
-            v.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
-          end
+          pcall(function()
+            if v.Name ~= LocalPlayer.Name then
+              v.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+            end
+          end)
         end)
       end
     end)
@@ -747,6 +749,7 @@ end)
 
 
 spawn(function()
+  local vu = game:GetService("VirtualUser")
   game:GetService("Players").LocalPlayer.Idled:connect(function()
     vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
     wait(1)
