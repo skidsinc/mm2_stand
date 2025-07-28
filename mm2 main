@@ -661,12 +661,16 @@ local function main_cmds(msg, id)
       getgenv().bending = false
       getgenv().banging = false
 	    cmd_loopfling(cmd[2])
+    
+    elseif cmd[1] == "ingame" then
+      getgenv().in_game = true
 	    
 	  elseif cmd[1] == "stop" then
-	    getgenv().loop_fling = false
-      getgenv().flinging = false
+	    getgenv().loop_fling = false 
+      getgenv().gun = false 
+      getgenv().flinging = false  
+      getgenv().bending = false 
       getgenv().banging = false
-      getgenv().bending = false
 
       stop_anims()
 	    
