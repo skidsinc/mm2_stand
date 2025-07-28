@@ -12,6 +12,9 @@ getgenv().can_auto = true
 ReplicatedStorage.Remotes.Gameplay.RoleSelect.OnClientEvent:Connect(function(role, ...)
   print("loaded")
 	getgenv().in_game = true
+	if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
+	  LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(58,60))
+	end
 end)
 LocalPlayer.CharacterAdded:Connect(function(char)
   print("died")
@@ -613,7 +616,7 @@ spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
 
-while task.wait(3.5) do
+while task.wait(3.3) do
   print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
@@ -623,7 +626,7 @@ while task.wait(3.5) do
           if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
             if k:FindFirstChild("Coin_Server").CoinVisual.Transparency ~= 1 then
               Cf = k:FindFirstChild("Coin_Server").CFrame
-              LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-2,2),math.random(5,7),math.random(-2,2))
+              LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
               tweento(Cf)
               task.wait(1)
               LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(58,60))
