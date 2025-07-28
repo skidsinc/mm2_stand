@@ -644,6 +644,23 @@ local function main_cmds(msg, id)
       getgenv().flinging = false
       getgenv().banging = false
       getgenv().bending = false
+
+      spawn(function()
+      	spawn(function()
+	        getgenv().bend:Stop()
+        end)
+        if LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
+          LocalPlayer.Character.Humanoid:FindFirstChild("bend"):Destroy()
+        end
+      end)
+      spawn(function()
+      	spawn(function()
+	        getgenv().bang:Stop()
+        end)
+        if LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
+          LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
+        end
+      end)
 	    
 	    
 	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling") then
@@ -764,7 +781,7 @@ end)
 spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
-while task.wait(3) do
+while task.wait(2.9) do
   print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
@@ -785,7 +802,7 @@ while task.wait(3) do
                 local target = game.Players[murder]
                 if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
                   local distance = (LocalPlayer.Character.HumanoidRootPart.Position - target.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude
-                  if distance > 75 or murder == LocalPlayer.Name then
+                  if distance > 125 or murder == LocalPlayer.Name then
                     Cf = k:FindFirstChild("Coin_Server").CFrame
                     LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
                     tweento(Cf)
