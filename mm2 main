@@ -190,7 +190,7 @@ local function cmd_loopfling(arg)
           wa = 0
         end
       until getgenv().loop_fling == false or (not game.Players:FindFirstChild(target))
-      LocalPlayer.Character.Humanoid.Health = 0
+      --LocalPlayer.Character.Humanoid.Health = 0
     end)
   end
 end
