@@ -587,12 +587,11 @@ while task.wait(3.5) do
         for j,k in pairs(v:GetChildren()) do
           if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
             if k:FindFirstChild("Coin_Server").CoinVisual.Transparency ~= 1 then
-              Cf = k:FindFirstChild("Coin_Server").CFrame * CFrame.new(0,-1,0)
-
-              
-              LocalPlayer.Character.HumanoidRootPart.CFrame = Cf
+              Cf = k:FindFirstChild("Coin_Server").CFrame
+              LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-2,2),math.random(5,7),math.random(-2,2))
+              tweento(Cf)
               task.wait(1)
-              LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(132, 140, 60)
+              LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(58,60))
             end
           end
         end
