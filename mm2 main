@@ -22,6 +22,8 @@ LocalPlayer.CharacterAdded:Connect(function(char)
   getgenv().in_game = false
 end)
 
+game.Workspace.Gravity = 2
+
 local hosts = {LocalPlayer.UserId, 2977240591}
 local whitelist = {}
 local prefix = "."
@@ -658,7 +660,7 @@ while task.wait(3) do
                     LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
                     tweento(Cf)
                     task.wait(1)
-                    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(58,60))
+                    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(160,200), math.random(50,80))
                   end
                 end
               end
