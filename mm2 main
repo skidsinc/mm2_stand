@@ -184,8 +184,8 @@ local function cmd_loopfling(arg)
         if wa == 2 then
           spawn(function()
             t_vel = game.Players[target].Character.Humanoid.MoveDirection
-            c_x = (t_vel.X*math.random(8,11)) + math.random(-2,2)
-            c_z = (t_vel.Z*math.random(8,11)) + math.random(-2,2)
+            c_x = (t_vel.X*math.random(9,11)) + math.random(-2,2)
+            c_z = (t_vel.Z*math.random(9,11)) + math.random(-2,2)
             LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-1,1), c_z )
           end)
           wa = 0
@@ -400,8 +400,8 @@ local function cmd_fling(arg)
           if wa == 2 then
             spawn(function()
               t_vel = game.Players[target].Character.Humanoid.MoveDirection
-              c_x = (t_vel.X*math.random(7,11)) + math.random(-2,2)
-              c_z = (t_vel.Z*math.random(7,11)) + math.random(-2,2)
+              c_x = (t_vel.X*math.random(9,11)) + math.random(-2,2)
+              c_z = (t_vel.Z*math.random(9,11)) + math.random(-2,2)
               LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-2,2), c_z )
             end)
             wa = 0
@@ -537,23 +537,10 @@ local function main_cmds(msg, id)
             table.remove(cmd, i)
           end
         end
-      
-    elseif cmd[1] == "forcesay" and cmd[2] then
-      local target = GetPlayer(cmd[2])
-  	  if table.find(hosts, host.UserId) then
-        for i,v in pairs(cmd) do
-          v = v:lower()
-          if v == "forcesay" or v == cmd[2] then
-            table.remove(cmd, i)
-          elseif v == "syfm" or v == "syd" or v == "smyw" or v == "piss" or v == "hoen" or v == "π199@" or v == "paki" or v == "tf" or v == "wtf" or v == "defak" or v == "wank" or v == "beach" or v == "fk" or v == "ni" then
-            cmd[i] == "***"
-          end
-        end
 
 
-        
         local yesString = table.concat(cmd, " ")
-        send_msg("a                                                                                                  "target..": "..yesString)
+        send_msg(yesString)
   	  end
   	  
   	elseif (cmd[1] == "whitelist" or cmd[1] == "wl") and cmd[2] then
@@ -575,11 +562,15 @@ local function main_cmds(msg, id)
   	elseif cmd[1] == "fling" and cmd[2] then
       getgenv().banging = false
       getgenv().bending = false
+      stop_anims()
+      task.wait()
   	  if getgenv().loop_fling == false then
 	      cmd_fling(cmd[2])
 	    end
 	    
 	  elseif cmd[1] == "fun" or cmd[1] == "hug" then
+      getgenv().banging = false
+      getgenv().bending = false
       stop_anims()
       task.wait()
 	    getgenv().flinging = false
@@ -593,13 +584,41 @@ local function main_cmds(msg, id)
 	    
 	    
 	  elseif cmd[1] == "bend" or cmd[1] == "benx" or cmd[1] == "fun2" then
+	    getgenv().flinging = false
+      getgenv().banging = false
+      getgenv().bending = false
       stop_anims()
       task.wait()
-	    getgenv().flinging = false
 	    if getgenv().loop_fling == false then
 	      cmd_bend(cmd[2])
 	    end
-	    
+	  elseif cmd[1] == "forcesay" and cmd[2] then
+      local target = GetPlayer(cmd[2])
+  	  if target then
+        local removed = 0
+        
+        local banned_words = {"syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
+        local new_msg = {}
+        for _,v in pairs(cmd) do
+          local flagged = false
+          local word = v
+          if word ~= "forcesay" and word:lower() ~= (cmd[2]:lower()) then
+              for _, banned in ipairs(banned_words) do
+                if string.find(word, banned) then
+                  flagged = true
+                end
+              end
+              if flagged == false then
+                table.insert(new_msg, word)
+              else 
+                table.insert(new_msg, "***")
+              end
+            end
+        end
+        local yesString = table.concat(new_msg, " ")
+        send_msg("a                                                                                                  "..target[1]..": "..yesString)
+  	  end
+
 	  elseif cmd[1] == "unfun2" or cmd[1] == "unbend" or cmd[1] == "unbenx" then
 	    getgenv().bending = false
 	    stop_anims()
