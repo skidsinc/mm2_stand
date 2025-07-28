@@ -580,6 +580,8 @@ local function main_cmds(msg, id)
 	    end
 	    
 	  elseif cmd[1] == "fun" or cmd[1] == "hug" then
+      stop_anims()
+      task.wait()
 	    getgenv().flinging = false
 	    if getgenv().loop_fling == false then
 	      cmd_bang(cmd[2])
@@ -591,6 +593,8 @@ local function main_cmds(msg, id)
 	    
 	    
 	  elseif cmd[1] == "bend" or cmd[1] == "benx" or cmd[1] == "fun2" then
+      stop_anims()
+      task.wait()
 	    getgenv().flinging = false
 	    if getgenv().loop_fling == false then
 	      cmd_bend(cmd[2])
