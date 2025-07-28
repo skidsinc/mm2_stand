@@ -287,7 +287,7 @@ local function cmd_bend(arg)
           	bendAnim.Parent = LocalPlayer.Character.Humanoid
           	getgenv().bend = humanoid:LoadAnimation(bendAnim)
           	getgenv().bend:Play(0.1, 1, 1)
-          	getgenv().bend:AdjustSpeed(3)
+          	getgenv().bend:AdjustSpeed(1)
           	humanoid.Died:Connect(function()
           		getgenv().bend:Stop()
           		bendAnim:Destroy()
@@ -561,6 +561,7 @@ local function main_cmds(msg, id)
   	  
   	elseif cmd[1] == "fling" and cmd[2] then
       getgenv().banging = false
+      getgenv().bending = false
   	  if getgenv().loop_fling == false then
 	      cmd_fling(cmd[2])
 	    end
@@ -657,6 +658,8 @@ local function main_cmds(msg, id)
 	    getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
 	    
 	  elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
+      getgenv().bending = false
+      getgenv().banging = false
 	    cmd_loopfling(cmd[2])
 	    
 	  elseif cmd[1] == "stop" then
@@ -786,7 +789,7 @@ end)
 spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
-while task.wait(2.8) do
+while task.wait(2.5) do
   print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
