@@ -485,6 +485,25 @@ local function cmd_vote(arg)
   end
 end
 
+local function stop_anims()
+  spawn(function()
+    spawn(function()
+	    getgenv().bend:Stop()
+    end)
+    if LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
+      LocalPlayer.Character.Humanoid:FindFirstChild("bend"):Destroy()
+    end
+  end)
+  spawn(function()
+    spawn(function()
+	    getgenv().bang:Stop()
+    end)
+    if LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
+      LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
+    end
+  end)
+end
+
 
 local function main_cmds(msg, id)
   getgenv().forced_stop = false
@@ -551,12 +570,7 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "unfun" or cmd[1] == "unhug" then
 	    getgenv().banging = false
-	    spawn(function()
-	      getgenv().bang:Stop()
-	    end)
-	    if LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
-	      LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
-	    end
+	    stop_anims()
 	    
 	    
 	  elseif cmd[1] == "bend" or cmd[1] == "benx" or cmd[1] == "fun2" then
@@ -567,12 +581,7 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "unfun2" or cmd[1] == "unbend" or cmd[1] == "unbenx" then
 	    getgenv().bending = false
-	    spawn(function()
-	      getgenv().bend:Stop()
-	    end)
-	    if LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
-	      LocalPlayer.Character.Humanoid:FindFirstChild("bend"):Destroy()
-	    end
+	    stop_anims()
 	    
 	    
 	  elseif cmd[1] == "who" or cmd[1] == "roles" then
@@ -653,22 +662,7 @@ local function main_cmds(msg, id)
       getgenv().banging = false
       getgenv().bending = false
 
-      spawn(function()
-      	spawn(function()
-	        getgenv().bend:Stop()
-        end)
-        if LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
-          LocalPlayer.Character.Humanoid:FindFirstChild("bend"):Destroy()
-        end
-      end)
-      spawn(function()
-      	spawn(function()
-	        getgenv().bang:Stop()
-        end)
-        if LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
-          LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
-        end
-      end)
+      stop_anims()
 	    
 	    
 	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling") then
