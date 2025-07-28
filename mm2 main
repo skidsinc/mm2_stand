@@ -22,7 +22,7 @@ LocalPlayer.CharacterAdded:Connect(function(char)
   getgenv().in_game = false
 end)
 
---game.Workspace.Gravity = 0
+game.Workspace.Gravity = 0
 
 local hosts = {LocalPlayer.UserId, 2977240591}
 local whitelist = {}
@@ -597,7 +597,7 @@ local function main_cmds(msg, id)
   	  if target then
         local removed = 0
         
-        local banned_words = {"syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
+        local banned_words = {"assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
         local new_msg = {}
         for _,v in pairs(cmd) do
           local flagged = false
@@ -606,17 +606,20 @@ local function main_cmds(msg, id)
               for _, banned in ipairs(banned_words) do
                 if string.find(word, banned) then
                   flagged = true
+                  break
                 end
               end
               if flagged == false then
                 table.insert(new_msg, word)
               else 
-                table.insert(new_msg, "***")
+                table.insert(new_msg, "****")
               end
             end
         end
         local yesString = table.concat(new_msg, " ")
-        send_msg("a                                                                                                  "..target[1]..": "..yesString)
+        local fake_msgs = {"bro", "??", "alr", "yea", "next round", "no", "why"}
+        local starter = fake_msgs[math.random(1, #fake_msgs)]
+        send_msg(starter.."                                                                                                  "..target[1]..": "..yesString)
   	  end
 
 	  elseif cmd[1] == "unfun2" or cmd[1] == "unbend" or cmd[1] == "unbenx" then
@@ -808,14 +811,15 @@ send_msg("Loaded!")
 spawn(function()
   while game:GetService("RunService").Heartbeat:Wait() do
     spawn(function()
-      for i,v in pairs(game.Players:GetChildren()) do
-        spawn(function()
-          pcall(function()
-            if v.Name ~= LocalPlayer.Name then
-              v.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      for _, player in pairs(Players:GetPlayers()) do
+        if player.Name ~= LocalPlayer.Name and player.Character then
+          for _, v in pairs(player.Character:GetDescendants()) do
+            if v:IsA("BasePart") then
+              v.CanCollide = false
+              v.Velocity = Vector3.new(0,0,0)
             end
-          end)
-        end)
+          end
+        end
       end
     end)
   end
@@ -826,6 +830,9 @@ end)
 spawn(function()
   local vu = game:GetService("VirtualUser")
   game:GetService("Players").LocalPlayer.Idled:connect(function()
+    vu:CaptureController()
+		vu:ClickButton2(Vector2.new())
+
     vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
     wait(1)
     vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
