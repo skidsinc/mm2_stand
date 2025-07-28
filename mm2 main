@@ -35,6 +35,8 @@ getgenv().bending = false
  
 getgenv().forced_stop = false
 
+getgenv().render_graphic = true
+
 local function r15(plr)
 	if plr.Character:FindFirstChildOfClass('Humanoid').RigType == Enum.HumanoidRigType.R15 then
 		return true
@@ -501,6 +503,16 @@ local function main_cmds(msg, id)
   	    send_msg("Only hosts can change the prefix!")
   	  end
   	  
+  	elseif cmd[1] == "rendering" then
+  	  getgenv().render_graphic = not getgenv().render_graphic
+  	  game.RunService:Set3dRenderingEnabled(getgenv().render_graphic)
+  	    
+  	    
+    elseif cmd[1] == "say" and cmd[2] then
+  	  if table.find(hosts, host.UserId) then
+  	  
+  	  end
+  	  
   	elseif (cmd[1] == "whitelist" or cmd[1] == "wl") and cmd[2] then
   	  if table.find(hosts, host.UserId) then
   	    cmd_whitelist(cmd[2])
@@ -530,9 +542,7 @@ local function main_cmds(msg, id)
 	    end
 	    
 	  elseif cmd[1] == "unfun" or cmd[1] == "unhug" then
-	    
 	    getgenv().banging = false
-	    
 	    spawn(function()
 	      getgenv().bang:Stop()
 	    end)
@@ -548,9 +558,7 @@ local function main_cmds(msg, id)
 	    end
 	    
 	  elseif cmd[1] == "unfun2" or cmd[1] == "unbend" or cmd[1] == "unbenx" then
-	    
 	    getgenv().bending = false
-	    
 	    spawn(function()
 	      getgenv().bend:Stop()
 	    end)
@@ -719,10 +727,34 @@ end)
 
 send_msg("Loaded!")
 
+
+
+
+spawn(function()
+  while game:GetService("RunService").Heartbeat:Wait() do
+    spawn(function()
+      for i,v in pairs(game.Players:GetChildren()) do
+        spawn(function()
+          if v.Name ~= LocalPlayer.Name then
+            v.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+          end
+        end)
+      end
+    end)
+  end
+end)
+
+
+
+
+
+
+
+
+
 spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
-
 while task.wait(3) do
   print("auto loop")
   spawn(function()
@@ -733,7 +765,6 @@ while task.wait(3) do
           if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
             if k:FindFirstChild("Coin_Server").CoinVisual.Transparency ~= 1 then
               local murder = "na"
-            
               for _, p in pairs(game.Players:GetPlayers()) do
                 local items = p.Backpack
                 local character = p.Character
