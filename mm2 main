@@ -247,11 +247,11 @@ local function cmd_bang(arg)
           	bangAnim.AnimationId = not r15(LocalPlayer) and "rbxassetid://148840371" or "rbxassetid://5918726674"
           	bangAnim.Name = "dolphin"
           	bangAnim.Parent = LocalPlayer.Character.Humanoid
-          	bang = humanoid:LoadAnimation(bangAnim)
-          	bang:Play(0.1, 1, 1)
-          	bang:AdjustSpeed(3.5)
+          	getgenv().bang = humanoid:LoadAnimation(bangAnim)
+          	getgenv().bang:Play(0.1, 1, 1)
+          	getgenv().bang:AdjustSpeed(3.5)
           	humanoid.Died:Connect(function()
-          		bang:Stop()
+          		getgenv().bang:Stop()
           		bangAnim:Destroy()
           		bangDied:Disconnect()
           		bangLoop:Disconnect()
@@ -429,9 +429,13 @@ local function main_cmds(msg, id)
 	    end
 	    
 	  elseif cmd[1] == "unfun" or cmd[1] == "unhug" then
+	    
 	    getgenv().banging = false
+	    
+	    spawn(function()
+	      getgenv().bang:Stop
+	    end)
 	    if LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
-	      LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Stop()
 	      LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
 	    end
 	    
