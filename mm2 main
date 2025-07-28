@@ -13,6 +13,7 @@ ReplicatedStorage.Remotes.Gameplay.RoleSelect.OnClientEvent:Connect(function(rol
   print("loaded")
 	getgenv().in_game = true
 	if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
+	  task.wait(0.1)
 	  LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(58,60))
 	end
 end)
@@ -630,7 +631,7 @@ spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
 
-while task.wait(3.3) do
+while task.wait(3) do
   print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
