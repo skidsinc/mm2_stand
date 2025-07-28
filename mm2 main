@@ -35,62 +35,30 @@ local function r15(plr)
 end
 
 
-
-
 local function tweento(targetCFrame)
 	local player = LocalPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
 	local hrp = character:WaitForChild("HumanoidRootPart")
-
 	local currentCFrame = hrp.CFrame
 	local distance = (currentCFrame.Position - targetCFrame.Position).Magnitude
 	local speed = 50
-
 	local tweenInfo = TweenInfo.new(
 		0.3,
 		Enum.EasingStyle.Quad,
 		Enum.EasingDirection.Out
 	)
-
 	local goal = {
 		CFrame = targetCFrame
 	}
-
 	local tween = TweenService:Create(hrp, tweenInfo, goal)
 	tween:Play()
 end
 
-local function tweento_a(targetCFrame)
-	local player = LocalPlayer
-	local character = player.Character or player.CharacterAdded:Wait()
-	local hrp = character:WaitForChild("HumanoidRootPart")
-
-	local currentCFrame = hrp.CFrame
-	local distance = (currentCFrame.Position - targetCFrame.Position).Magnitude
-	local speed = 50
-	local dur = distance/20
-	if dur > 4 then
-	  dur = 4
-	end
-
-	local tweenInfo = TweenInfo.new(
-		dur,
-		Enum.EasingStyle.Quad,
-		Enum.EasingDirection.Out
-	)
-
-	local goal = {
-		CFrame = targetCFrame
-	}
-
-	local tween = TweenService:Create(hrp, tweenInfo, goal)
-	tween:Play()
-	return dur
-end
 
 local function send_msg(msg)
     game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync(msg)
 end
+
 
 local function GetPlayer(input)
 	local found = {}
@@ -143,6 +111,7 @@ local function cmd_whitelist(arg)
   end
 end
 
+
 local function cmd_unwhitelist(arg)
   local target = GetPlayer(arg)[1]
   local target_id = Players:FindFirstChild(target).UserId
@@ -156,6 +125,7 @@ local function cmd_unwhitelist(arg)
     send_msg("Unwhitelisted: "..target)
   end
 end
+
 
 local function cmd_loopfling(arg)
   print("lfling start")
@@ -214,7 +184,6 @@ local function cmd_who(arg)
       end
     end
   end
-  
   if arg == "murder" or arg == "murderer" then
     send_msg("The murderer is: "..murder)
   elseif arg == "sherrif" then
@@ -396,6 +365,24 @@ local function cmd_gun(arg)
 end
 
 
+local function cmd_vote(arg)
+  local target = arg
+  if target and target ~= LocalPlayer.Name then
+    local pos = game.Players[target].Character.HumanoidRootPart.CFrame
+    
+    LocalPlayer.Character.Humanoid.Health = 0 
+    task.wait()
+    repeat
+      task.wait()
+    until LocalPlayer and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") and LocalPlayer.Character:WaitForChild("Humanoid").Health > 0 
+    
+    task.wait(0.1)
+    tweento(pos)
+    
+  end
+end
+
+
 local function main_cmds(msg, id)
   getgenv().forced_stop = false
   local msg = string.lower(msg)
@@ -407,7 +394,11 @@ local function main_cmds(msg, id)
   		cmd[2] = host.Name
   	end
   	if cmd[1] == "prefix" and cmd[2] then
-  	  cmd_prefix(cmd[2])
+  	  if table.find(hosts, host.UserId) then
+  	    cmd_prefix(cmd[2])
+  	  else 
+  	    send_msg("Only hosts can change the prefix!")
+  	  end
   	  
   	elseif (cmd[1] == "whitelist" or cmd[1] == "wl") and cmd[2] then
   	  if table.find(hosts, host.UserId) then
@@ -486,6 +477,9 @@ local function main_cmds(msg, id)
 	      getgenv().can_auto = true
 	      send_msg("I will farm for the next round")
 	    end
+	    
+	  elseif cmd[1] == "vote" then
+	    cmd_vote(host.Name)
 	    
 	  elseif cmd[1] == "re" or cmd[1] == "reset" or cmd[1] == "fix" then
 	    getgenv().loop_fling = false
