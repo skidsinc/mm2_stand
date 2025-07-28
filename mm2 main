@@ -83,9 +83,36 @@ local function GetPlayer(input)
 				break
 			end
 		end
-	elseif strl == "me" then
-		table.insert(found, localPlayer.Name)
-
+	elseif strl == "murder" or strl == "murderer" then
+	  local murder = "na"
+  
+    for _, p in pairs(game.Players:GetPlayers()) do
+      local items = p.Backpack
+      local character = p.Character
+      if (items and items:FindFirstChild("Knife")) or (character and character:FindFirstChild("Knife")) then
+        murder = p.Name
+      end
+    end
+    
+    if murder ~= "na" then
+      table.insert(found, murder)
+    end
+		
+	elseif strl == "sherrif" then
+    local sheriff = "na"
+  
+    for _, p in pairs(game.Players:GetPlayers()) do
+      local items = p.Backpack
+      local character = p.Character
+      if (items and items:FindFirstChild("Gun")) or (character and character:FindFirstChild("Gun")) then
+        sheriff = p.Name
+      end
+    end
+    
+    if sheriff ~= "na" then
+      table.insert(found, sheriff)
+    end
+    
 	else
 		for _, v in ipairs(players) do
 			if totalFound == 0 and (
