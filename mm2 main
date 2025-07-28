@@ -183,8 +183,8 @@ local function cmd_loopfling(arg)
         if wa == 2 then
           spawn(function()
             t_vel = game.Players[target].Character.Humanoid.MoveDirection
-            c_x = (t_vel.X*math.random(8,11)) + math.random(-2,2)
-            c_z = (t_vel.Z*math.random(8,11)) + math.random(-2,2)
+            c_x = (t_vel.X*math.random(9,13)) + math.random(-1,2)
+            c_z = (t_vel.Z*math.random(9,13)) + math.random(-2,1)
             LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-1,1), c_z )
           end)
           wa = 0
@@ -399,8 +399,8 @@ local function cmd_fling(arg)
           if wa == 2 then
             spawn(function()
               t_vel = game.Players[target].Character.Humanoid.MoveDirection
-              c_x = (t_vel.X*math.random(8,12)) + math.random(-2,2)
-              c_z = (t_vel.Z*math.random(8,12)) + math.random(-2,2)
+              c_x = (t_vel.X*math.random(9,14)) + math.random(-2,1)
+              c_z = (t_vel.Z*math.random(9,14)) + math.random(-1,2)
               LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-2,2), c_z )
             end)
             wa = 0
@@ -510,7 +510,15 @@ local function main_cmds(msg, id)
   	    
     elseif cmd[1] == "say" and cmd[2] then
   	  if table.find(hosts, host.UserId) then
-  	  
+        for i,v in pairs(cmd) do
+          if v == "say" then
+            table.remove(cmd, i)
+          end
+        end
+
+
+        local yesString = table.concat(cmd, " ")
+        send_msg(yesString)
   	  end
   	  
   	elseif (cmd[1] == "whitelist" or cmd[1] == "wl") and cmd[2] then
@@ -781,7 +789,7 @@ end)
 spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
-while task.wait(2.9) do
+while task.wait(2.8) do
   print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
