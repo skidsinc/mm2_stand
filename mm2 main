@@ -12,7 +12,7 @@ getgenv().can_auto = true
 ReplicatedStorage.Remotes.Gameplay.RoleSelect.OnClientEvent:Connect(function(role, ...)
   print("loaded")
 	getgenv().in_game = true
-	if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
+	if getgenv().loop_fling == false and getgenv().bending == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
 	  task.wait(0.1)
 	  LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(58,60))
 	end
@@ -31,6 +31,7 @@ local prefix = "."
 getgenv().loop_fling = false
 getgenv().flinging = false
 getgenv().banging = false
+getgenv().bending = false
  
 getgenv().forced_stop = false
 
@@ -237,6 +238,75 @@ local function cmd_who(arg)
 end
 
 
+local function cmd_bend(arg)
+  print("cmd")
+  local target = GetPlayer(arg)[1]
+  if target and target ~= LocalPlayer.Name then
+    print("a")
+    if getgenv().bending == true then
+      getgenv().bending = false
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_bend * CFrame.new(0,2,0)
+      task.wait(0.4)
+    end
+    task.wait(0.1)
+    if target and target ~= LocalPlayer.Name then
+      getgenv().bending = true
+      getgenv().before_bend = LocalPlayer.Character.HumanoidRootPart.CFrame
+      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+      task.wait(0.2)
+      
+      local bang_z = 1.1
+      local dir = 1
+      
+      send_msg("Ohhh yeaaah")
+      local anim = Instance.new("Animation")
+      anim.AnimationId = "rbxassetid://10714360343"
+      while getgenv().bending == true do 
+        task.wait()
+        if dir == 1 then
+          bang_z -= 0.1
+        else 
+          bang_z += 0.1
+        end 
+        if bang_z < -3 then
+          dir = -1
+        elseif bang_z > -1 then
+          dir = 1 
+        end
+        spawn(function()
+          LocalPlayer.Character:FindFirstChild("Animate").PlayEmote:Invoke(anim)
+          LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,0,bang_z)
+          if not LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
+            local humanoid = LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
+          	bendAnim = Instance.new("Animation")
+          	bendAnim.AnimationId = not r15(LocalPlayer) and "rbxassetid://10714360343" or "rbxassetid://10714360343"
+          	bendAnim.Name = "bend"
+          	bendAnim.Parent = LocalPlayer.Character.Humanoid
+          	getgenv().bend = humanoid:LoadAnimation(bendAnim)
+          	getgenv().bend:Play(0.1, 1, 1)
+          	getgenv().bend:AdjustSpeed(3)
+          	humanoid.Died:Connect(function()
+          		getgenv().bend:Stop()
+          		bendAnim:Destroy()
+          	end)
+          end
+        
+        end)
+      end
+      for i = 1,5 do
+      task.wait(0.05)
+        LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+        LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_bend
+      end
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      task.wait(0.1)
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_bend * CFrame.new(0,2,0)
+    end
+  end
+end
+
+
 local function cmd_bang(arg)
   print("cmd")
   local target = GetPlayer(arg)[1]
@@ -244,7 +314,7 @@ local function cmd_bang(arg)
     print("a")
     if getgenv().banging == true then
       getgenv().banging = false
-      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_bangg * CFrame.new(0,2,0)
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_bang * CFrame.new(0,2,0)
       task.wait(0.4)
     end
     task.wait(0.1)
@@ -261,9 +331,9 @@ local function cmd_bang(arg)
       while getgenv().banging == true do 
         task.wait()
         if dir == 1 then
-          bang_z += 0.25
+          bang_z += 0.3
         else 
-          bang_z -= 0.25
+          bang_z -= 0.3
         end 
         if bang_z > 4 then
           dir = -1
@@ -282,12 +352,10 @@ local function cmd_bang(arg)
           	bangAnim.Parent = LocalPlayer.Character.Humanoid
           	getgenv().bang = humanoid:LoadAnimation(bangAnim)
           	getgenv().bang:Play(0.1, 1, 1)
-          	getgenv().bang:AdjustSpeed(3.5)
+          	getgenv().bang:AdjustSpeed(3)
           	humanoid.Died:Connect(function()
           		getgenv().bang:Stop()
           		bangAnim:Destroy()
-          		bangDied:Disconnect()
-          		bangLoop:Disconnect()
           	end)
           end
         
@@ -472,6 +540,25 @@ local function main_cmds(msg, id)
 	      LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
 	    end
 	    
+	    
+	  elseif cmd[1] == "bend" or cmd[1] == "benx" or cmd[1] == "fun2" then
+	    getgenv().flinging = false
+	    if getgenv().loop_fling == false then
+	      cmd_bend(cmd[2])
+	    end
+	    
+	  elseif cmd[1] == "unfun2" or cmd[1] == "unbend" or cmd[1] == "unbenx" then
+	    
+	    getgenv().bending = false
+	    
+	    spawn(function()
+	      getgenv().bend:Stop()
+	    end)
+	    if LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
+	      LocalPlayer.Character.Humanoid:FindFirstChild("bend"):Destroy()
+	    end
+	    
+	    
 	  elseif cmd[1] == "who" or cmd[1] == "roles" then
 	    cmd_who(cmd[2])
 	    
@@ -535,6 +622,8 @@ local function main_cmds(msg, id)
 	  elseif cmd[1] == "re" or cmd[1] == "reset" or cmd[1] == "fix" then
 	    getgenv().loop_fling = false
 	    getgenv().flinging = false
+	    getgenv().bending = false
+	    getgenv().banging = false 
 	    LocalPlayer.Character.Humanoid.Health = 0
 	    
 	    getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
@@ -546,6 +635,7 @@ local function main_cmds(msg, id)
 	    getgenv().loop_fling = false
       getgenv().flinging = false
       getgenv().banging = false
+      getgenv().bending = false
 	    
 	    
 	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling") then
@@ -636,7 +726,7 @@ end)
 while task.wait(3) do
   print("auto loop")
   spawn(function()
-    if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
+    if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
       print("asdsa")
       for i,v in pairs(game.Workspace:GetChildren()) do
         for j,k in pairs(v:GetChildren()) do
