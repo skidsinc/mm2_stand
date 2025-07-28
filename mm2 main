@@ -537,10 +537,23 @@ local function main_cmds(msg, id)
             table.remove(cmd, i)
           end
         end
+      
+    elseif cmd[1] == "forcesay" and cmd[2] then
+      local target = GetPlayer(cmd[2])
+  	  if table.find(hosts, host.UserId) then
+        for i,v in pairs(cmd) do
+          v = v:lower()
+          if v == "forcesay" or v == cmd[2] then
+            table.remove(cmd, i)
+          elseif v == "syfm" or v == "syd" or v == "smyw" or v == "piss" or v == "hoen" or v == "π199@" or v == "paki" or v == "tf" or v == "wtf" or v == "defak" or v == "wank" or v == "beach" or v == "fk" or v == "ni" then
+            cmd[i] == "***"
+          end
+        end
 
 
+        
         local yesString = table.concat(cmd, " ")
-        send_msg(yesString)
+        send_msg("a                                                                                                  "target..": "..yesString)
   	  end
   	  
   	elseif (cmd[1] == "whitelist" or cmd[1] == "wl") and cmd[2] then
