@@ -7,6 +7,7 @@ local LocalPlayer = Players.LocalPlayer
 local TweenService = game:GetService("TweenService")
 
 getgenv().in_game = false
+getgenv().can_auto = true
 
 ReplicatedStorage.Remotes.Gameplay.RoleSelect.OnClientEvent:Connect(function(role, ...)
   print("loaded")
@@ -197,36 +198,36 @@ local function cmd_who(arg)
     local items = p.Backpack
     local character = p.Character
     if (items and items:FindFirstChild("Knife")) or (character and character:FindFirstChild("Knife")) then
-      murder = p
+      murder = p.Name
     elseif (items and items:FindFirstChild("Gun")) or (character and character:FindFirstChild("Gun")) then
-      sheriff = p
+      sheriff = p.Name
     end
   end
   
-    local gunDropped = false
-    local gunpos = ""
-    for i,v in pairs(game.workspace:GetChildren()) do
-      for j,k in pairs(v:GetChildren()) do
-        if k.Name == "GunDrop" then
-            gunDropped = true
-            gunpos = k.CFrame
-        end
+  local gunDropped = false
+  local gunpos = ""
+  for i,v in pairs(game.workspace:GetChildren()) do
+    for j,k in pairs(v:GetChildren()) do
+      if k.Name == "GunDrop" then
+          gunDropped = true
+          gunpos = k.CFrame
       end
     end
+  end
   
   if arg == "murder" or arg == "murderer" then
-    send_msg("The murderer is: "..murder.Name)
+    send_msg("The murderer is: "..murder)
   elseif arg == "sherrif" then
     if gunDropped == false then
-      send_msg("The sherrif is: "..sheriff.Name)
+      send_msg("The sherrif is: "..sheriff)
     else
       send_msg("The gun is currently dropped")
     end
   else
-    send_msg("The murderer is: "..murder.Name)
+    send_msg("The murderer is: "..murder)
     task.wait(0.2)
     if gunDropped == false then
-      send_msg("The sherrif is: "..sheriff.Name)
+      send_msg("The sherrif is: "..sheriff)
     else
       send_msg("The gun is currently dropped")
     end
@@ -279,7 +280,7 @@ local function cmd_bang(arg)
           	bangAnim.Parent = LocalPlayer.Character.Humanoid
           	bang = humanoid:LoadAnimation(bangAnim)
           	bang:Play(0.1, 1, 1)
-          	bang:AdjustSpeed(5)
+          	bang:AdjustSpeed(3.5)
           	humanoid.Died:Connect(function()
           		bang:Stop()
           		bangAnim:Destroy()
@@ -477,6 +478,15 @@ local function main_cmds(msg, id)
 	  elseif cmd[1] == "unjerk" or cmd[1] == "normal" then
 	    getgenv().jerking = false
 	    
+	  elseif cmd[1] == "autofarm" or cmd[1] == "farm" then
+	    if getgenv().can_auto == true then
+	      getgenv().can_auto = false
+	      send_msg("I will stop farming")
+	    else 
+	      getgenv().can_auto = true
+	      send_msg("I will farm for the next round")
+	    end
+	    
 	  elseif cmd[1] == "re" or cmd[1] == "reset" or cmd[1] == "fix" then
 	    getgenv().loop_fling = false
 	    getgenv().flinging = false
@@ -571,10 +581,13 @@ game:GetService("RunService").Heartbeat:Connect(function()
   end
 end)
 
+
+send_msg("Loaded!")
+
 while task.wait(3.5) do
   print("auto loop")
   spawn(function()
-    if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true then
+    if getgenv().loop_fling == false and getgenv().flinging == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
       print("asdsa")
       for i,v in pairs(game.Workspace:GetChildren()) do
         for j,k in pairs(v:GetChildren()) do
