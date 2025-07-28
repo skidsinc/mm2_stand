@@ -463,7 +463,7 @@ local function main_cmds(msg, id)
 	    getgenv().banging = false
 	    
 	    spawn(function()
-	      getgenv().bang:Stop
+	      getgenv().bang:Stop()
 	    end)
 	    if LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
 	      LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
@@ -474,6 +474,19 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "gun" then
 	    cmd_gun(host.Name)
+	    
+	  elseif cmd[1] == "fps" or cmd[1] == "boostfps" then
+	    spawn(function()
+        for _,v in pairs(workspace:GetDescendants()) do
+          if v.ClassName == "Part"
+          or v.ClassName == "SpawnLocation"
+          or v.ClassName == "WedgePart"
+          or v.ClassName == "Terrain"
+          or v.ClassName == "MeshPart" then
+          v.Material = "Plastic"
+          end
+        end
+	    end)
 	    
 	  elseif cmd[1] == "jerk" then
 	    getgenv().jerking = true
@@ -497,9 +510,10 @@ local function main_cmds(msg, id)
             track:Stop()
             track = nil
           end
-          
         end
       end
+      
+      
 	  elseif cmd[1] == "unjerk" or cmd[1] == "normal" then
 	    getgenv().jerking = false
 	    
@@ -625,35 +639,32 @@ while task.wait(3.3) do
         for j,k in pairs(v:GetChildren()) do
           if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
             if k:FindFirstChild("Coin_Server").CoinVisual.Transparency ~= 1 then
-              Cf = k:FindFirstChild("Coin_Server").CFrame
-              LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
-              tweento(Cf)
-              task.wait(1)
-              LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(58,60))
+              local murder = "na"
+            
+              for _, p in pairs(game.Players:GetPlayers()) do
+                local items = p.Backpack
+                local character = p.Character
+                if (items and items:FindFirstChild("Knife")) or (character and character:FindFirstChild("Knife")) then
+                  murder = p.Name
+                end
+              end
+              if murder ~= "na" then
+                local target = game.Players[murder]
+                if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
+                  local distance = (LocalPlayer.Character.HumanoidRootPart.Position - target.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude
+                  if distance > 75 then
+                    Cf = k:FindFirstChild("Coin_Server").CFrame
+                    LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
+                    tweento(Cf)
+                    task.wait(1)
+                    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(58,60))
+                  end
+                end
+              end
             end
           end
         end
       end
     end
   end)
-end
-
-if LocalPlayer.Name == "deth66789" then
-  spawn(function()
-  for _,v in pairs(workspace:GetDescendants()) do
-  if v.ClassName == "Part"
-  or v.ClassName == "SpawnLocation"
-  or v.ClassName == "WedgePart"
-  or v.ClassName == "Terrain"
-  or v.ClassName == "MeshPart" then
-  v.Material = "Plastic"
-  end
-  end
-  end)
-  --game:GetService("RunService"):Set3dRenderingEnabled(false)
-  
-  task.wait(3)
-  
-  --loadstring(game:HttpGet("https://gist.githubusercontent.com/skidsinc/c2e7829d7632b374d6980b863c9e65b1/raw/1100a85a83e6e8ac9c5ec20148567ddbbdb4452f/gistfile1.txt"))()
-
 end
