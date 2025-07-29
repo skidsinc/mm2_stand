@@ -818,6 +818,18 @@ send_msg("Loaded!")
 
 spawn(function()
   while game:GetService("RunService").Heartbeat:Wait() do
+    task.spawn(function()
+      if getgenv().bending == false then
+        task.spawn(function()
+          getgenv().bend:Stop()
+        end)
+      end
+      if getgenv().banging == false then
+        task.spawn(function()
+          getgenv().bang:Stop()
+        end)
+      end
+    end)
     spawn(function()
       for _, player in pairs(Players:GetPlayers()) do
         if player.Name ~= LocalPlayer.Name and player.Character then
