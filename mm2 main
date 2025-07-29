@@ -451,26 +451,30 @@ local function cmd_gun(arg)
       end
     end
     if gunDropped == false then
-      send_msg("The gun isnt dropped")
+      if LocalPlayer.Backpack:FindFirstChild("Gun") then
+        send_msg("I already have it")
+      else
+        send_msg("The gun isnt dropped")
+      end
     else 
       for i = 1,5 do 
         twen = tweento(gunpos)
         task.wait(0.05)
       end
-      
       task.wait(0.5)
+      twen = tweento(gunpos)
+    end
       
-      if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
-        send_msg("Picked up gun...")
-        for i = 1,3 do 
-          tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
-          task.wait(0.1)
-        end
-        task.wait(0.4)
-        LocalPlayer.Character.Humanoid.Health = 0
-      else 
-        send_msg("Unable to pick up the gun")
+    if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
+      send_msg("Picked up gun...")
+      for i = 1,3 do 
+        tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+        task.wait(0.1)
       end
+      task.wait(0.4)
+      LocalPlayer.Character.Humanoid.Health = 0
+    else 
+      send_msg("Unable to pick up the gun")
     end
     
   end
