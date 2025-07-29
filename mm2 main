@@ -466,6 +466,7 @@ local function cmd_gun(arg)
           tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
           task.wait(0.1)
         end
+        task.wait(0.4)
         LocalPlayer.Character.Humanoid.Health = 0
       else 
         send_msg("Unable to pick up the gun")
