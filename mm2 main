@@ -242,6 +242,9 @@ end
 
 
 local function cmd_bend(arg)
+  spawn(function()
+    getgenv().bend:Stop()
+  end)
   print("cmd")
   local target = GetPlayer(arg)[1]
   if target and target ~= LocalPlayer.Name then
@@ -311,6 +314,9 @@ end
 
 
 local function cmd_bang(arg)
+  spawn(function()
+    getgenv().bang:Stop()
+  end)
   print("cmd")
   local target = GetPlayer(arg)[1]
   if target and target ~= LocalPlayer.Name then
