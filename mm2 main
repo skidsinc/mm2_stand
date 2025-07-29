@@ -22,7 +22,7 @@ LocalPlayer.CharacterAdded:Connect(function(char)
   getgenv().in_game = false
 end)
 
-game.Workspace.Gravity = 0
+--game.Workspace.Gravity = 0
 
 local hosts = {LocalPlayer.UserId, 2977240591}
 local whitelist = {}
