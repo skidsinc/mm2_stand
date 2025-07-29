@@ -535,8 +535,15 @@ local function main_cmds(msg, id)
   local msg = string.lower(msg)
   local cmd = string.split(msg," ")
   local host = game.Players:GetPlayerByUserId(id)
-  if cmd[1] and cmd[1]:sub(1, #prefix) == prefix then
-    cmd[1] = cmd[1]:sub(#prefix + 1)
+if cmd[1] then
+    local arg = cmd[1]
+    if arg:sub(1, #prefix) == prefix then
+        cmd[1] = arg:sub(#prefix + 1)
+    elseif arg:sub(1, 2) == "/e" then
+        cmd[1] = arg:sub(3)
+    else
+        return
+    end
   	if cmd[2] == "me" then
   		cmd[2] = host.Name
   	end
