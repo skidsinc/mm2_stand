@@ -923,7 +923,7 @@ while task.wait(2.5) do
                     LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
                     tweento(Cf)
                     task.wait(1)
-                    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(160,200), math.random(50,80))
+                    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(400,500), math.random(50,80))
                   end
                 end
               end
