@@ -621,7 +621,7 @@ local function main_cmds(msg, id)
       getgenv().banging = false
       getgenv().bending = false
       stop_anims()
-      task.wait()
+      task.wait(0.1)
 	    getgenv().flinging = false
 	    if getgenv().loop_fling == false then
 	      cmd_bang(cmd[2])
@@ -638,7 +638,7 @@ local function main_cmds(msg, id)
       getgenv().banging = false
       getgenv().bending = false
       stop_anims()
-      task.wait()
+      task.wait(0.1)
 	    if getgenv().loop_fling == false then
 	      cmd_bend(cmd[2])
 	    end
@@ -647,7 +647,7 @@ local function main_cmds(msg, id)
   	  if target then
         local removed = 0
         
-        local banned_words = {"w1nk", "wink", "wunk", "w@nk", "wan", "w@n", "p@ki", "p@k", "pak", "s1y0", "s1yo", "e1p", "e1d", "ride", "edy", "epy", "juzz", "sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
+        local banned_words = {"n0n", "nonc", "s3tke", "e9p", "e9d", "m@5t", "m@st", "w$nk", "w$nk", "w1nk", "wink", "wunk", "w@nk", "wan", "w@n", "p@ki", "p@k", "pak", "s1y0", "s1yo", "e1p", "e1d", "ride", "edy", "epy", "juzz", "sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
         local new_msg = {}
         for _,v in pairs(cmd) do
           local flagged = false
@@ -932,7 +932,7 @@ while task.wait(2.5) do
                 local target = game.Players[murder]
                 if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
                   local distance = (k:FindFirstChild("Coin_Server").Position - target.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude
-                  if distance > 55 or murder == LocalPlayer.Name then
+                  if distance > 45 or murder == LocalPlayer.Name then
                     Cf = k:FindFirstChild("Coin_Server").CFrame
                     LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
                     tweento(Cf)
