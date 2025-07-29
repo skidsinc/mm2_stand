@@ -653,7 +653,7 @@ local function main_cmds(msg, id)
             end
         end
         local yesString = table.concat(new_msg, " ")
-        local fake_msgs = {"bro", "??", "alr", "yea", "next round", "no", "why"}
+        local fake_msgs = {"bro", "??", "alr", "yea", "next round", "no", "why", "wym", "ill trade later", "erm"}
         local starter = fake_msgs[math.random(1, #fake_msgs)]
         send_msg(starter.."                                                                                                  "..target[1]..": "..yesString)
   	  end
@@ -666,6 +666,8 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "who" or cmd[1] == "roles" then
 	    cmd_who(cmd[2])
+    elseif cmd[1] == "safe" or cmd[1] == "hide" then
+      LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, 1000, math.random(58,60))
 	    
 	  elseif cmd[1] == "gun" then
 	    cmd_gun(host.Name)
@@ -932,4 +934,3 @@ while task.wait(2.5) do
     end
   end)
 end
-
