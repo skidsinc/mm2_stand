@@ -188,7 +188,7 @@ local function cmd_loopfling(arg)
             t_vel = game.Players[target].Character.Humanoid.MoveDirection
             c_x = (t_vel.X*math.random(9,11)) + math.random(-2,2)
             c_z = (t_vel.Z*math.random(9,11)) + math.random(-2,2)
-            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, 0.2, c_z )
+            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-3,0), c_z )
           end)
           wa = 0
         end
@@ -419,7 +419,7 @@ local function cmd_fling(arg)
               t_vel = game.Players[target].Character.Humanoid.MoveDirection
               c_x = (t_vel.X*math.random(9,11)) + math.random(-2,2)
               c_z = (t_vel.Z*math.random(9,11)) + math.random(-2,2)
-              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, 0.2, c_z )
+              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame  + Vector3.new(c_x, math.random(-3,0), c_z )
             end)
             wa = 0
           end
@@ -903,7 +903,7 @@ while task.wait(2.5) do
                 local target = game.Players[murder]
                 if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
                   local distance = (k:FindFirstChild("Coin_Server").Position - target.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude
-                  if distance > 60 or murder == LocalPlayer.Name then
+                  if distance > 55 or murder == LocalPlayer.Name then
                     Cf = k:FindFirstChild("Coin_Server").CFrame
                     LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
                     tweento(Cf)
