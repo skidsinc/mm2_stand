@@ -543,7 +543,7 @@ local function main_cmds(msg, id)
     elseif cmds_pre[1] == "/e" then
         cmd = {}
         for i,v in pairs(cmds_pre) do
-          if v ~ = "/e" then
+          if v ~= "/e" then
             table.insert(cmd, v)
           end
         end
