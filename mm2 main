@@ -887,7 +887,7 @@ while task.wait(2.5) do
               if murder ~= "na" then
                 local target = game.Players[murder]
                 if target and target.Character and target.Character:FindFirstChild("HumanoidRootPart") then
-                  local distance = (LocalPlayer.Character.HumanoidRootPart.Position - target.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude
+                  local distance = (k:FindFirstChild("Coin_Server").Position - target.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude
                   if distance > 125 or murder == LocalPlayer.Name then
                     Cf = k:FindFirstChild("Coin_Server").CFrame
                     LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
