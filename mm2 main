@@ -167,13 +167,15 @@ end
 local function cmd_loopfling(arg)
   print("lfling start")
   local target = GetPlayer(arg)[1]
-  if getgenv().flinging == true then
-    getgenv().flinging = false
-    LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_fling * CFrame.new(0,2,0)
+  if getgenv().loop_fling == true then
+    getgenv().loop_fling = false
+    task.wait()
+    tweento(getgenv().before_lfling * CFrame.new(0,2,0))
     task.wait(0.4)
   end
   task.wait(0.1)
   if target and target ~= LocalPlayer.Name then
+    getgenv().before_lfling = LocalPlayer.Character.HumanoidRootPart.CFrame
     getgenv().loop_fling = true
     twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
     task.wait(0.4)
@@ -192,6 +194,15 @@ local function cmd_loopfling(arg)
         end
       until getgenv().loop_fling == false or (not game.Players:FindFirstChild(target))
       --LocalPlayer.Character.Humanoid.Health = 0
+      for i = 1,5 do
+        task.wait(0.05)
+        LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+        LocalPlayer.Character.HumanoidRootPart.CFrame =getgenv().before_lfling
+      end
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      task.wait(0.1)
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_lfling * CFrame.new(0,2,0)
     end)
   end
 end
