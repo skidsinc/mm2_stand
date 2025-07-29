@@ -534,13 +534,19 @@ local function main_cmds(msg, id)
   getgenv().forced_stop = false
   local msg = string.lower(msg)
   local cmd = string.split(msg," ")
+  local cmds_pre = string.split(msg," ")
   local host = game.Players:GetPlayerByUserId(id)
-if cmd[1] then
+  if cmd[1] then
     local arg = cmd[1]
     if arg:sub(1, #prefix) == prefix then
         cmd[1] = arg:sub(#prefix + 1)
-    elseif arg:sub(1, 2) == "/e" then
-        cmd[1] = arg:sub(3)
+    elseif cmds_pre[1] == "/e" then
+        cmd = {}
+        for i,v in pairs(cmds_pre) do
+          if v ~ = "/e" then
+            table.insert(cmd, v)
+          end
+        end
     else
         return
     end
