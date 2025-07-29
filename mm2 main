@@ -586,6 +586,7 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "unfun" or cmd[1] == "unhug" then
 	    getgenv().banging = false
+      task.wait(0.2)
 	    stop_anims()
 	    
 	    
@@ -630,6 +631,7 @@ local function main_cmds(msg, id)
 
 	  elseif cmd[1] == "unfun2" or cmd[1] == "unbend" or cmd[1] == "unbenx" then
 	    getgenv().bending = false
+      task.wait(0.2)
 	    stop_anims()
 	    
 	    
@@ -716,7 +718,7 @@ local function main_cmds(msg, id)
       getgenv().flinging = false  
       getgenv().bending = false 
       getgenv().banging = false
-
+      task.wait(0.2)
       stop_anims()
 	    
 	    
