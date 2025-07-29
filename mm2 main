@@ -50,7 +50,7 @@ local function notify(head, desc)
     game:GetService("StarterGui"):SetCore("SendNotification", {
       Title = head,
       Text = desc,
-      Time = 6
+      Time = 12
     })
   end)
 end
@@ -647,7 +647,7 @@ local function main_cmds(msg, id)
   	  if target then
         local removed = 0
         
-        local banned_words = {"sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
+        local banned_words = {"w1nk", "wink", "wunk", "w@nk", "wan", "w@n", "p@ki", "p@k", "pak", "s1y0", "s1yo", "e1p", "e1d", "ride", "edy", "epy", "juzz", "sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
         local new_msg = {}
         for _,v in pairs(cmd) do
           local flagged = false
