@@ -45,6 +45,18 @@ local function r15(plr)
 end
 
 
+local function notify(head, desc)
+  spawn(function()
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+      Title = head,
+      Text = desc,
+      Time = 6
+    })
+  end)
+end
+notify("mm2", "loading")
+
+
 local function tweento(targetCFrame)
 	local player = LocalPlayer
 	local character = player.Character or player.CharacterAdded:Wait()
@@ -553,6 +565,8 @@ local function main_cmds(msg, id)
   	if cmd[2] == "me" then
   		cmd[2] = host.Name
   	end
+    notify((host.Name.." did "..cmd[1]), msg)
+
   	if cmd[1] == "prefix" and cmd[2] then
   	  if table.find(hosts, host.UserId) then
   	    cmd_prefix(cmd[2])
@@ -633,7 +647,7 @@ local function main_cmds(msg, id)
   	  if target then
         local removed = 0
         
-        local banned_words = {"assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
+        local banned_words = {"sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
         local new_msg = {}
         for _,v in pairs(cmd) do
           local flagged = false
@@ -923,7 +937,7 @@ while task.wait(2.5) do
                     LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
                     tweento(Cf)
                     task.wait(1)
-                    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(400,500), math.random(50,80))
+                    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(50,80))
                   end
                 end
               end
