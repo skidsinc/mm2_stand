@@ -919,7 +919,6 @@ while task.wait(3) do
   --print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
-      print("asdsa")
       for i,v in pairs(game.Workspace:GetChildren()) do
         for j,k in pairs(v:GetChildren()) do
           if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
