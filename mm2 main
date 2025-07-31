@@ -417,7 +417,6 @@ local function cmd_fling(arg)
   task.wait(0.1)
   if target and target ~= LocalPlayer.Name then
     spawn(function()
-
       getgenv().flinging = true
       getgenv().before_fling = LocalPlayer.Character.HumanoidRootPart.CFrame
       twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
@@ -435,9 +434,6 @@ local function cmd_fling(arg)
               LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(c_x, math.random(-2,0), c_z )
             end)
           elseif wa == 4 then
-            task.spawn(function()
-              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(math.random(-2,2), math.random(-2,2), math.random(-2,2))
-            end)
             wa = 0
           end
         end
