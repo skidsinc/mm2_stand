@@ -797,7 +797,7 @@ local function handle_msg(plr, msg)
   if plr then
     local id = plr.UserId
     if table.find(whitelist, id) or table.find(hosts, id) then
-      print("running cmd")
+      --print("running cmd")
       main_cmds(msg, id)
     end
   end
@@ -915,7 +915,7 @@ spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
 while task.wait(3) do
-  print("auto loop")
+  --print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
       print("asdsa")
