@@ -723,7 +723,7 @@ local function main_cmds(msg, id)
           track:AdjustSpeed(isR15 and 0.7 or 0.65)
           track.TimePosition = 0.6
           task.wait(0.1)
-          while track and track.TimePosition < (not isR15 and 0.65 or 0.7) do task.wait(0.1) end
+          while track and track.TimePosition < (0.65) do task.wait(0.1) end
           if track then
             track:Stop()
             track = nil
