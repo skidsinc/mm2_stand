@@ -570,6 +570,7 @@ local function main_cmds(msg, id)
   		cmd[2] = host.Name
   	end
     notify((host.Name.." ran "..cmd[1]), msg)
+    print(host.Name.." ran "..cmd[1].." full cmd: "..msg)
 
   	if cmd[1] == "prefix" and cmd[2] then
   	  if table.find(hosts, host.UserId) then
@@ -607,6 +608,13 @@ local function main_cmds(msg, id)
   	    cmd_unwhitelist(cmd[2])
   	  else
   	    send_msg("Unable to whitelist that user - invalid permissons.")
+  	  end
+    elseif (cmd[1] == "clearwhitelist" or cmd[1] == "clearwl") then
+  	  if table.find(hosts, host.UserId) then
+  	    whitelist = {}
+        send_msg("Whitelist cleared.")
+  	  else
+  	    send_msg("Invalid permissons.")
   	  end
   	  
   	elseif cmd[1] == "bring" then
