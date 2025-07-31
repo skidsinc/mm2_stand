@@ -439,7 +439,7 @@ local function cmd_fling(arg)
         end
       end)
     end)
-    task.wait(3)
+    task.wait(4.5)
     getgenv().flinging = false
     for i = 1,5 do
       task.wait(0.05)
@@ -652,7 +652,7 @@ local function main_cmds(msg, id)
   	  if target then
         local removed = 0
         
-        local banned_words = {"n0n", "nonc", "s3tke", "e9p", "e9d", "m@5t", "m@st", "w$nk", "w$nk", "w1nk", "wink", "wunk", "w@nk", "wan", "w@n", "p@ki", "p@k", "pak", "s1y0", "s1yo", "e1p", "e1d", "ride", "edy", "epy", "juzz", "sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
+        local banned_words = {"n0n", "nonc", "s3tke", "e9p", "e9d", "m@5t", "m@st", "w$nk", "w$nk", "w1nk", "wink", "wunk", "w@nk", "w4n", "w@n", "p@ki", "p@k", "pak", "s1y0", "s1yo", "e1p", "e1d", "ride", "edy", "epy", "juzz", "sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
         if LocalPlayer.Name == "zbcniayfsz" then
           banned_words = {}
         end
@@ -870,7 +870,7 @@ send_msg("Loaded!")
 
 
 spawn(function()
-  while game:GetService("RunService").Heartbeat:Wait() do
+  while task.wait() do
     task.spawn(function()
       if getgenv().bending == false then
         task.spawn(function()
@@ -881,18 +881,6 @@ spawn(function()
         task.spawn(function()
           getgenv().bang:Stop()
         end)
-      end
-    end)
-    spawn(function()
-      for _, player in pairs(Players:GetPlayers()) do
-        if player.Name ~= LocalPlayer.Name and player.Character then
-          for _, v in pairs(player.Character:GetDescendants()) do
-            if v:IsA("BasePart") then
-              v.CanCollide = false
-              v.Velocity = Vector3.new(0,0,0)
-            end
-          end
-        end
       end
     end)
   end
@@ -919,7 +907,7 @@ end)
 spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
-while task.wait(2.5) do
+while task.wait(3) do
   print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
