@@ -426,20 +426,19 @@ local function cmd_fling(arg)
         while getgenv().flinging == true do
           game:GetService("RunService").RenderStepped:Wait()
           wa += 1
-          if wa == 2 or wa == 3 then
+          if wa == 2 then
             task.spawn(function()
               t_vel = game.Players[target].Character.Humanoid.MoveDirection
-              c_x = (t_vel.X*math.random(9,11)) + math.random(-2,2)
-              c_z = (t_vel.Z*math.random(9,11)) + math.random(-2,2)
+              c_x = (t_vel.X*math.random(9,12)) + math.random(-2,2)
+              c_z = (t_vel.Z*math.random(9,12)) + math.random(-2,2)
               LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-3,0), c_z )
             end)
-          elseif wa == 4 then
             wa = 0
           end
         end
       end)
     end)
-    task.wait(4.5)
+    task.wait(3.5)
     getgenv().flinging = false
     for i = 1,5 do
       task.wait(0.05)
