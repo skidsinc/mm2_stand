@@ -914,6 +914,7 @@ end)
 spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
+
 while task.wait(3) do
   --print("auto loop")
   spawn(function()
