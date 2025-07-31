@@ -607,7 +607,7 @@ local function main_cmds(msg, id)
   	  if table.find(hosts, host.UserId) then
   	    cmd_unwhitelist(cmd[2])
   	  else
-  	    send_msg("Unable to whitelist that user - invalid permissons.")
+  	    send_msg("Unable to unwhitelist that user - invalid permissons.")
   	  end
     elseif (cmd[1] == "clearwhitelist" or cmd[1] == "clearwl") then
   	  if table.find(hosts, host.UserId) then
