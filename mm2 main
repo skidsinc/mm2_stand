@@ -417,26 +417,26 @@ local function cmd_fling(arg)
   task.wait(0.1)
   if target and target ~= LocalPlayer.Name then
     spawn(function()
-      
+
+      getgenv().flinging = true
       getgenv().before_fling = LocalPlayer.Character.HumanoidRootPart.CFrame
       twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
       task.wait(0.3)
       wa = 0
       task.spawn(function()
-        getgenv().flinging = true
-        while getgenv().flinging == true and game.Players:FindFirstChild(target) o
-          game:GetService("RunService").Stepped:Wait()
+        while getgenv().flinging == true do
+          game:GetService("RunService").RenderStepped:Wait()
           wa += 1
-          if wa == 2 then
-            spawn(function()
+          if wa == 2 or wa == 3 then
+            task.spawn(function()
               t_vel = game.Players[target].Character.Humanoid.MoveDirection
               c_x = (t_vel.X*math.random(9,11)) + math.random(-2,2)
               c_z = (t_vel.Z*math.random(9,11)) + math.random(-2,2)
-              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame  + Vector3.new(c_x, math.random(-2,0), c_z )
+              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(c_x, math.random(-2,0), c_z )
             end)
-          elseif wa == 3 then
+          elseif wa == 4 then
             task.spawn(function()
-              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame  + Vector3.new(c_x, math.random(-2,0), c_z )
+              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(math.random(-2,2), math.random(-2,2), math.random(-2,2))
             end)
             wa = 0
           end
