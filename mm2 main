@@ -424,7 +424,7 @@ local function cmd_fling(arg)
       task.wait(0.2)
       wa = 0
       spawn(function()
-        repeat game:GetService("RunService").Heartbeat:Wait()
+        repeat game:GetService("RunService").Stepped:Wait()
           wa += 1
           if wa == 2 then
             spawn(function()
@@ -522,22 +522,26 @@ local function cmd_vote(arg)
 end
 
 local function stop_anims()
-  spawn(function()
+  if getgenv().bending == false then
     spawn(function()
-	    getgenv().bend:Stop()
+      spawn(function()
+        getgenv().bend:Stop()
+      end)
+      if LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
+        LocalPlayer.Character.Humanoid:FindFirstChild("bend"):Destroy()
+      end
     end)
-    if LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
-      LocalPlayer.Character.Humanoid:FindFirstChild("bend"):Destroy()
-    end
-  end)
-  spawn(function()
+  end
+  if getgenv().banging == false then
     spawn(function()
-	    getgenv().bang:Stop()
+      spawn(function()
+        getgenv().bang:Stop()
+      end)
+      if LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
+        LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
+      end
     end)
-    if LocalPlayer.Character.Humanoid:FindFirstChild("dolphin") then
-      LocalPlayer.Character.Humanoid:FindFirstChild("dolphin"):Destroy()
-    end
-  end)
+  end
 end
 
 
@@ -565,7 +569,7 @@ local function main_cmds(msg, id)
   	if cmd[2] == "me" then
   		cmd[2] = host.Name
   	end
-    notify((host.Name.." did "..cmd[1]), msg)
+    notify((host.Name.." ran "..cmd[1]), msg)
 
   	if cmd[1] == "prefix" and cmd[2] then
   	  if table.find(hosts, host.UserId) then
@@ -670,7 +674,7 @@ local function main_cmds(msg, id)
             end
         end
         local yesString = table.concat(new_msg, " ")
-        local fake_msgs = {"bro", "??", "alr", "yea", "next round", "no", "why", "wym", "ill trade later", "erm"}
+        local fake_msgs = {"bro", "??", "alr", "yea", "next round", "no", "why", "wym", "erm", "no", "np"}
         local starter = fake_msgs[math.random(1, #fake_msgs)]
         send_msg(starter.."                                                                                                  "..target[1]..": "..yesString)
   	  end
