@@ -32,6 +32,7 @@ getgenv().loop_fling = false
 getgenv().flinging = false
 getgenv().banging = false
 getgenv().bending = false
+getgenv().up_boost = false
  
 getgenv().forced_stop = false
 
@@ -406,6 +407,28 @@ local function cmd_bang(arg)
   end
 end
 
+local function cmd_up(arg)
+  local target = GetPlayer(arg)[1]
+  if getgenv().up_boost == true then
+    send_msg("I am already boosting someone")
+  end
+  if target and target ~= LocalPlayer.Name then
+    getgenv().up_boost = true
+    task.spawn(function()
+      getgenv().before_uboost = LocalPlayer.Character.HumanoidRootPart.CFrame
+      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,-15, 0))
+      task.wait(0.3)
+
+      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,-15, 0))
+      send_msg("WEEEE")
+
+
+    end)
+    task.wait(2.5)
+    getgenv().up_boost = false
+  end
+end
+
 
 local function cmd_fling(arg)
   local target = GetPlayer(arg)[1]
@@ -619,6 +642,16 @@ local function main_cmds(msg, id)
   	  
   	elseif cmd[1] == "bring" then
   	  LocalPlayer.Character.HumanoidRootPart.CFrame = host.Character.HumanoidRootPart.CFrame
+    
+    elseif cmd[1] == "up" then
+      getgenv().banging = false
+      getgenv().bending = false
+      getgenv().flinging = false
+      stop_anims()
+      task.wait()
+  	  if getgenv().loop_fling == false then
+	      cmd_up(host.Name)
+	    end
   	  
   	elseif cmd[1] == "fling" and cmd[2] then
       getgenv().banging = false
@@ -773,13 +806,15 @@ local function main_cmds(msg, id)
           getgenv().loop_fling = false
           getgenv().flinging = false
           getgenv().bending = false
-          getgenv().banging = false 
+          getgenv().banging = false
+          getgenv().up_boost = false
           LocalPlayer.Character.Humanoid.Health = 0
           getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
         else
           send_msg("Only hosts can respawn me when im murderer!")
         end
       else
+        getgenv().up_boost = false
         getgenv().loop_fling = false
         getgenv().flinging = false
         getgenv().bending = false
@@ -797,6 +832,7 @@ local function main_cmds(msg, id)
       getgenv().in_game = true
 	    
 	  elseif cmd[1] == "stop" then
+      getgenv().up_boost = false
 	    getgenv().loop_fling = false 
       getgenv().gun = false 
       getgenv().flinging = false  
@@ -894,6 +930,35 @@ game:GetService("RunService").Heartbeat:Connect(function()
   end
 end)
 
+game:GetService("RunService").Heartbeat:Connect(function()
+  if getgenv().up_boost == true  then
+    
+    
+    local character = LocalPlayer.Character
+    if character then
+      
+      
+      local root = character:WaitForChild("HumanoidRootPart")
+      local vel, movel = nil, 0.1
+    
+      vel = root.Velocity
+      root.Velocity = Vector3.new(0, 500, 0)
+      
+    
+      game:GetService("RunService").RenderStepped:Wait()
+      if character and character.Parent and root and root.Parent then
+          root.Velocity = vel
+      end
+    
+      game:GetService("RunService").Stepped:Wait()
+      if character and character.Parent and root and root.Parent then
+        root.Velocity = vel + Vector3.new(0, movel, 0)
+        movel = movel * -1
+      end
+    end
+  end
+end)
+
 
 send_msg("Loaded!")
 
@@ -903,7 +968,7 @@ local old_grav = game.Workspace.Gravity
 spawn(function()
   while task.wait() do
     task.spawn(function()
-      if getgenv().bending == true or getgenv().banging == true then
+      if getgenv().bending == true or getgenv().banging == true or getgenv().up_boost == true then
         game.Workspace.Gravity = 0
       else
         game.Workspace.Gravity = old_grav
