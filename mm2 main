@@ -77,6 +77,25 @@ local function tweento(targetCFrame)
 	tween:Play()
 end
 
+local function tweento_slow(targetCFrame)
+	local player = LocalPlayer
+	local character = player.Character or player.CharacterAdded:Wait()
+	local hrp = character:WaitForChild("HumanoidRootPart")
+	local currentCFrame = hrp.CFrame
+	local distance = (currentCFrame.Position - targetCFrame.Position).Magnitude
+	local speed = 50
+	local tweenInfo = TweenInfo.new(
+		1,
+		Enum.EasingStyle.Quad,
+		Enum.EasingDirection.Out
+	)
+	local goal = {
+		CFrame = targetCFrame
+	}
+	local tween = TweenService:Create(hrp, tweenInfo, goal)
+	tween:Play()
+end
+
 
 local function send_msg(msg)
     game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync(msg)
@@ -420,7 +439,7 @@ local function cmd_up(arg)
       twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,-15, 0))
       task.wait(0.3)
 
-      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,11, 0))
+      twen = tweento_slow(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,7, 0))
       send_msg("WEEEE")
 
 
