@@ -419,7 +419,7 @@ local function cmd_up(arg)
       twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,-15, 0))
       task.wait(0.3)
 
-      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,10, 0))
+      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,11, 0))
       send_msg("WEEEE")
 
 
