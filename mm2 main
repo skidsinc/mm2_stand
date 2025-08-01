@@ -415,12 +415,11 @@ local function cmd_up(arg)
   if target and target ~= LocalPlayer.Name then
     getgenv().up_boost = true
     task.spawn(function()
-      game.Workspace.Gravity = 0
       getgenv().before_uboost = LocalPlayer.Character.HumanoidRootPart.CFrame
       twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,-15, 0))
       task.wait(0.3)
 
-      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, 10, 0)
+      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,10, 0))
       send_msg("WEEEE")
 
 
