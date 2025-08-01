@@ -728,7 +728,7 @@ local function main_cmds(msg, id)
           end
         
           track:Play()
-          track:AdjustSpeed(isR15 and 0.7 or 0.65)
+          track:AdjustSpeed(0.5)
           track.TimePosition = 0.6
           task.wait(0.1)
           while track and track.TimePosition < (0.65) do task.wait(0.1) end
@@ -744,25 +744,49 @@ local function main_cmds(msg, id)
 	    getgenv().jerking = false
 	    
 	  elseif cmd[1] == "autofarm" or cmd[1] == "farm" then
-	    if getgenv().can_auto == true then
-	      getgenv().can_auto = false
-	      send_msg("I will stop farming")
-	    else 
-	      getgenv().can_auto = true
-	      send_msg("I will farm for the next round")
-	    end
+      if table.find(hosts, host.UserId) then
+        if getgenv().can_auto == true then
+          getgenv().can_auto = false
+          send_msg("I will stop farming")
+        else 
+          getgenv().can_auto = true
+          send_msg("I will farm for the next round")
+        end
+      else 
+  	    send_msg("Only hosts can stop/start autofarm!")
+  	  end
 	    
 	  elseif cmd[1] == "vote" then
 	    cmd_vote(host.Name)
 	    
 	  elseif cmd[1] == "re" or cmd[1] == "reset" or cmd[1] == "fix" then
-	    getgenv().loop_fling = false
-	    getgenv().flinging = false
-	    getgenv().bending = false
-	    getgenv().banging = false 
-	    LocalPlayer.Character.Humanoid.Health = 0
-	    
-	    getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
+      local murder = "na"
+      for _, p in pairs(game.Players:GetPlayers()) do
+        local items = p.Backpack
+        local character = p.Character
+        if (items and items:FindFirstChild("Knife")) or (character and character:FindFirstChild("Knife")) then
+          murder = p.Name
+        end
+      end
+      if murder == LocalPlayer.Name then
+        if table.find(hosts, host.UserId) then
+          getgenv().loop_fling = false
+          getgenv().flinging = false
+          getgenv().bending = false
+          getgenv().banging = false 
+          LocalPlayer.Character.Humanoid.Health = 0
+          getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
+        else
+          send_msg("Only hosts can respawn me when im murderer!")
+        end
+      else
+        getgenv().loop_fling = false
+        getgenv().flinging = false
+        getgenv().bending = false
+        getgenv().banging = false 
+        LocalPlayer.Character.Humanoid.Health = 0
+        getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
+      end
 	    
 	  elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
       getgenv().bending = false
@@ -875,9 +899,16 @@ send_msg("Loaded!")
 
 
 
-
+local old_grav = game.Workspace.Gravity
 spawn(function()
   while task.wait() do
+    task.spawn(function()
+      if getgenv().bending == true or getgenv().banging == true then
+        game.Workspace.Gravity = 0
+      else
+        game.Workspace.Gravity = old_grav
+      end
+    end)
     task.spawn(function()
       if getgenv().bending == false then
         task.spawn(function()
@@ -915,7 +946,7 @@ spawn(function()
   loadstring(game:HttpGet("https://raw.githubusercontent.com/Linux6699/DaHubRevival/main/AntiFling.lua"))()
 end)
 
-while task.wait(3) do
+while task.wait(2) do
   --print("auto loop")
   spawn(function()
     if getgenv().loop_fling == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
