@@ -407,6 +407,7 @@ local function cmd_bang(arg)
   end
 end
 
+
 local function cmd_up(arg)
   local target = GetPlayer(arg)[1]
   if getgenv().up_boost == true then
