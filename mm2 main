@@ -528,8 +528,10 @@ local function cmd_gun(arg)
         task.wait(0.05)
       end
       task.wait(0.5)
-      twen = tweento(gunpos)
+      twen = tweento_slow(gunpos)
     end
+
+    task.wait(0.1)
       
     if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
       send_msg("Picked up gun...")
