@@ -85,7 +85,7 @@ local function tweento_slow(targetCFrame)
 	local distance = (currentCFrame.Position - targetCFrame.Position).Magnitude
 	local speed = 50
 	local tweenInfo = TweenInfo.new(
-		1,
+		0.9,
 		Enum.EasingStyle.Quad,
 		Enum.EasingDirection.Out
 	)
@@ -1016,9 +1016,6 @@ end)
 spawn(function()
   local vu = game:GetService("VirtualUser")
   game:GetService("Players").LocalPlayer.Idled:connect(function()
-    vu:CaptureController()
-		vu:ClickButton2(Vector2.new())
-
     vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
     wait(1)
     vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
@@ -1036,7 +1033,7 @@ end)
 while task.wait(2) do
   --print("auto loop")
   spawn(function()
-    if getgenv().loop_fling == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
+    if getgenv().loop_fling == false and getgenv().up_boost == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
       for i,v in pairs(game.Workspace:GetChildren()) do
         for j,k in pairs(v:GetChildren()) do
           if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
