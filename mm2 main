@@ -324,7 +324,7 @@ local function cmd_bend(arg)
         end
         spawn(function()
           LocalPlayer.Character:FindFirstChild("Animate").PlayEmote:Invoke(anim)
-          LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,-1.5,bang_z)
+          LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,2,bang_z)
           if not LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
             local humanoid = LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
           	bendAnim = Instance.new("Animation")
@@ -440,7 +440,6 @@ local function cmd_up(arg)
       task.wait(0.3)
 
       twen = tweento_slow(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,7, 0))
-      send_msg("WEEEE")
 
 
     end)
