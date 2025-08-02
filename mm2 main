@@ -518,7 +518,7 @@ local function cmd_gun(arg)
     end
     if gunDropped == false then
       if LocalPlayer.Backpack:FindFirstChild("Gun") then
-        send_msg("I already have it")
+        --send_msg("I already have it")
       else
         send_msg("The gun isnt dropped")
       end
