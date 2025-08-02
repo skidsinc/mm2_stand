@@ -922,12 +922,28 @@ end)
 
 
 
+local samnaf = 0
 game:GetService("RunService").Heartbeat:Connect(function()
+  samnaf = samnaf+1
+  if samnaf > 5 then
+    samnaf = 0
+  end
   if getgenv().loop_fling == true or getgenv().flinging == true then
     
     
     local character = LocalPlayer.Character
     if character then
+      task.spawn(function()
+        if samnaf == 1 then
+          for i,v in pairs(character:GetChildren()) do
+            task.spawn(function()
+              pcall(function()
+                v.CustomPhysicalProperties = PhysicalProperties.new(100, 100, 100)
+              end)
+            end)
+          end
+        end
+      end)
       
       
       local root = character:WaitForChild("HumanoidRootPart")
@@ -947,6 +963,21 @@ game:GetService("RunService").Heartbeat:Connect(function()
         root.Velocity = vel + Vector3.new(0, movel, 0)
         movel = movel * -1
       end
+    end
+  else
+    local character = LocalPlayer.Character
+    if character then
+      task.spawn(function()
+        if samnaf == 1 then
+          for i,v in pairs(character:GetChildren()) do
+            task.spawn(function()
+              if v.ClassName == "Part" then 
+                v.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
+              end
+            end)
+          end
+        end
+      end)
     end
   end
 end)
