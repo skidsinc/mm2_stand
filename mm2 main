@@ -1266,21 +1266,23 @@ while task.wait(2) do
     end
     if murder ~= "na" and getgenv().loop_fling == false and getgenv().floating == false and getgenv().mounting == false and getgenv().up_boost == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
       local coins_ = {}
-      for i,v in pairs(game.Workspace:GetChildren()) do
-        for j,k in pairs(v:GetChildren()) do
-          task.spawn(function()
-            if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
-              if k:FindFirstChild("Coin_Server").CoinVisual.Transparency ~= 1 then
-                local target = game.Players[murder]
-                local distance = (k:FindFirstChild("Coin_Server").Position - target.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude
-                if distance > 40 or murder == LocalPlayer.Name then
-                  table.insert(coins_, k)
+      task.spawn(function()
+        for i,v in pairs(game.Workspace:GetChildren()) do
+          for j,k in pairs(v:GetChildren()) do
+            task.spawn(function()
+              if (k.Name == "CoinContainer" or k.Name == "CoinAreas") and k:FindFirstChild("Coin_Server") then
+                if k:FindFirstChild("Coin_Server").CoinVisual.Transparency ~= 1 then
+                  local target = game.Players[murder]
+                  local distance = (k:FindFirstChild("Coin_Server").Position - target.Character:FindFirstChild("HumanoidRootPart").Position).Magnitude
+                  if distance > 40 or murder == LocalPlayer.Name then
+                    table.insert(coins_, k)
+                  end
                 end
               end
-            end
-          end)
+            end)
+          end
         end
-      end
+      end)
       task.wait()
       local picked = coins_[math.random(1, #coins_)]
       Cf = picked:FindFirstChild("Coin_Server").CFrame
