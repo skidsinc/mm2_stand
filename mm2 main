@@ -648,7 +648,7 @@ local function cmd_mount(arg)
       task.spawn(function()
         LocalPlayer.Character.Humanoid.Sit = true
 
-        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.Head.CFrame * CFrame.Angles(0, math.rad(180), 0) * CFrame.new(0, 0.2, offset)
+        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.Head.CFrame * CFrame.Angles(0, math.rad(180), 0) * CFrame.new(0, 1, offset)
 
       end)
     end
