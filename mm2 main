@@ -1283,7 +1283,7 @@ while task.wait(2) do
           end
         end
       end)
-      task.wait()
+      task.wait(0.3)
       local picked = coins_[math.random(1, #coins_)]
       Cf = picked:FindFirstChild("Coin_Server").CFrame
       LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
