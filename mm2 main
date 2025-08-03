@@ -565,6 +565,62 @@ local function cmd_vote(arg)
   end
 end
 
+local function cmd_alive(arg)
+  local alive = {}
+  for i, v in pairs(game:GetService("Players"):GetPlayers()) do
+    if v.Name == LocalPlayer.Name then
+      continue
+    end
+    task.spawn(function()
+      if v and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+        local targ_pos = v.Character.HumanoidRootPart.Position
+        local distance = (Vector3.new(133, 0, 60) - Vector3.new(targ_pos.X, 0, targ_pos.Z)).Magnitude
+        if distance > 300 then
+          table.insert(alive, v.Name)
+        end
+      end
+    end)
+    task.wait()
+  end
+
+  task.wait()
+  if getgenv().in_game == true then
+    table.insert(alive, LocalPlayer.Name)
+  end
+
+  task.wait()
+
+  if arg == "who" then
+    for i, v in pairs(alive) do
+      send_msg("Alive: " .. v)
+      task.wait(0.15)
+    end
+  elseif arg == "random" then
+    local player = alive[math.random(1, #alive)]
+    send_msg(player .. " is alive.")
+  else
+    local count = tostring(#alive)
+    send_msg("There are " .. count .. " people alive.")
+  end
+end
+
+
+local function cmd_isalive(arg)
+  local target = GetPlayer(arg)
+
+  if target and game.Players[target] then
+    if game.Players[target].Character and game.Players[target].Character:FindFirstChild("HumanoidRootPart") then
+      local targ_pos = game.Players[target].Character:FindFirstChild("HumanoidRootPart").Position
+      local distance = (Vector3.new(133, 0, 60) - Vector3.new(targ_pos.X, 0, targ_pos.Z)).Magnitude
+      if distance > 300 then
+        send_msg("Target is alive.")
+      else
+        send_msg("Target is dead!")
+      end
+    end
+  end
+end
+
 local function stop_anims()
   if getgenv().bending == false then
     spawn(function()
@@ -851,6 +907,13 @@ local function main_cmds(msg, id)
     
     elseif cmd[1] == "ingame" then
       getgenv().in_game = true
+
+    elseif cmd[1] == "alive" then
+      cmd_alive(cmd[2])
+
+    elseif cmd[1] == "isalive" then
+      cmd_isalive(cmd[2])
+
 	    
 	  elseif cmd[1] == "stop" then
       getgenv().up_boost = false
@@ -1085,7 +1148,7 @@ while task.wait(2) do
                     LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
                     tweento(Cf)
                     task.wait(1)
-                    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, math.random(140,144), math.random(50,80))
+                    LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(math.random(100,150), math.random(140,144), math.random(50,80))
                   end
                 end
               end
