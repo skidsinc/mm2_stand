@@ -1288,7 +1288,7 @@ while task.wait(2) do
       Cf = picked:FindFirstChild("Coin_Server").CFrame
       LocalPlayer.Character.HumanoidRootPart.CFrame = Cf * CFrame.new(math.random(-4,4),math.random(10,12),math.random(-4,4))
       tweento(Cf)
-      task.wait(1)
+      task.wait(0.5)
       LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(math.random(100,150), math.random(140,144), math.random(50,80))
     end
   end)
