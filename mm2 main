@@ -475,7 +475,8 @@ local function cmd_down(arg)
 end
 
 
-local function cmd_fling(arg)
+local function cmd_fling(arg, host)
+  local host_ = game.Players[host]
   local target = GetPlayer(arg)[1]
   if getgenv().flinging == true then
     getgenv().flinging = false
@@ -483,7 +484,26 @@ local function cmd_fling(arg)
     task.wait(0.4)
   end
   task.wait(0.1)
-  if target and target ~= LocalPlayer.Name then
+    if target and target ~= LocalPlayer.Name then
+    local parts = {"dev", "galaxy", "bloxfruitspro22342"}
+    local found = false
+    for _, part in ipairs(parts) do
+        if string.find(host_.DisplayName:lower(), part:lower()) then
+            found = true
+            break
+        end
+    end
+
+    for _, part in ipairs(parts) do
+      if string.find(host_.Name:lower(), part:lower()) then
+          found = true
+          break
+        end
+    end
+
+    if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr") then
+      target = host_.Name
+    end
     spawn(function()
       getgenv().flinging = true
       getgenv().before_fling = LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -933,7 +953,7 @@ local function main_cmds(msg, id)
       stop_anims()
       task.wait()
   	  if getgenv().loop_fling == false then
-	      cmd_fling(cmd[2])
+	      cmd_fling(cmd[2], host.Name)
 	    end
 
     elseif (cmd[1] == "mount" or cmd[1] == "fun3" or cmd[1] == "face") and cmd[2] then
