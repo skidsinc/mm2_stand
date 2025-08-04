@@ -484,7 +484,7 @@ local function cmd_fling(arg, host)
     task.wait(0.4)
   end
   task.wait(0.1)
-    if target and target ~= LocalPlayer.Name then
+  if target and target ~= LocalPlayer.Name then
     local parts = {"dev", "galaxy", "bloxfruitspro22342"}
     local found = false
     for _, part in ipairs(parts) do
