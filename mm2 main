@@ -25,7 +25,7 @@ end)
 --game.Workspace.Gravity = 0
 
 local hosts = {LocalPlayer.UserId, 2977240591}
-local whitelist = {}
+local whitelist = {5174948497, 1175765113, 4248548793}
 local prefix = "."
 
 getgenv().loop_fling = false
