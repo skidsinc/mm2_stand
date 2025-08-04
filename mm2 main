@@ -35,6 +35,7 @@ getgenv().bending = false
 getgenv().up_boost = false
 getgenv().mounting = false
 getgenv().floating = false
+getgenv().platforming = false
  
 getgenv().forced_stop = false
 
@@ -695,9 +696,9 @@ local function cmd_float(arg)
 
         local hrpc = game.Players[target].Character.HumanoidRootPart.CFrame
         local lfootc = game.Players[target].Character.LeftFoot.CFrame
-        --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
-        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, -1, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+       -- LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, -1, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
       end)
     end
@@ -719,6 +720,56 @@ local function cmd_float(arg)
     task.wait(0.1)
     LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
     LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_float * CFrame.new(0,2,0)
+
+
+
+  end
+end
+
+
+local function cmd_platform(arg)
+  local target = GetPlayer(arg)[1]
+  if target then
+    if getgenv().platforming == true then
+      getgenv().platforming = false
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_plat * CFrame.new(0,2,0)
+      task.wait(0.4)
+    end
+    task.wait(0.1)
+    getgenv().platforming = true
+    getgenv().before_plat = LocalPlayer.Character.HumanoidRootPart.CFrame
+    send_msg("Jump to go up!")
+    while task.wait() and getgenv().platforming == true and game.Players[target] do
+      task.spawn(function()
+        LocalPlayer.Character.Humanoid.Sit = true
+
+        local hrpc = game.Players[target].Character.HumanoidRootPart.CFrame
+        local lfootc = game.Players[target].Character.LeftFoot.CFrame
+        --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+
+        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, -1, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+
+      end)
+    end
+
+    if not game.Players[target] then
+      getgenv.platforming = false
+    end
+
+    task.wait()
+    LocalPlayer.Character.Humanoid.Sit = false
+    LocalPlayer.Character.Humanoid.Jump = true
+
+    for i = 1,5 do
+      task.wait(0.05)
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_plat * CFrame.new(0,2,0)
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_plat
+    end
+    LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+    task.wait(0.1)
+    LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+    LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_plat * CFrame.new(0,2,0)
 
 
 
@@ -847,6 +898,7 @@ local function main_cmds(msg, id)
 
     elseif (cmd[1] == "mount" or cmd[1] == "fun3" or cmd[1] == "face") and cmd[2] then
       getgenv().floating = false
+      getgenv().platforming = false
       getgenv().flinging = false
       getgenv().banging = false
       getgenv().bending = false
@@ -858,6 +910,7 @@ local function main_cmds(msg, id)
 
     elseif cmd[1] == "float" and cmd[2] then
       getgenv().mounting =  false
+      getgenv().platforming = false
       getgenv().flinging = false
       getgenv().banging = false
       getgenv().bending = false
@@ -865,6 +918,17 @@ local function main_cmds(msg, id)
       task.wait()
   	  if getgenv().loop_fling == false then
 	      cmd_float(cmd[2])
+	    end
+    elseif cmd[1] == "platform" and cmd[2] then
+      getgenv().mounting =  false
+      getgenv().floating = false
+      getgenv().flinging = false
+      getgenv().banging = false
+      getgenv().bending = false
+      stop_anims()
+      task.wait()
+  	  if getgenv().loop_fling == false then
+	      cmd_platform(cmd[2])
 	    end
 	    
 	  elseif cmd[1] == "fun" or cmd[1] == "hug" then
@@ -1009,6 +1073,7 @@ local function main_cmds(msg, id)
       if murder == LocalPlayer.Name then
         if table.find(hosts, host.UserId) then
           getgenv().floating = false
+          getgenv().platforming = false
           getgenv().mounting = false
           getgenv().loop_fling = false
           getgenv().flinging = false
@@ -1022,6 +1087,7 @@ local function main_cmds(msg, id)
         end
       else
         getgenv().floating = false
+        getgenv().platforming = false
         getgenv().mounting = false
         getgenv().up_boost = false
         getgenv().loop_fling = false
@@ -1034,6 +1100,7 @@ local function main_cmds(msg, id)
 	    
 	  elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
       getgenv().floating = false
+      getgenv().platforming = false
       getgenv().mounting = false
       getgenv().up_boost = false
 	    getgenv().loop_fling = false 
@@ -1223,7 +1290,7 @@ local old_grav = game.Workspace.Gravity
 spawn(function()
   while task.wait(0.1) do
     task.spawn(function()
-      if getgenv().bending == true or getgenv().banging == true or getgenv().up_boost == true or getgenv().mounting == true or getgenv().floating == true then
+      if getgenv().bending == true or getgenv().banging == true or getgenv().up_boost == true or getgenv().mounting == true or getgenv().floating == true or getgenv().platforming == true then
         game.Workspace.Gravity = 0
       else
         game.Workspace.Gravity = old_grav
@@ -1275,7 +1342,7 @@ while task.wait(2.1) do
         murder = p.Name
       end
     end
-    if murder ~= "na" and getgenv().loop_fling == false and getgenv().floating == false and getgenv().mounting == false and getgenv().up_boost == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
+    if murder ~= "na" and getgenv().loop_fling == false and getgenv().platforming == false and getgenv().floating == false and getgenv().mounting == false and getgenv().up_boost == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
       local coins_ = {}
       task.spawn(function()
         for i,v in pairs(game.Workspace:GetChildren()) do
