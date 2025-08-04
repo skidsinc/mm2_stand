@@ -33,6 +33,7 @@ getgenv().flinging = false
 getgenv().banging = false
 getgenv().bending = false
 getgenv().up_boost = false
+getgenv().down_boost = false
 getgenv().mounting = false
 getgenv().floating = false
 getgenv().platforming = false
@@ -448,6 +449,28 @@ local function cmd_up(arg)
     end)
     task.wait(2.5)
     getgenv().up_boost = false
+  end
+end
+
+local function cmd_down(arg)
+  local target = GetPlayer(arg)[1]
+  if getgenv().down_boost == true then
+    send_msg("I am already boosting someone")
+  end
+  if target and target ~= LocalPlayer.Name then
+    getgenv().down_boost = true
+    task.spawn(function()
+      getgenv().before_dboost = LocalPlayer.Character.HumanoidRootPart.CFrame
+      twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,15, 0))
+      task.wait(0.3)
+
+      twen = tweento_slow(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,-15, 0))
+
+
+    end)
+    task.wait(1)
+    LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_dboost
+    getgenv().down_boost = false
   end
 end
 
@@ -883,7 +906,24 @@ local function main_cmds(msg, id)
       stop_anims()
       task.wait()
   	  if getgenv().loop_fling == false then
-	      cmd_up(host.Name)
+        if cmd[2] then
+	        cmd_up(cmd[2])
+        else
+          cmd_up(host.Name)
+        end
+	    end
+    elseif cmd[1] == "down" or cmd[1] == "ground" or cmd[1] == "groundsmash" then
+      getgenv().banging = false
+      getgenv().bending = false
+      getgenv().flinging = false
+      stop_anims()
+      task.wait()
+  	  if getgenv().loop_fling == false then
+        if cmd[2] then
+	        cmd_down(cmd[2])
+        else
+          cmd_down(host.Name)
+        end
 	    end
   	  
   	elseif cmd[1] == "fling" and cmd[2] then
@@ -902,6 +942,8 @@ local function main_cmds(msg, id)
       getgenv().flinging = false
       getgenv().banging = false
       getgenv().bending = false
+      getgenv().up_boost = false
+      getgenv().down_boost = false
       stop_anims()
       task.wait()
   	  if getgenv().loop_fling == false then
@@ -910,6 +952,8 @@ local function main_cmds(msg, id)
 
     elseif cmd[1] == "float" and cmd[2] then
       getgenv().mounting =  false
+      getgenv().up_boost = false
+      getgenv().down_boost = false
       getgenv().platforming = false
       getgenv().flinging = false
       getgenv().banging = false
@@ -925,6 +969,8 @@ local function main_cmds(msg, id)
       getgenv().flinging = false
       getgenv().banging = false
       getgenv().bending = false
+      getgenv().up_boost = false
+      getgenv().down_boost = false
       stop_anims()
       task.wait()
   	  if getgenv().loop_fling == false then
@@ -1080,6 +1126,7 @@ local function main_cmds(msg, id)
           getgenv().bending = false
           getgenv().banging = false
           getgenv().up_boost = false
+          getgenv().down_boost = false
           LocalPlayer.Character.Humanoid.Health = 0
           getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
         else
@@ -1094,6 +1141,7 @@ local function main_cmds(msg, id)
         getgenv().flinging = false
         getgenv().bending = false
         getgenv().banging = false 
+        getgenv().down_boost = false
         LocalPlayer.Character.Humanoid.Health = 0
         getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
       end
@@ -1129,6 +1177,7 @@ local function main_cmds(msg, id)
       getgenv().flinging = false  
       getgenv().bending = false 
       getgenv().banging = false
+      getgenv().down_boost = false
       task.wait(0.2)
       stop_anims()
 	    
@@ -1282,6 +1331,36 @@ game:GetService("RunService").Heartbeat:Connect(function()
 end)
 
 
+game:GetService("RunService").Heartbeat:Connect(function()
+  if getgenv().down_boost == true  then
+    
+    
+    local character = LocalPlayer.Character
+    if character then
+      
+      
+      local root = character:WaitForChild("HumanoidRootPart")
+      local vel, movel = nil, 0.1
+    
+      vel = root.Velocity
+      root.Velocity = Vector3.new(0, -1000, 0)
+      
+    
+      game:GetService("RunService").RenderStepped:Wait()
+      if character and character.Parent and root and root.Parent then
+          root.Velocity = vel
+      end
+    
+      game:GetService("RunService").Stepped:Wait()
+      if character and character.Parent and root and root.Parent then
+        root.Velocity = vel + Vector3.new(0, movel, 0)
+        movel = movel * -1
+      end
+    end
+  end
+end)
+
+
 send_msg("Loaded!")
 
 
@@ -1290,7 +1369,7 @@ local old_grav = game.Workspace.Gravity
 spawn(function()
   while task.wait(0.1) do
     task.spawn(function()
-      if getgenv().bending == true or getgenv().banging == true or getgenv().up_boost == true or getgenv().mounting == true or getgenv().floating == true or getgenv().platforming == true then
+      if getgenv().bending == true or getgenv().banging == true or getgenv().down_boost == true or getgenv().up_boost == true or getgenv().mounting == true or getgenv().floating == true or getgenv().platforming == true then
         game.Workspace.Gravity = 0
       else
         game.Workspace.Gravity = old_grav
@@ -1342,7 +1421,7 @@ while task.wait(2.1) do
         murder = p.Name
       end
     end
-    if murder ~= "na" and getgenv().loop_fling == false and getgenv().platforming == false and getgenv().floating == false and getgenv().mounting == false and getgenv().up_boost == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
+    if murder ~= "na" and getgenv().down_boost and getgenv().loop_fling == false and getgenv().platforming == false and getgenv().floating == false and getgenv().mounting == false and getgenv().up_boost == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
       local coins_ = {}
       task.spawn(function()
         for i,v in pairs(game.Workspace:GetChildren()) do
