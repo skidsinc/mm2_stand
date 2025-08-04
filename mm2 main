@@ -537,7 +537,7 @@ local function cmd_gun(arg)
     if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
       send_msg("Picked up gun...")
       for i = 1,3 do 
-        tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+        tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,1,0))
         task.wait(0.1)
       end
       task.wait(0.4)
@@ -693,7 +693,11 @@ local function cmd_float(arg)
       task.spawn(function()
         LocalPlayer.Character.Humanoid.Sit = true
 
-        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+        local hrpc = game.Players[target].Character.HumanoidRootPart.CFrame
+        local lfootc = game.Players[target].Character.LeftFoot.CFrame
+        --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+
+        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, -2, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
       end)
     end
