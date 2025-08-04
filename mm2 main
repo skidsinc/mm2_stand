@@ -693,7 +693,7 @@ local function cmd_float(arg)
       task.spawn(function()
         LocalPlayer.Character.Humanoid.Sit = true
 
-        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-15)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
       end)
     end
