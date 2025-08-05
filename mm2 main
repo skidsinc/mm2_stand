@@ -1190,6 +1190,7 @@ local function main_cmds(msg, id)
 
 	    
 	  elseif cmd[1] == "stop" then
+      getgenv().platforming = false
       getgenv().floating = false
       getgenv().mounting = false
       getgenv().up_boost = false
