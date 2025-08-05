@@ -222,6 +222,9 @@ local function cmd_loopfling(arg)
         if wa == 2 then
           spawn(function()
             t_vel = game.Players[target].Character.Humanoid.MoveDirection
+              if game.Players[target].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
+                t_vel = Vector3.new(0,0,0)
+              end
             c_x = (t_vel.X*math.random(9,13)) + math.random(-2,2)
             c_z = (t_vel.Z*math.random(9,13)) + math.random(-2,2)
             LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-3,0), c_z )
@@ -518,6 +521,9 @@ local function cmd_fling(arg, host)
           if wa == 2 then
             task.spawn(function()
               t_vel = game.Players[target].Character.Humanoid.MoveDirection
+              if game.Players[target].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
+                t_vel = Vector3.new(0,0,0)
+              end
               c_x = (t_vel.X*math.random(8,11)) + math.random(-2,2)
               c_z = (t_vel.Z*math.random(8,11)) + math.random(-2,2)
               LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-3,0), c_z )
