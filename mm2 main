@@ -1088,6 +1088,9 @@ local function main_cmds(msg, id)
           end
         end
 	    end)
+
+    elseif cmd[1] == "dance" then
+      game:GetService("Players"):Chat("/e dance")
 	    
 	  elseif cmd[1] == "jerk" then
 	    getgenv().jerking = true
