@@ -791,7 +791,7 @@ local function cmd_platform(arg)
         local lfootc = game.Players[target].Character.LeftFoot.CFrame
         --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
-        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, -1.4, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+        LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, -1.2, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
       end)
     end
