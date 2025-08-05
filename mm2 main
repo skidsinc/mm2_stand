@@ -1442,7 +1442,7 @@ while task.wait(2.1) do
         murder = p.Name
       end
     end
-    if murder ~= "na" and getgenv().down_boost and getgenv().loop_fling == false and getgenv().platforming == false and getgenv().floating == false and getgenv().mounting == false and getgenv().up_boost == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
+    if murder ~= "na" and getgenv().down_boost == false and getgenv().loop_fling == false and getgenv().platforming == false and getgenv().floating == false and getgenv().mounting == false and getgenv().up_boost == false and getgenv().gun == false and getgenv().flinging == false and getgenv().bending == false and getgenv().banging == false and getgenv().in_game == true and getgenv().can_auto == true then
       local coins_ = {}
       task.spawn(function()
         for i,v in pairs(game.Workspace:GetChildren()) do
