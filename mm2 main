@@ -524,8 +524,8 @@ local function cmd_fling(arg, host)
               if game.Players[target].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
                 t_vel = Vector3.new(0,0,0)
               end
-              c_x = (t_vel.X*math.random(8,11)) + math.random(-2,2)
-              c_z = (t_vel.Z*math.random(8,11)) + math.random(-2,2)
+              c_x = (t_vel.X*math.random(6,12)) + math.random(-2,2)
+              c_z = (t_vel.Z*math.random(6,12)) + math.random(-2,2)
               LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-3,0), c_z )
             end)
             wa = 0
@@ -533,7 +533,7 @@ local function cmd_fling(arg, host)
         end
       end)
     end)
-    task.wait(3.5)
+    task.wait(4)
     getgenv().flinging = false
     for i = 1,5 do
       task.wait(0.05)
