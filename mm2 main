@@ -200,7 +200,8 @@ local function cmd_unwhitelist(arg)
 end
 
 
-local function cmd_loopfling(arg)
+local function cmd_loopfling(arg, host)
+  local host_ = game.Players[host]
   print("lfling start")
   local target = GetPlayer(arg)[1]
   if getgenv().loop_fling == true then
@@ -1209,7 +1210,8 @@ local function main_cmds(msg, id)
       getgenv().flinging = false  
       getgenv().bending = false 
       getgenv().banging = false
-	    cmd_loopfling(cmd[2])
+
+	    cmd_loopfling(cmd[2], host.Name)
     
     elseif cmd[1] == "ingame" then
       getgenv().in_game = true
