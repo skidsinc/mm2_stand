@@ -229,9 +229,9 @@ local function cmd_loopfling(arg)
 
     if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr") then
       target = host_.Name
-      cmd_unwhitelist(host.Name)
-      
+      cmd_unwhitelist(host_.Name)
     end
+
     getgenv().before_lfling = LocalPlayer.Character.HumanoidRootPart.CFrame
     getgenv().loop_fling = true
     twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
