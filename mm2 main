@@ -768,9 +768,9 @@ local function cmd_float(arg)
 
         local hrpc = game.Players[target].Character.HumanoidRootPart.CFrame
         local lfootc = game.Players[target].Character.LeftFoot.CFrame
-        LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+        --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
-       -- LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, -1, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, math.random(-50, -10)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
       end)
     end
