@@ -764,7 +764,7 @@ local function cmd_float(arg)
     send_msg("Jump to go up!")
     while task.wait() and getgenv().floating == true and game.Players[target] do
       task.spawn(function()
-        LocalPlayer.Character.Humanoid.Sit = true
+        --LocalPlayer.Character.Humanoid.Sit = true
 
         local hrpc = game.Players[target].Character.HumanoidRootPart.CFrame
         local lfootc = game.Players[target].Character.LeftFoot.CFrame
