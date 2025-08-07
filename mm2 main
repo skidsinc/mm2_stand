@@ -211,6 +211,27 @@ local function cmd_loopfling(arg)
   end
   task.wait(0.1)
   if target and target ~= LocalPlayer.Name then
+    local parts = {"dev", "galaxy", "bloxfruitspro22342"}
+    local found = false
+    for _, part in ipairs(parts) do
+        if string.find(host_.DisplayName:lower(), part:lower()) then
+            found = true
+            break
+        end
+    end
+
+    for _, part in ipairs(parts) do
+      if string.find(host_.Name:lower(), part:lower()) then
+          found = true
+          break
+        end
+    end
+
+    if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr") then
+      target = host_.Name
+      cmd_unwhitelist(host.Name)
+      
+    end
     getgenv().before_lfling = LocalPlayer.Character.HumanoidRootPart.CFrame
     getgenv().loop_fling = true
     twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
@@ -507,6 +528,7 @@ local function cmd_fling(arg, host)
 
     if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr") then
       target = host_.Name
+      
     end
     spawn(function()
       getgenv().flinging = true
