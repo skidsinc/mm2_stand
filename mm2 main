@@ -550,7 +550,7 @@ local function cmd_fling(arg, host)
               c_x = (t_vel.X*math.random(5,13)) + math.random(-2,2)
               c_z = (t_vel.Z*math.random(5,13)) + math.random(-2,2)
               --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(math.rad(math.random(160,200)), math.rad(math.random(160,200)), math.rad(math.random(160,200))) + Vector3.new(c_x, math.random(-3,0), c_z )
-              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.random(1,180),math.random(1,180),math.random(1,180)) * CFrame.new(c_x, math.random(-3, 0), c_z)
+              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.random(1,180),math.random(1,180),math.random(1,180)) + Vector3.new(c_x, math.random(-3, 0), c_z)
 
             end)
             wa = 0
