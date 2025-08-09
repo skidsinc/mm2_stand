@@ -603,21 +603,25 @@ local function cmd_gun(arg)
         task.wait(0.05)
       end
       task.wait(0.5)
-      twen = tweento_slow(gunpos)
+      twen = tweento_slow(gunpos) * CFrame.new(0,0.1,0)
     end
 
     task.wait(0.1)
+    game.Players[target].Character.HumanoidRootPart.CFrame = (gunpos) * CFrame.new(0,0.1,0)
+    task.wait()
       
     if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
-      send_msg("Picked up gun...")
+      --send_msg("Picked up gun...")
       for i = 1,3 do 
         tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,1,0))
         task.wait(0.1)
       end
       task.wait(0.4)
       LocalPlayer.Character.Humanoid.Health = 0
+      getgenv().gun = false
     else 
       send_msg("Unable to pick up the gun")
+      getgenv().gun = false
     end
     
   end
@@ -771,7 +775,7 @@ local function cmd_float(arg)
         local lfootc = game.Players[target].Character.LeftFoot.CFrame
         --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
-         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, math.random(5, 20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, math.random(-10, 20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
       end)
     end
