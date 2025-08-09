@@ -228,7 +228,7 @@ local function cmd_loopfling(arg, host)
         end
     end
 
-    if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr") then
+    if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr" or target == "SheepishSwan48") then
       target = host_.Name
       cmd_unwhitelist(host_.Name)
     end
@@ -527,7 +527,7 @@ local function cmd_fling(arg, host)
         end
     end
 
-    if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr") then
+    if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr" or target == "SheepishSwan48") then
       target = host_.Name
       
     end
@@ -549,7 +549,7 @@ local function cmd_fling(arg, host)
               end
               c_x = (t_vel.X*math.random(5,13)) + math.random(-2,2)
               c_z = (t_vel.Z*math.random(5,13)) + math.random(-2,2)
-              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-3,0), c_z ) * CFrame.Angles(math.rad(math.rad(math.random(160,200), math.rad(math.random(160,200), math.rad(math.random(160,200))
+              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame + Vector3.new(c_x, math.random(-3,0), c_z ) * CFrame.Angles(math.rad(math.rad(math.random(160,200)), math.rad(math.random(160,200)), math.rad(math.random(160,200)) )
             end)
             wa = 0
           end
