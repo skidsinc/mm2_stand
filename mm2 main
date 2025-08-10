@@ -934,7 +934,7 @@ end
 
 
 local  banned_silent = {}
-getgenv().allow_fling_all = true
+getgenv().allow_fling_all = false
 local function main_cmds(msg, id)
   getgenv().gun = false
   getgenv().forced_stop = false
@@ -997,10 +997,12 @@ local function main_cmds(msg, id)
     elseif cmd[1] == "allowflingall" or cmd[1] == "allowallarg"  then
   	  if table.find(hosts, host.UserId) then
   	    getgenv().allow_fling_all = true
+        send_msg("toggled on")
   	  end
     elseif cmd[1] == "banflingall" or cmd[1] == "banallarg"  then
   	  if table.find(hosts, host.UserId) then
   	    getgenv().allow_fling_all = true
+        send_msg("toggled off)
   	  end
   	elseif (cmd[1] == "unwhitelist" or cmd[1] == "unwl") and cmd[2] then
   	  if table.find(hosts, host.UserId) then
