@@ -529,26 +529,6 @@ local function cmd_loopfling(host)
   local host_ = game.Players[host]
   print("lfling start")
   task.wait(0.1)
-  local parts = {"dev", "galaxy", "bloxfruitspro22342"}
-  local found = false
-  for _, part in ipairs(parts) do
-      if string.find(host_.DisplayName:lower(), part:lower()) then
-          found = true
-          break
-      end
-  end
-
-  for _, part in ipairs(parts) do
-    if string.find(host_.Name:lower(), part:lower()) then
-        found = true
-        break
-      end
-  end
-
-  if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr" or target == "SheepishSwan48") then
-    target = host_.Name
-    cmd_unwhitelist(host_.Name)
-  end
 
   getgenv().before_lfling = LocalPlayer.Character.HumanoidRootPart.CFrame
   task.wait()
@@ -954,6 +934,7 @@ end
 
 
 local  banned_silent = {}
+getgenv().allow_fling_all = true
 local function main_cmds(msg, id)
   getgenv().gun = false
   getgenv().forced_stop = false
@@ -1011,6 +992,15 @@ local function main_cmds(msg, id)
   	    cmd_whitelist(cmd[2])
   	  else
   	    send_msg("Unable to whitelist that user - invalid permissons.")
+  	  end
+
+    elseif cmd[1] == "allowflingall" or cmd[1] == "allowallarg"  then
+  	  if table.find(hosts, host.UserId) then
+  	    getgenv().allow_fling_all = true
+  	  end
+    elseif cmd[1] == "banflingall" or cmd[1] == "banallarg"  then
+  	  if table.find(hosts, host.UserId) then
+  	    getgenv().allow_fling_all = true
   	  end
   	elseif (cmd[1] == "unwhitelist" or cmd[1] == "unwl") and cmd[2] then
   	  if table.find(hosts, host.UserId) then
@@ -1304,6 +1294,14 @@ local function main_cmds(msg, id)
         print("added new loopfling target")
         table.insert(getgenv().loopfling_targets, target)
 	      cmd_loopfling(host.Name)
+      elseif cmd[2] == "all" and getgenv().allow_fling_all == true then
+        for i,v in  pairs(game.Players:GetChildren()) do
+          if v.Name ~= LocalPlayer.Name and v.Name ~= "bd_nk" TextChannels
+            table.insert(getgenv().loopfling_targets, v.Name)
+          end
+        end
+        send_msg("Good luck to all")
+        cmd_loopfling(host.Name)
       end
     
     elseif cmd[1] == "ingame" then
@@ -1325,7 +1323,7 @@ local function main_cmds(msg, id)
 	    
 	  elseif (cmd[1] == "unloopfling" or cmd[1] == "unlfling") then
 	    getgenv().loop_fling = false
-	    
+      getgenv().loopfling_targets = {}
 	    
   	end
   end
