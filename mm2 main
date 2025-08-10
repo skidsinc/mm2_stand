@@ -1072,7 +1072,7 @@ local function main_cmds(msg, id)
         elseif word == "8" then
           word = "retard"
         end
-        local time_per_letter = 0.75
+        local time_per_letter = 1
 
         local charList = string.split(word, "")
         
