@@ -628,8 +628,6 @@ local function cmd_gun(arg)
     end
 
     task.wait(0.1)
-    game.Players[target].Character.HumanoidRootPart.CFrame = (gunpos) * CFrame.new(0,0.1,0)
-    task.wait()
       
     if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
       --send_msg("Picked up gun...")
