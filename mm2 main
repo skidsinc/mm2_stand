@@ -1007,7 +1007,7 @@ local function main_cmds(msg, id)
 
     elseif (cmd[1] == "ban/e" or cmd[1] == "bansilent") and cmd[2] then
       if table.find(hosts, host.UserId) then
-        local target = GetPlayer(cmd[2])
+        local target = GetPlayer(cmd[2])[1]
         if target then
           table.insert(banned_silent, game.Players[target].UserId)
           send_msg("Target can no longer use /e commands")
