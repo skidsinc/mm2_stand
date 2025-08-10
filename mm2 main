@@ -1015,6 +1015,15 @@ local function main_cmds(msg, id)
   	    send_msg("Invalid permissons.")
   	  end
 
+    elseif (cmd[1] == "allowloopfling" or cmd[1] == "allowlfling") then
+      if table.find(hosts, host.UserId) then
+        getgenv().allow_loop_fling = true
+      end
+    elseif (cmd[1] == "banloopfling" or cmd[1] == "banlfling") then
+      if table.find(hosts, host.UserId) then
+        getgenv().allow_loop_fling = false
+      end
+
     elseif (cmd[1] == "ban/e" or cmd[1] == "bansilent") and cmd[2] then
       if table.find(hosts, host.UserId) then
         local target = GetPlayer(cmd[2])[1]
@@ -1286,6 +1295,10 @@ local function main_cmds(msg, id)
       end
 	    
 	elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
+      if not table.find(hosts, host.UserId) or getgenv().allow_loop_fling == false then
+        return
+      end
+        
       stop_most_cmds()
       task.wait()
       --getgenv().loop_fling = false
