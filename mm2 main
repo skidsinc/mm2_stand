@@ -557,8 +557,8 @@ local function cmd_loopfling(host)
                 if game.Players[v].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
                   t_vel = Vector3.new(0,0,0)
                 end
-              c_x = ((t_vel.X*math.random(3,10)) + math.random(-1,1))*2
-              c_z = ((t_vel.Z*math.random(3,10)) + math.random(-1,1))*2
+              c_x = ((t_vel.X*math.random(3,10)))*2
+              c_z = ((t_vel.Z*math.random(3,10)))*2
               LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[v].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.random(1,180),math.random(1,180),math.random(1,360)) + Vector3.new(c_x, math.random(-1, 1), c_z)
 
             end)
@@ -1137,9 +1137,10 @@ local function main_cmds(msg, id)
   	  if target then
         local removed = 0
         
-        local banned_words = {"n0n", "nonc", "s3tke", "e9p", "e9d", "m@5t", "m@st", "w$nk", "w$nk", "w1nk", "wink", "wunk", "w@nk", "w4n", "w@n", "p@ki", "p@k", "pak", "s1y0", "s1yo", "e1p", "e1d", "ride", "edy", "epy", "juzz", "sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
-        if LocalPlayer.Name ~= "deth66789" then
-          banned_words = {}
+        banned_words = {}
+
+        if LocalPlayer.Name -= "deth66789" then
+          banned_words = {"n0n", "nonc", "s3tke", "e9p", "e9d", "m@5t", "m@st", "w$nk", "w$nk", "w1nk", "wink", "wunk", "w@nk", "w4n", "w@n", "p@ki", "p@k", "pak", "s1y0", "s1yo", "e1p", "e1d", "ride", "edy", "epy", "juzz", "sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
         end
         local new_msg = {}
         for _,v in pairs(cmd) do
