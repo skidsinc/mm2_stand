@@ -523,17 +523,14 @@ getgenv().loopfling_targets = {}
 
 local function cmd_loopfling(host)
   if getgenv().loop_fling == true then
+    print("alr running")
     return
   end
-  print("start")
-  local host_ = game.Players[host]
-  print("lfling start")
   task.wait(0.1)
 
   getgenv().before_lfling = LocalPlayer.Character.HumanoidRootPart.CFrame
   task.wait()
   getgenv().loop_fling = true
-  print("lfling loop start")
   while getgenv().loop_fling == true and getgenv().loopfling_targets ~= {} do
     game:GetService("RunService").RenderStepped:Wait()
     valid = {}
@@ -1321,6 +1318,7 @@ local function main_cmds(msg, id)
 
 	    
 	  elseif cmd[1] == "stop" then
+      getgenv().loop_fling = false
       stop_most_cmds()
       getgenv().loop_fling = false
       task.wait(0.2)
@@ -1604,5 +1602,3 @@ while task.wait(2.1) do
     end
   end)
 end
-
-
