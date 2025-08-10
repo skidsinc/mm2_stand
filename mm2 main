@@ -1298,7 +1298,8 @@ local function main_cmds(msg, id)
 	    
 	  elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
       stop_most_cmds()
-      getgenv().loop_fling = false
+      task.wait()
+      --getgenv().loop_fling = false
       local target = GetPlayer(cmd[2])[1]
       if target then
         send_msg("added new loopfling target")
