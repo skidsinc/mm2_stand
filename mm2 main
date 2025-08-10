@@ -1,4 +1,4 @@
-print("it executed forral v4asddasdasdasdsa")
+print("it executed forral v433333333333333333333333333333")
 
 
 local Players = game:GetService("Players")
@@ -1002,7 +1002,7 @@ local function main_cmds(msg, id)
     elseif cmd[1] == "banflingall" or cmd[1] == "banallarg"  then
   	  if table.find(hosts, host.UserId) then
   	    getgenv().allow_fling_all = true
-        send_msg("toggled off)
+        send_msg("toggled off")
   	  end
   	elseif (cmd[1] == "unwhitelist" or cmd[1] == "unwl") and cmd[2] then
   	  if table.find(hosts, host.UserId) then
@@ -1286,7 +1286,7 @@ local function main_cmds(msg, id)
         getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
       end
 	    
-	  elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
+	elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
       stop_most_cmds()
       task.wait()
       --getgenv().loop_fling = false
@@ -1297,12 +1297,16 @@ local function main_cmds(msg, id)
         table.insert(getgenv().loopfling_targets, target)
 	      cmd_loopfling(host.Name)
       elseif cmd[2] == "all" and getgenv().allow_fling_all == true then
+        send_msg("dear god...")
+        task.wait(1)
+        send_msg("I wish everyone the best of luck...")
         for i,v in  pairs(game.Players:GetChildren()) do
-          if v.Name ~= LocalPlayer.Name and v.Name ~= "bd_nk" TextChannels
+          if v.Name ~= LocalPlayer.Name and v.Name ~= "bd_nk" then
             table.insert(getgenv().loopfling_targets, v.Name)
           end
         end
-        send_msg("Good luck to all")
+        
+  
         cmd_loopfling(host.Name)
       end
     
