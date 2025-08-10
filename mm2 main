@@ -602,40 +602,46 @@ local function cmd_gun(arg)
   getgenv().gun = true
   local target = arg
   if target then
-    local gunDropped = false
-    local gunpos = ""
-    for i,v in pairs(game.workspace:GetChildren()) do
-      for j,k in pairs(v:GetChildren()) do
-        if k.Name == "GunDrop" then
-            gunDropped = true
-            gunpos = k.CFrame
+    task.spawn(function()
+      local gunDropped = false
+      local gunpos = ""
+
+      for i,v in pairs(game.workspace:GetChildren()) do
+        for j,k in pairs(v:GetChildren()) do
+          if k.Name == "GunDrop" then
+              gunDropped = true
+              gunpos = k.CFrame
+          end
         end
       end
-    end
-    if gunDropped == false then
-      if LocalPlayer.Backpack:FindFirstChild("Gun") then
-        --send_msg("I already have it")
-      else
-        send_msg("The gun isnt dropped")
+      if gunDropped == false then
+        if LocalPlayer.Backpack:FindFirstChild("Gun") then
+          --send_msg("I already have it")
+        else
+          send_msg("The gun isnt dropped")
+        end
+      else 
+        for i = 1,5 do 
+          twen = tweento(gunpos)
+          task.wait(0.05)
+        end
+        task.wait(0.5)
+        twen = tweento_slow(gunpos) * CFrame.new(0,0.1,0)
       end
-    else 
-      for i = 1,5 do 
-        twen = tweento(gunpos)
-        task.wait(0.05)
-      end
-      task.wait(0.5)
-      twen = tweento_slow(gunpos) * CFrame.new(0,0.1,0)
-    end
+    end)
 
-    task.wait(0.1)
+    task.wait(0.8)
       
     if LocalPlayer.Backpack:FindFirstChild("Gun") or LocalPlayer.Character:FindFirstChild("Gun") then
-      --send_msg("Picked up gun...")
-      for i = 1,3 do 
-        tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,1,0))
-        task.wait(0.1)
-      end
-      task.wait(0.4)
+      task.spawn(function()
+        for i = 1,3 do 
+          tweento(game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,1,0))
+          task.wait(0.1)
+        end
+      end)
+      task.wait(0.3)
+      LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame
+      task.wait(0.1)
       LocalPlayer.Character.Humanoid.Health = 0
       getgenv().gun = false
     else 
