@@ -1165,6 +1165,7 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "gun" then
       stop_most_cmds()
+      task.wait(0.1)
 	    cmd_gun(host.Name)
 	    
 	  elseif cmd[1] == "fps" or cmd[1] == "boostfps" then
