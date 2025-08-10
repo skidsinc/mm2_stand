@@ -1259,6 +1259,8 @@ local function main_cmds(msg, id)
 	    cmd_vote(host.Name)
 	    
 	  elseif cmd[1] == "re" or cmd[1] == "reset" or cmd[1] == "fix" then
+      getgenv().loop_fling = false
+      getgenv().loopfling_targets = {}
       local murder = "na"
       for _, p in pairs(game.Players:GetPlayers()) do
         local items = p.Backpack
@@ -1321,6 +1323,7 @@ local function main_cmds(msg, id)
       getgenv().loop_fling = false
       stop_most_cmds()
       getgenv().loop_fling = false
+      getgenv().loopfling_targets = {}
       task.wait(0.2)
       stop_anims()
 	    
