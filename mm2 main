@@ -1018,7 +1018,7 @@ local function main_cmds(msg, id)
         banned_silent = {}
         send_msg("Everyone can use /e again")
       end
-    elseif (cmd[1] == "allow/e" or cmd[1] == "allowsilent" or cmd[1] == "give/e" or cmd[1] == "givesilent") and cmd[2] then
+    elseif (cmd[1] == "allow/e" or cmd[1] == "allowsilent" or cmd[1] == "give/e" or cmd[1] == "givesilent") then
   	  if table.find(hosts, host.UserId) then
         local target = GetPlayer(arg)[1]
         local target_id = game.Players[target].UserId
@@ -1570,6 +1570,3 @@ while task.wait(2.1) do
     end
   end)
 end
-
-
-
