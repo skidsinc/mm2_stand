@@ -1013,6 +1013,11 @@ local function main_cmds(msg, id)
           send_msg("Target can no longer use /e commands")
         end
       end
+    elseif (cmd[1] == "clearban/e" or cmd[1] == "clearbansilent") and cmd[2] then
+      if table.find(hosts, host.UserId) then
+        banned_silent = {}
+        send_msg("Everyone can use /e again")
+      end
     elseif (cmd[1] == "allow/e" or cmd[1] == "allowsilent") and cmd[2] then
   	  if table.find(hosts, host.UserId) then
         local target = GetPlayer(arg)[1]
