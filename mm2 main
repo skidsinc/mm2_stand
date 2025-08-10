@@ -564,14 +564,17 @@ local function cmd_loopfling(arg, host)
         if wa == 2 then
           spawn(function()
             --t_vel = game.Players[target].Character.Humanoid.MoveDirection
-            t_vel_ = getVelocity(game.Players[target].Character.HumanoidRootPart)
-            t_vel = Vector3.new(t_vel_.X/16, t_vel_.Y/32, t_vel_.Z/16)
-            if game.Players[target].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
-              t_vel = Vector3.new(0,0,0)
-            end
-            c_x = (t_vel.X*math.random(4,9)) + math.random(-2,2)
-            c_z = (t_vel.Z*math.random(4,9)) + math.random(-2,2)
-            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.random(1,180),math.random(1,180),math.random(1,180)) + Vector3.new(c_x, math.random(-3, 0), c_z)
+              --t_vel = game.Players[target].Character.Humanoid.MoveDirection
+              t_vel_ = getVelocity(game.Players[target].Character.HumanoidRootPart)
+              t_vel = Vector3.new(t_vel_.X/16, 0, t_vel_.Z/16)
+              if game.Players[target].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
+                t_vel = Vector3.new(0,0,0)
+              end
+              c_x = (t_vel.X*math.random(3,10)) + math.random(-1,1)
+              c_z = (t_vel.Z*math.random(3,10)) + math.random(-1,1)
+              --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(math.rad(math.random(160,200)), math.rad(math.random(160,200)), math.rad(math.random(160,200))) + Vector3.new(c_x, math.random(-3,0), c_z )
+              LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.random(1,180),math.random(1,180),math.random(1,360)) + Vector3.new(c_x, math.random(-1, 1), c_z)
+
           end)
           wa = 0
         end
