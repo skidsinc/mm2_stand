@@ -200,76 +200,6 @@ local function cmd_unwhitelist(arg)
 end
 
 
-local function cmd_loopfling(arg, host)
-  local host_ = game.Players[host]
-  print("lfling start")
-  local target = GetPlayer(arg)[1]
-  if getgenv().loop_fling == true then
-    getgenv().loop_fling = false
-    task.wait()
-    tweento(getgenv().before_lfling * CFrame.new(0,2,0))
-    task.wait(0.4)
-  end
-  task.wait(0.1)
-  if target and target ~= LocalPlayer.Name then
-    local parts = {"dev", "galaxy", "bloxfruitspro22342"}
-    local found = false
-    for _, part in ipairs(parts) do
-        if string.find(host_.DisplayName:lower(), part:lower()) then
-            found = true
-            break
-        end
-    end
-
-    for _, part in ipairs(parts) do
-      if string.find(host_.Name:lower(), part:lower()) then
-          found = true
-          break
-        end
-    end
-
-    if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr" or target == "SheepishSwan48") then
-      target = host_.Name
-      cmd_unwhitelist(host_.Name)
-    end
-
-    getgenv().before_lfling = LocalPlayer.Character.HumanoidRootPart.CFrame
-    getgenv().loop_fling = true
-    twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
-    task.wait(0.4)
-    wa = 0
-    spawn(function()
-      repeat game:GetService("RunService").Heartbeat:Wait()
-        wa += 1
-        if wa == 2 then
-          spawn(function()
-            --t_vel = game.Players[target].Character.Humanoid.MoveDirection
-            t_vel_ = getVelocity(game.Players[target].Character.HumanoidRootPart)
-            t_vel = Vector3.new(t_vel_.X/16, t_vel_.Y/32, t_vel_.Z/16)
-            if game.Players[target].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
-              t_vel = Vector3.new(0,0,0)
-            end
-            c_x = (t_vel.X*math.random(4,9)) + math.random(-2,2)
-            c_z = (t_vel.Z*math.random(4,9)) + math.random(-2,2)
-            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.random(1,180),math.random(1,180),math.random(1,180)) + Vector3.new(c_x, math.random(-3, 0), c_z)
-          end)
-          wa = 0
-        end
-      until getgenv().loop_fling == false or (not game.Players:FindFirstChild(target))
-      --LocalPlayer.Character.Humanoid.Health = 0
-      for i = 1,5 do
-        task.wait(0.05)
-        LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
-        LocalPlayer.Character.HumanoidRootPart.CFrame =getgenv().before_lfling
-      end
-      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
-      task.wait(0.1)
-      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
-      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_lfling * CFrame.new(0,2,0)
-    end)
-  end
-end
-
 
 local function cmd_who(arg)
   local murder = "MURDERER NOT FOUND"
@@ -588,6 +518,78 @@ local function cmd_fling(arg, host)
     LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_fling * CFrame.new(0,2,0)
   end
 end
+
+
+local function cmd_loopfling(arg, host)
+  local host_ = game.Players[host]
+  print("lfling start")
+  local target = GetPlayer(arg)[1]
+  if getgenv().loop_fling == true then
+    getgenv().loop_fling = false
+    task.wait()
+    tweento(getgenv().before_lfling * CFrame.new(0,2,0))
+    task.wait(0.4)
+  end
+  task.wait(0.1)
+  if target and target ~= LocalPlayer.Name then
+    local parts = {"dev", "galaxy", "bloxfruitspro22342"}
+    local found = false
+    for _, part in ipairs(parts) do
+        if string.find(host_.DisplayName:lower(), part:lower()) then
+            found = true
+            break
+        end
+    end
+
+    for _, part in ipairs(parts) do
+      if string.find(host_.Name:lower(), part:lower()) then
+          found = true
+          break
+        end
+    end
+
+    if found == true and (target == "bd_nk" or target == "iamnaconburtal" or target == "myramandgpufr" or target == "SheepishSwan48") then
+      target = host_.Name
+      cmd_unwhitelist(host_.Name)
+    end
+
+    getgenv().before_lfling = LocalPlayer.Character.HumanoidRootPart.CFrame
+    getgenv().loop_fling = true
+    twen = tweento(game.Players[target].Character.HumanoidRootPart.CFrame)
+    task.wait(0.4)
+    wa = 0
+    spawn(function()
+      repeat game:GetService("RunService").Heartbeat:Wait()
+        wa += 1
+        if wa == 2 then
+          spawn(function()
+            --t_vel = game.Players[target].Character.Humanoid.MoveDirection
+            t_vel_ = getVelocity(game.Players[target].Character.HumanoidRootPart)
+            t_vel = Vector3.new(t_vel_.X/16, t_vel_.Y/32, t_vel_.Z/16)
+            if game.Players[target].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
+              t_vel = Vector3.new(0,0,0)
+            end
+            c_x = (t_vel.X*math.random(4,9)) + math.random(-2,2)
+            c_z = (t_vel.Z*math.random(4,9)) + math.random(-2,2)
+            LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.random(1,180),math.random(1,180),math.random(1,180)) + Vector3.new(c_x, math.random(-3, 0), c_z)
+          end)
+          wa = 0
+        end
+      until getgenv().loop_fling == false or (not game.Players:FindFirstChild(target))
+      --LocalPlayer.Character.Humanoid.Health = 0
+      for i = 1,5 do
+        task.wait(0.05)
+        LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+        LocalPlayer.Character.HumanoidRootPart.CFrame =getgenv().before_lfling
+      end
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      task.wait(0.1)
+      LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+      LocalPlayer.Character.HumanoidRootPart.CFrame = getgenv().before_lfling * CFrame.new(0,2,0)
+    end)
+  end
+end
+
 
 local function cmd_prefix(arg)
   if arg ~= "" then
@@ -1356,7 +1358,7 @@ end)
 local samnaf = 0
 game:GetService("RunService").Heartbeat:Connect(function()
   samnaf = samnaf+1
-  if samnaf > 5 then
+  if samnaf > 8 then
     samnaf = 0
   end
   if getgenv().loop_fling == true or getgenv().flinging == true then
