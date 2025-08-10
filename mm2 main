@@ -1,4 +1,4 @@
-print("it executed forral v4")
+print("work or u gay fah4")
 
 
 local Players = game:GetService("Players")
@@ -1142,6 +1142,8 @@ local function main_cmds(msg, id)
         if LocalPlayer.Name == "deth66789" then
           banned_words = {"n0n", "nonc", "s3tke", "e9p", "e9d", "m@5t", "m@st", "w$nk", "w$nk", "w1nk", "wink", "wunk", "w@nk", "w4n", "w@n", "p@ki", "p@k", "pak", "s1y0", "s1yo", "e1p", "e1d", "ride", "edy", "epy", "juzz", "sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
         end
+
+        
         local new_msg = {}
         for _,v in pairs(cmd) do
           local flagged = false
@@ -1619,5 +1621,3 @@ while task.wait(2.1) do
     end
   end)
 end
-
-print("ee")
