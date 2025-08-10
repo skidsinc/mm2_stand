@@ -494,8 +494,8 @@ local function cmd_fling(arg, host)
               if game.Players[target].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
                 t_vel = Vector3.new(0,0,0)
               end
-              c_x = (t_vel.X*math.random(4,10)) + math.random(-2,2)
-              c_z = (t_vel.Z*math.random(4,10)) + math.random(-2,2)
+              c_x = (t_vel.X*math.random(3,11)) + math.random(-1,1)
+              c_z = (t_vel.Z*math.random(3,11)) + math.random(-1,1)
               --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(math.rad(math.random(160,200)), math.rad(math.random(160,200)), math.rad(math.random(160,200))) + Vector3.new(c_x, math.random(-3,0), c_z )
               LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.Angles(math.random(1,180),math.random(1,180),math.random(1,180)) + Vector3.new(c_x, math.random(-1, 1), c_z)
 
@@ -1570,5 +1570,3 @@ while task.wait(2.1) do
     end
   end)
 end
-
-print("end")
