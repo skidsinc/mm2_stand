@@ -1013,25 +1013,21 @@ local function main_cmds(msg, id)
           send_msg("Target can no longer use /e commands")
         end
       end
-    elseif (cmd[1] == "clearban/e" or cmd[1] == "clearbansilent") and cmd[2] then
+    elseif (cmd[1] == "clearban/e" or cmd[1] == "clearbansilent") then
       if table.find(hosts, host.UserId) then
         banned_silent = {}
         send_msg("Everyone can use /e again")
       end
-    elseif (cmd[1] == "allow/e" or cmd[1] == "allowsilent") and cmd[2] then
+    elseif (cmd[1] == "allow/e" or cmd[1] == "allowsilent" or cmd[1] == "give/e" or cmd[1] == "givesilent") and cmd[2] then
   	  if table.find(hosts, host.UserId) then
         local target = GetPlayer(arg)[1]
         local target_id = game.Players[target].UserId
-        if target then
-          if table.find(banned_silent, target_id) then
-            for i, v in ipairs(banned_silent) do
-              if v == target_id then
+        for i, v in ipairs(banned_silent) do
+            if v == target_id then
                 table.remove(banned_silent, i)
+                send_msg("Target can use /e again")
                 break
-              end
             end
-            send_msg("Target can now use /e commands")
-          end
         end
       end
   	elseif cmd[1] == "bring" then
@@ -1574,3 +1570,6 @@ while task.wait(2.1) do
     end
   end)
 end
+
+
+
