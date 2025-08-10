@@ -1016,7 +1016,7 @@ local function main_cmds(msg, id)
     elseif (cmd[1] == "allow/e" or cmd[1] == "allowsilent") and cmd[2] then
   	  if table.find(hosts, host.UserId) then
         local target = GetPlayer(arg)[1]
-        local target_id = Players:FindFirstChild(target).UserId
+        local target_id = game.Players[target].UserId
         if target then
           if table.find(banned_silent, target_id) then
             for i, v in ipairs(banned_silent) do
