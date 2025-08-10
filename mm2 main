@@ -879,6 +879,41 @@ local function stop_anims()
   end
 end
 
+local function stop_dances()
+  task.spawn(function()
+    if getgenv().twerk then
+      getgenv().twerk:Stop()
+      getgenv().twerk:Destroy()
+    end
+  end)
+  task.spawn(function()
+    if getgenv().griddy then
+      getgenv().griddy:Stop()
+      getgenv().griddy:Destroy()
+    end
+  end)
+  task.spawn(function()
+    if getgenv().gangnam then
+      getgenv().gangnam:Stop()
+      getgenv().gangnam:Destroy()
+    end
+  end)
+end
+
+local function stop_most_cmds()
+    getgenv().platforming = false
+    getgenv().floating = false
+    getgenv().mounting = false
+    getgenv().up_boost = false
+	  --getgenv().loop_fling = false 
+    getgenv().gun = false 
+    getgenv().flinging = false  
+    getgenv().bending = false 
+    getgenv().banging = false
+    getgenv().down_boost = false
+    stop_dances()
+end
+
 
 local function main_cmds(msg, id)
   getgenv().gun = false
@@ -983,9 +1018,7 @@ local function main_cmds(msg, id)
 	    end
   	  
   	elseif cmd[1] == "fling" and cmd[2] then
-      getgenv().mounting = false
-      getgenv().banging = false
-      getgenv().bending = false
+      stop_most_cmds()
       stop_anims()
       task.wait()
   	  if getgenv().loop_fling == false then
@@ -993,13 +1026,7 @@ local function main_cmds(msg, id)
 	    end
 
     elseif (cmd[1] == "mount" or cmd[1] == "fun3" or cmd[1] == "face") and cmd[2] then
-      getgenv().floating = false
-      getgenv().platforming = false
-      getgenv().flinging = false
-      getgenv().banging = false
-      getgenv().bending = false
-      getgenv().up_boost = false
-      getgenv().down_boost = false
+      stop_most_cmds()
       stop_anims()
       task.wait()
   	  if getgenv().loop_fling == false then
@@ -1007,26 +1034,14 @@ local function main_cmds(msg, id)
 	    end
 
     elseif cmd[1] == "float" and cmd[2] then
-      getgenv().mounting =  false
-      getgenv().up_boost = false
-      getgenv().down_boost = false
-      getgenv().platforming = false
-      getgenv().flinging = false
-      getgenv().banging = false
-      getgenv().bending = false
+      stop_most_cmds()
       stop_anims()
       task.wait()
   	  if getgenv().loop_fling == false then
 	      cmd_float(cmd[2])
 	    end
     elseif cmd[1] == "platform" and cmd[2] then
-      getgenv().mounting =  false
-      getgenv().floating = false
-      getgenv().flinging = false
-      getgenv().banging = false
-      getgenv().bending = false
-      getgenv().up_boost = false
-      getgenv().down_boost = false
+      stop_most_cmds()
       stop_anims()
       task.wait()
   	  if getgenv().loop_fling == false then
@@ -1034,8 +1049,7 @@ local function main_cmds(msg, id)
 	    end
 	    
 	  elseif cmd[1] == "fun" or cmd[1] == "hug" then
-      getgenv().banging = false
-      getgenv().bending = false
+      stop_most_cmds()
       stop_anims()
       task.wait(0.1)
 	    getgenv().flinging = false
@@ -1050,9 +1064,7 @@ local function main_cmds(msg, id)
 	    
 	    
 	  elseif cmd[1] == "bend" or cmd[1] == "benx" or cmd[1] == "fun2" then
-	    getgenv().flinging = false
-      getgenv().banging = false
-      getgenv().bending = false
+      stop_most_cmds()
       stop_anims()
       task.wait(0.1)
 	    if getgenv().loop_fling == false then
@@ -1103,6 +1115,7 @@ local function main_cmds(msg, id)
       LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, 1000, math.random(58,60))
 	    
 	  elseif cmd[1] == "gun" then
+      stop_most_cmds()
 	    cmd_gun(host.Name)
 	    
 	  elseif cmd[1] == "fps" or cmd[1] == "boostfps" then
@@ -1118,9 +1131,33 @@ local function main_cmds(msg, id)
         end
 	    end)
 
-    elseif cmd[1] == "dance" and host.Name ~= LocalPlayer.Name then
-      game:GetService("Players"):Chat("/e dance")
-      send_msg("/e dance")
+    elseif cmd[1] == "dance" or cmd[1] == "shake" then
+      stop_dances()
+      local animation = Instance.new("Animation")
+      animation.AnimationId = "rbxassetid://136490740599725"
+      getgenv().twerk = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+      getgenv().twerk.Looped = true
+      getgenv().twerk:Play()
+
+    elseif cmd[1] == "dance2" or cmd[1] == "griddy" then
+      stop_dances()
+      local animation = Instance.new("Animation")
+      animation.AnimationId = "rbxassetid://121966805049108"
+      getgenv().griddy = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+      getgenv().griddy.Looped = true
+      getgenv().griddy:Play()
+
+    elseif cmd[1] == "dance3" or cmd[1] == "gangnam" then
+      stop_dances()
+      local animation = Instance.new("Animation")
+      animation.AnimationId = "rbxassetid://129764254213842"
+      getgenv().gangnam = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+      getgenv().gangnam.Looped = true
+      getgenv().gangnam:Play()
+
+
+    elseif cmd[1] == "undance" then
+      stop_dances()
 	    
 	  elseif cmd[1] == "jerk" then
 	    getgenv().jerking = true
@@ -1178,44 +1215,23 @@ local function main_cmds(msg, id)
       end
       if murder == LocalPlayer.Name then
         if table.find(hosts, host.UserId) then
-          getgenv().floating = false
-          getgenv().platforming = false
-          getgenv().mounting = false
-          getgenv().loop_fling = false
-          getgenv().flinging = false
-          getgenv().bending = false
-          getgenv().banging = false
-          getgenv().up_boost = false
-          getgenv().down_boost = false
+        stop_most_cmds()
+        getgenv().loop_fling = false
           LocalPlayer.Character.Humanoid.Health = 0
           getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
         else
           send_msg("Only hosts can respawn me when im murderer!")
         end
       else
-        getgenv().floating = false
-        getgenv().platforming = false
-        getgenv().mounting = false
-        getgenv().up_boost = false
+        stop_most_cmds()
         getgenv().loop_fling = false
-        getgenv().flinging = false
-        getgenv().bending = false
-        getgenv().banging = false 
-        getgenv().down_boost = false
         LocalPlayer.Character.Humanoid.Health = 0
         getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
       end
 	    
 	  elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
-      getgenv().floating = false
-      getgenv().platforming = false
-      getgenv().mounting = false
-      getgenv().up_boost = false
-	    getgenv().loop_fling = false 
-      getgenv().gun = false 
-      getgenv().flinging = false  
-      getgenv().bending = false 
-      getgenv().banging = false
+      stop_most_cmds()
+      getgenv().loop_fling = false
 
 	    cmd_loopfling(cmd[2], host.Name)
     
@@ -1230,16 +1246,8 @@ local function main_cmds(msg, id)
 
 	    
 	  elseif cmd[1] == "stop" then
-      getgenv().platforming = false
-      getgenv().floating = false
-      getgenv().mounting = false
-      getgenv().up_boost = false
-	    getgenv().loop_fling = false 
-      getgenv().gun = false 
-      getgenv().flinging = false  
-      getgenv().bending = false 
-      getgenv().banging = false
-      getgenv().down_boost = false
+      stop_most_cmds()
+      getgenv().loop_fling = false
       task.wait(0.2)
       stop_anims()
 	    
@@ -1441,12 +1449,18 @@ spawn(function()
         task.spawn(function()
         if getgenv().bending == false then
           task.spawn(function()
-            getgenv().bend:Stop()
+            if getgenv().bend then
+              getgenv().bend:Stop()
+              getgenv().bend:Destroy()
+            end
           end)
         end
         if getgenv().banging == false then
           task.spawn(function()
-            getgenv().bang:Stop()
+            if getgenv().bang then
+              getgenv().bang:Stop()
+              getgenv().bang:Destroy()
+            end
           end)
         end
       end)
