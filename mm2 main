@@ -794,13 +794,13 @@ local function cmd_float(arg)
     send_msg("Jump to go up!")
     while task.wait() and getgenv().floating == true and game.Players[target] do
       task.spawn(function()
-        --LocalPlayer.Character.Humanoid.Sit = true
+        LocalPlayer.Character.Humanoid.Sit = true
 
         local hrpc = game.Players[target].Character.HumanoidRootPart.CFrame
         local lfootc = game.Players[target].Character.LeftFoot.CFrame
         --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
-         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, math.random(-10, 20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, math.random(-10, 30)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
       end)
     end
