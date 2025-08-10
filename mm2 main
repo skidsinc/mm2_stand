@@ -1301,7 +1301,7 @@ local function main_cmds(msg, id)
       getgenv().loop_fling = false
       local target = GetPlayer(cmd[2])[1]
       if target then
-        --send_msg("added new loopfling target")
+        send_msg("added new loopfling target")
         print("added new loopfling target")
         table.insert(getgenv().loopfling_targets, target)
 	      cmd_loopfling(host.Name)
