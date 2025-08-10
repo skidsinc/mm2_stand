@@ -1,5 +1,3 @@
-print("i am goijnmg kto kill myselfg if this suckdas doesft upgaye tje hof da,m script")
-
 print("it executed forral v4")
 
 
@@ -915,9 +913,41 @@ local function stop_dances()
       getgenv().gangnam:Destroy()
     end
   end)
+  task.spawn(function()
+    if getgenv().unemployment then
+      getgenv().unemployment:Stop()
+      getgenv().unemployment:Destroy()
+    end
+  end)
+  task.spawn(function()
+    if getgenv().carson then
+      getgenv().carson:Stop()
+      getgenv().carson:Destroy()
+    end
+  end)
+  task.spawn(function()
+    if getgenv().caremel then
+      getgenv().caremel:Stop()
+      getgenv().caremel:Destroy()
+    end
+  end)
+  task.spawn(function()
+    if getgenv().rand_dance then
+      getgenv().rand_dance:Stop()
+      getgenv().rand_dance:Destroy()
+    end
+  end)
+  task.spawn(function()
+    if getgenv().letter_spell then
+      task.wait()
+      getgenv().letter_spell:Stop()
+      getgenv().letter_spell:Destroy()
+    end
+  end)
 end
 
 local function stop_most_cmds()
+  getgenv().spelling = false
     getgenv().platforming = false
     getgenv().floating = false
     getgenv().mounting = false
@@ -930,6 +960,49 @@ local function stop_most_cmds()
     getgenv().down_boost = false
     stop_dances()
 end
+
+local letters = {
+    ["a"] = "rbxassetid://138338789917579",
+    ["b"] = "rbxassetid://83774225211894",
+    ["c"] = "rbxassetid://102706636381416",
+    ["d"] = "rbxassetid://119432455866325",
+    ["e"] = "rbxassetid://71682979802728",
+    ["f"] = "rbxassetid://135227259060683",
+    ["g"] = "rbxassetid://135257394807798",
+    ["h"] = "rbxassetid://128894072580927",
+    ["i"] = "rbxassetid://114137878243453",
+    ["j"] = "rbxassetid://110276817462232",
+    ["k"] = "rbxassetid://120953677535193",
+    ["l"] = "rbxassetid://108858374594098",
+    ["m"] = "rbxassetid://98288662279156",
+    ["n"] = "rbxassetid://82503474144449",
+    ["o"] = "rbxassetid://101641887378951",
+    ["r"] = "rbxassetid://134446396997637",
+    ["s"] = "rbxassetid://122443734972375",
+    ["t"] = "rbxassetid://105838262954463",
+    [" "] = "rbxassetid://90569241075391"
+}
+
+local dance_ids = {
+  "rbxassetid://127118661424463",
+  "rbxassetid://76099554484027",
+  "rbxassetid://93086419490844",
+  "rbxassetid://129764254213842",
+  "rbxassetid://121966805049108",
+  "rbxassetid://136490740599725",
+  "rbxassetid://82686542709410",
+  "rbxassetid://112426842996634",
+  "rbxassetid://83942029068730",
+  "rbxassetid://113572437262440",
+  "rbxassetid://95627698551397",
+  "rbxassetid://87574738912971",
+  "rbxassetid://130483738487321",
+  "rbxassetid://111791336456908",
+  "rbxassetid://135314674136844",
+  "rbxassetid://91012872837524",
+  "rbxassetid://124982597491660"
+}
+
 
 
 local  banned_silent = {}
@@ -973,6 +1046,75 @@ local function main_cmds(msg, id)
   	  game.RunService:Set3dRenderingEnabled(getgenv().render_graphic)
   	    
   	    
+    elseif cmd[1] == "spell" and cmd[2] then
+      print("atleast ran")
+      if getgenv().spelling == true then
+        send_msg("Already spelling a word")
+      end
+  	  if table.find(hosts, host.UserId) then
+        print("start")
+        stop_dances()
+        local word = cmd[2]
+        if word == "1" then
+          word = "nigga"
+        elseif word == "2" then
+          word = "fuck"
+        elseif word == "3" then
+          word = "faggot"
+        elseif word == "4" then
+          word = "bitch"
+        elseif word == "5" then
+          word = "kys"
+        elseif word == "6" then
+          word = "slag"
+        elseif word == "7" then
+          word = "hoe"
+        elseif word == "8" then
+          word = "retard"
+        end
+        local time_per_letter = 0.75
+
+        local charList = string.split(word, "")
+        
+        for i,v in pairs(charList) do
+          local char = v
+          print(char)
+          print("bcbcb")
+          if not letters[char] then
+            send_msg("Unable to spell that word")
+            return
+          end
+        end
+        print(word)
+
+        getgenv().spelling = true
+        task.spawn(function()
+          local animation = Instance.new("Animation")
+          for i,v in pairs(charList) do
+            if getgenv().spelling == false then
+              break
+            end
+            local char = v
+            local assetid = letters[char]
+            animation.AnimationId = assetid
+            getgenv().rand_dance = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+            getgenv().rand_dance.Looped = true
+            getgenv().rand_dance:Play()
+            task.wait(time_per_letter)
+            getgenv().rand_dance:Stop()
+            getgenv().rand_dance:Destroy()
+            task.wait(0.05)
+
+          end
+        end)
+        task.wait((time_per_letter*#word) + (0.05*#word))
+        if getgenv().letter_spell then
+          task.wait()
+          getgenv().letter_spell:Stop()
+          getgenv().letter_spell:Destroy()
+        end
+
+      end
     elseif cmd[1] == "say" and cmd[2] then
   	  if table.find(hosts, host.UserId) then
         for i,v in pairs(cmd) do
@@ -1199,7 +1341,15 @@ local function main_cmds(msg, id)
         end
 	    end)
 
-    elseif cmd[1] == "dance" or cmd[1] == "shake" then
+    elseif cmd[1] == "randomdance" or cmd[1] == "dancerandom" or cmd[1] == "dance" then
+      stop_dances()
+      local animation = Instance.new("Animation")
+      animation.AnimationId = dance_ids[math.random(1, #dance_ids)]
+      getgenv().rand_dance = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+      getgenv().rand_dance.Looped = true
+      getgenv().rand_dance:Play()
+
+    elseif cmd[1] == "dance1" or cmd[1] == "shake" then
       stop_dances()
       local animation = Instance.new("Animation")
       animation.AnimationId = "rbxassetid://136490740599725"
@@ -1222,6 +1372,28 @@ local function main_cmds(msg, id)
       getgenv().gangnam = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
       getgenv().gangnam.Looped = true
       getgenv().gangnam:Play()
+    elseif cmd[1] == "dance4" or cmd[1] == "unemployment" then
+      stop_dances()
+      local animation = Instance.new("Animation")
+      animation.AnimationId = "rbxassetid://93086419490844"
+      getgenv().unemployment = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+      getgenv().unemployment.Looped = true
+      getgenv().unemployment:Play()
+    elseif cmd[1] == "dance5" or cmd[1] == "carson" then
+      stop_dances()
+      local animation = Instance.new("Animation")
+      animation.AnimationId = "rbxassetid://76099554484027"
+      getgenv().carson = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+      getgenv().carson.Looped = true
+      getgenv().carson:Play()
+
+    elseif cmd[1] == "dance6" or cmd[1] == "caremel" then
+      stop_dances()
+      local animation = Instance.new("Animation")
+      animation.AnimationId = "rbxassetid://127118661424463"
+      getgenv().caremel = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+      getgenv().caremel.Looped = true
+      getgenv().caremel:Play()
 
 
     elseif cmd[1] == "undance" then
@@ -1623,8 +1795,3 @@ while task.wait(2.1) do
     end
   end)
 end
-
-
-print("please and tahnk you")
-
-print("work")
