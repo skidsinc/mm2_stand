@@ -1709,19 +1709,16 @@ part.Material = Enum.Material.Neon
 part.Color = Color3.fromRGB(255, 0, 0)
 part.Parent = workspace
 
-game:GetService("RunService").RenderStepped:Connect(function()
+game:GetService("RunService").Heartbeat:Connect(function()
     local character = LocalPlayer.Character
-    if character and character:FindFirstChild("HumanoidRootPart") then
-        local root = character.HumanoidRootPart
-        local bottomY = root.Position.Y - (character.Humanoid.HipHeight + 2) -- Rough offset for feet level
-
-        -- Update highestY only if player is higher than before
-        if bottomY > highestY then
-            highestY = bottomY
-        end
-
-        -- Keep platform at highestY
-        part.Position = Vector3.new(root.Position.X, highestY - 0.5, root.Position.Z)
+    if character and character:FindFirstChild("LeftFoot") then
+        local foot = character.LeftFoot
+        local footPosition = foot.Position
+        part.Position = Vector3.new(
+            footPosition.X,
+            footPosition.Y,
+            footPosition.Z
+        )
     end
 end)
 
