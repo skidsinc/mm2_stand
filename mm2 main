@@ -1068,7 +1068,6 @@ local function main_cmds(msg, id)
         stop_dances()
 
         local word = table.concat(cmd, " ")
-        send_msg(yesString)
         if word == "1" then
           word = "nigga"
         elseif word == "2" then
@@ -1706,7 +1705,7 @@ local part = Instance.new("Part")
 part.Name = "PART_NAME"
 part.Size = Vector3.new(10, 1, 10)
 part.Anchored = true
-part.CanCollide = false
+part.CanCollide = true
 part.Material = Enum.Material.Neon
 part.Color = Color3.fromRGB(255, 0, 0)
 part.Parent = workspace
