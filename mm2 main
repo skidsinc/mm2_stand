@@ -281,7 +281,7 @@ local function cmd_bend(arg)
         end 
         if bang_z < -3 then
           dir = -1
-        elseif bang_z > -1 then
+        elseif bang_z > -1.5 then
           dir = 1 
         end
         spawn(function()
@@ -635,7 +635,7 @@ local function cmd_gun(arg)
       end)
       task.wait(0.3)
       LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame
-      task.wait(0.1)
+      task.wait(0.3)
       LocalPlayer.Character.Humanoid.Health = 0
       getgenv().gun = false
     else 
@@ -1059,9 +1059,16 @@ local function main_cmds(msg, id)
         return
       end
   	  if table.find(hosts, host.UserId) then
+        for i,v in pairs(cmd) do
+          if v == "spell" then
+            table.remove(cmd, i)
+          end
+        end
         print("start")
         stop_dances()
-        local word = cmd[2]
+
+        local word = table.concat(cmd, " ")
+        send_msg(yesString)
         if word == "1" then
           word = "nigga"
         elseif word == "2" then
@@ -1071,7 +1078,7 @@ local function main_cmds(msg, id)
         elseif word == "4" then
           word = "bitch"
         elseif word == "5" then
-          word = "kys"
+          word = "die"
         elseif word == "6" then
           word = "slag"
         elseif word == "7" then
@@ -1102,7 +1109,6 @@ local function main_cmds(msg, id)
           end
           local char = v
           local assetid = letters[char]
-          for i = 1,10 do
             task.spawn(function()
               local animation = Instance.new("Animation")
               animation.AnimationId = assetid
@@ -1113,7 +1119,6 @@ local function main_cmds(msg, id)
               table.insert(getgenv().letter_spell, rand_dance)
             end)
             task.wait(0.01)
-          end
           task.wait(time_per_letter)
           for i,v in pairs(getgenv().letter_spell) do
             v:Stop()
@@ -1693,6 +1698,28 @@ game:GetService("RunService").Heartbeat:Connect(function()
       end
     end
   end
+end)
+
+local part = Instance.new("Part")
+part.Name = "PART_NAME"
+part.Size = Vector3.new(10, 1, 10)
+part.Anchored = true
+part.CanCollide = false
+part.Material = Enum.Material.Neon
+part.Color = Color3.fromRGB(255, 0, 0)
+part.Parent = workspace
+
+RunService.Heartbeat:Connect(function()
+    local character = LocalPlayer.Character
+    if character and character:FindFirstChild("LeftFoot") then
+        local foot = character.LeftFoot
+        local footPosition = foot.Position
+        part.Position = Vector3.new(
+            footPosition.X,
+            footPosition.Y - (foot.Size.Y / 2),
+            footPosition.Z
+        )
+    end
 end)
 
 
