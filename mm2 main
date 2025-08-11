@@ -1504,7 +1504,7 @@ local function main_cmds(msg, id)
       end
 	    
 	elseif (cmd[1] == "loopfling" or cmd[1] == "lfling") and cmd[2] then
-      if not table.find(hosts, host.UserId) or getgenv().allow_loop_fling == false then
+      if not table.find(hosts, host.UserId) and getgenv().allow_loop_fling ~= true then
         return
       end
         
@@ -1512,7 +1512,7 @@ local function main_cmds(msg, id)
       task.wait()
       --getgenv().loop_fling = false
       local target = GetPlayer(cmd[2])[1]
-      if target then
+      if target and cmd[2] ~= "all" then
         send_msg("added new loopfling target")
         print("added new loopfling target")
         table.insert(getgenv().loopfling_targets, target)
