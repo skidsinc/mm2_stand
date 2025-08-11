@@ -1,4 +1,4 @@
-print("it executed forral v4")
+print("it executed forralasddsadsadsa v4")
 
 
 local Players = game:GetService("Players")
@@ -1849,26 +1849,3 @@ while task.wait(2.1) do
     end
   end)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
