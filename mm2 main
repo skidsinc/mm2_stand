@@ -20,6 +20,7 @@ end)
 LocalPlayer.CharacterAdded:Connect(function(char)
   print("died")
   getgenv().in_game = false
+  getgenv().spelling = false
 end)
 
 --game.Workspace.Gravity = 0
@@ -1101,24 +1102,16 @@ local function main_cmds(msg, id)
           local char = v
           local assetid = letters[char]
           for i = 1,10 do
+            task.spawn(function()
+              local animation = Instance.new("Animation")
+              animation.AnimationId = assetid
+              local rand_dance = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+              rand_dance.Looped = false
+              rand_dance.Priority = Enum.AnimationPriority.Action
+              rand_dance:Play()
+              table.insert(getgenv().letter_spell, rand_dance)
+            end)
             task.wait(0.01)
-            local animation = Instance.new("Animation")
-            animation.AnimationId = assetid
-            local rand_dance = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
-            rand_dance.Looped = false
-            rand_dance.Priority = Enum.AnimationPriority.Action
-            rand_dance:Play()
-            table.insert(getgenv().letter_spell, rand_dance)
-          end
-          for i = 1,5 do
-            task.wait()
-            local animation = Instance.new("Animation")
-            animation.AnimationId = assetid
-            local rand_dance = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
-            rand_dance.Looped = true
-            rand_dance.Priority = Enum.AnimationPriority.Action
-            rand_dance:Play()
-            table.insert(getgenv().letter_spell, rand_dance)
           end
           task.wait(time_per_letter)
           for i,v in pairs(getgenv().letter_spell) do
