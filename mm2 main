@@ -938,10 +938,12 @@ local function stop_dances()
     end
   end)
   task.spawn(function()
-    if getgenv().letter_spell then
+    if #getgenv().letter_spell > 0 then
       task.wait()
-      getgenv().letter_spell:Stop()
-      getgenv().letter_spell:Destroy()
+      for i,v in pairs(getgenv().letter_spell) do
+          v:Stop()
+          v:Destroy()
+      end
     end
   end)
 end
@@ -1050,6 +1052,7 @@ local function main_cmds(msg, id)
       print("atleast ran")
       if getgenv().spelling == true then
         send_msg("Already spelling a word")
+        return
       end
   	  if table.find(hosts, host.UserId) then
         print("start")
@@ -1088,31 +1091,44 @@ local function main_cmds(msg, id)
         print(word)
 
         getgenv().spelling = true
+        getgenv().letter_spell = {}
         task.spawn(function()
-          local animation = Instance.new("Animation")
           for i,v in pairs(charList) do
             if getgenv().spelling == false then
               break
             end
             local char = v
             local assetid = letters[char]
-            animation.AnimationId = assetid
-            getgenv().rand_dance = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
-            getgenv().rand_dance.Looped = true
-            getgenv().rand_dance:Play()
+            for i = 1,10 do
+              task.wait()
+              local animation = Instance.new("Animation")
+              animation.AnimationId = assetid
+              local rand_dance = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+              rand_dance.Looped = true
+              rand_dance:Play()
+              table.insert(getgenv().letter_spell, rand_dance)
+            end
             task.wait(time_per_letter)
-            getgenv().rand_dance:Stop()
-            getgenv().rand_dance:Destroy()
+            for i,v in pairs(getgenv().letter_spell) do
+              v:Stop()
+              v:Destroy()
+            end
+            getgenv().letter_spell = {}
             task.wait(0.05)
 
           end
         end)
         task.wait((time_per_letter*#word) + (0.05*#word))
-        if getgenv().letter_spell then
+        task.wait(0.1)
+        if #getgenv().letter_spell > 0 then
           task.wait()
-          getgenv().letter_spell:Stop()
-          getgenv().letter_spell:Destroy()
+            for i,v in pairs(getgenv().letter_spell) do
+              v:Stop()
+              v:Destroy()
+            end
+            getgenv().letter_spell = {}
         end
+        getgenv().spelling = false
 
       end
     elseif cmd[1] == "say" and cmd[2] then
