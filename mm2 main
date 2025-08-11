@@ -1719,7 +1719,7 @@ part.Parent = workspace
 
 game:GetService("RunService").Heartbeat:Connect(function()
     local character = LocalPlayer.Character
-    if character and character:FindFirstChild("LeftFoot") then
+    if character and character:FindFirstChild("LeftFoot") and getgenv().spelling == false then
         local foot = character.LeftFoot
         local footPosition = foot.Position
         part.Position = Vector3.new(
