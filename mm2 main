@@ -1,4 +1,4 @@
-print("it executed forral v4")
+"print("it executed forral v4433434433434")
 
 
 local Players = game:GetService("Players")
@@ -286,7 +286,7 @@ local function cmd_bend(arg)
         end
         spawn(function()
           LocalPlayer.Character:FindFirstChild("Animate").PlayEmote:Invoke(anim)
-          LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0,-2,bang_z)
+          LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.LowerTorso.CFrame * CFrame.new(0,-0.1,bang_z)
           if not LocalPlayer.Character.Humanoid:FindFirstChild("bend") then
             local humanoid = LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid")
           	bendAnim = Instance.new("Animation")
@@ -1724,7 +1724,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
         local footPosition = foot.Position
         part.Position = Vector3.new(
             footPosition.X,
-            footPosition.Y,
+            footPosition.Y-1,
             footPosition.Z
         )
     end
@@ -1856,4 +1856,4 @@ while task.wait(2.1) do
       tweento(CFrame.new(math.random(100,150), math.random(140,144), math.random(50,80)))
     end
   end)
-end
+end"
