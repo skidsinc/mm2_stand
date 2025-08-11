@@ -1,4 +1,4 @@
-"print("it executed forral v4433434433434")
+"print("it executed forral v4")
 
 
 local Players = game:GetService("Players")
@@ -27,7 +27,7 @@ end)
 
 local hosts = {LocalPlayer.UserId, 2977240591}
 local whitelist = {5174948497, 1175765113, 4248548793}
-local prefix = "."
+local prefix = "!"
 
 getgenv().loop_fling = false
 getgenv().flinging = false
