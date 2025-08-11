@@ -1709,7 +1709,7 @@ part.Material = Enum.Material.Neon
 part.Color = Color3.fromRGB(255, 0, 0)
 part.Parent = workspace
 
-RunService.Heartbeat:Connect(function()
+game:GetService("RunService").Heartbeat:Connect(function()
     local character = LocalPlayer.Character
     if character and character:FindFirstChild("LeftFoot") then
         local foot = character.LeftFoot
