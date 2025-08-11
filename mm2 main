@@ -1092,33 +1092,30 @@ local function main_cmds(msg, id)
 
         getgenv().spelling = true
         getgenv().letter_spell = {}
-        task.spawn(function()
-          for i,v in pairs(charList) do
-            if getgenv().spelling == false then
-              break
-            end
-            local char = v
-            local assetid = letters[char]
-            for i = 1,10 do
-              task.wait()
-              local animation = Instance.new("Animation")
-              animation.AnimationId = assetid
-              local rand_dance = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
-              rand_dance.Looped = true
-              rand_dance:Play()
-              table.insert(getgenv().letter_spell, rand_dance)
-            end
-            task.wait(time_per_letter)
-            for i,v in pairs(getgenv().letter_spell) do
-              v:Stop()
-              v:Destroy()
-            end
-            getgenv().letter_spell = {}
-            task.wait(0.05)
-
+        for i,v in pairs(charList) do
+          if getgenv().spelling == false then
+            break
           end
-        end)
-        task.wait((time_per_letter*#word) + (0.05*#word))
+          local char = v
+          local assetid = letters[char]
+          for i = 1,10 do
+            task.wait(0.01)
+            local animation = Instance.new("Animation")
+            animation.AnimationId = assetid
+            local rand_dance = game.Players.LocalPlayer.Character.Humanoid:LoadAnimation(animation)
+            rand_dance.Looped = true
+            rand_dance:Play()
+            table.insert(getgenv().letter_spell, rand_dance)
+          end
+          task.wait(time_per_letter)
+          for i,v in pairs(getgenv().letter_spell) do
+            v:Stop()
+            v:Destroy()
+          end
+          getgenv().letter_spell = {}
+          task.wait(0.05)
+
+        end
         task.wait(0.1)
         if #getgenv().letter_spell > 0 then
           task.wait()
