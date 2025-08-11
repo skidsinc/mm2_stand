@@ -982,7 +982,8 @@ local letters = {
     ["r"] = "rbxassetid://134446396997637",
     ["s"] = "rbxassetid://122443734972375",
     ["t"] = "rbxassetid://105838262954463",
-    [" "] = "rbxassetid://90569241075391"
+    [" "] = "rbxassetid://90569241075391",
+    ["y"] = "http://www.roblox.com/asset/?id=10714164866"
 }
 
 local dance_ids = {
@@ -1002,7 +1003,8 @@ local dance_ids = {
   "rbxassetid://111791336456908",
   "rbxassetid://135314674136844",
   "rbxassetid://91012872837524",
-  "rbxassetid://124982597491660"
+  "rbxassetid://124982597491660",
+  "rbxassetid://128968764985212"
 }
 
 
@@ -1045,7 +1047,7 @@ local function main_cmds(msg, id)
   	  
   	elseif cmd[1] == "rendering" then
   	  getgenv().render_graphic = not getgenv().render_graphic
-  	  game.RunService:Set3dRenderingEnabled(getgenv().render_graphic)
+  	  game.RunService:Set3dRenderingEnabled(false)
   	    
   	    
     elseif cmd[1] == "spell" and cmd[2] then
@@ -1061,7 +1063,7 @@ local function main_cmds(msg, id)
         if word == "1" then
           word = "nigga"
         elseif word == "2" then
-          word = "fuck"
+          word = "fck"
         elseif word == "3" then
           word = "faggot"
         elseif word == "4" then
@@ -1075,7 +1077,7 @@ local function main_cmds(msg, id)
         elseif word == "8" then
           word = "retard"
         end
-        local time_per_letter = 1
+        local time_per_letter = 0.7
 
         local charList = string.split(word, "")
         
@@ -1108,7 +1110,7 @@ local function main_cmds(msg, id)
             rand_dance:Play()
             table.insert(getgenv().letter_spell, rand_dance)
           end
-          for i = 1,25 do
+          for i = 1,5 do
             task.wait()
             local animation = Instance.new("Animation")
             animation.AnimationId = assetid
@@ -1371,6 +1373,7 @@ local function main_cmds(msg, id)
       animation.AnimationId = dance_ids[math.random(1, #dance_ids)]
       getgenv().rand_dance = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
       getgenv().rand_dance.Looped = true
+      getgenv().rand_dance.Priority = Enum.AnimationPriority.Action4
       getgenv().rand_dance:Play()
 
     elseif cmd[1] == "dance1" or cmd[1] == "shake" then
@@ -1379,6 +1382,7 @@ local function main_cmds(msg, id)
       animation.AnimationId = "rbxassetid://136490740599725"
       getgenv().twerk = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
       getgenv().twerk.Looped = true
+      getgenv().twerk.Priority = Enum.AnimationPriority.Action4
       getgenv().twerk:Play()
 
     elseif cmd[1] == "dance2" or cmd[1] == "griddy" then
@@ -1387,6 +1391,7 @@ local function main_cmds(msg, id)
       animation.AnimationId = "rbxassetid://121966805049108"
       getgenv().griddy = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
       getgenv().griddy.Looped = true
+      getgenv().griddy.Priority = Enum.AnimationPriority.Action4
       getgenv().griddy:Play()
 
     elseif cmd[1] == "dance3" or cmd[1] == "gangnam" then
@@ -1395,6 +1400,7 @@ local function main_cmds(msg, id)
       animation.AnimationId = "rbxassetid://129764254213842"
       getgenv().gangnam = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
       getgenv().gangnam.Looped = true
+      getgenv().gangnam.Priority = Enum.AnimationPriority.Action4
       getgenv().gangnam:Play()
     elseif cmd[1] == "dance4" or cmd[1] == "unemployment" then
       stop_dances()
@@ -1402,6 +1408,7 @@ local function main_cmds(msg, id)
       animation.AnimationId = "rbxassetid://93086419490844"
       getgenv().unemployment = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
       getgenv().unemployment.Looped = true
+      getgenv().unemployment.Priority = Enum.AnimationPriority.Action4
       getgenv().unemployment:Play()
     elseif cmd[1] == "dance5" or cmd[1] == "carson" then
       stop_dances()
@@ -1409,6 +1416,7 @@ local function main_cmds(msg, id)
       animation.AnimationId = "rbxassetid://76099554484027"
       getgenv().carson = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
       getgenv().carson.Looped = true
+      getgenv().carson.Priority = Enum.AnimationPriority.Action4
       getgenv().carson:Play()
 
     elseif cmd[1] == "dance6" or cmd[1] == "caremel" then
@@ -1417,6 +1425,7 @@ local function main_cmds(msg, id)
       animation.AnimationId = "rbxassetid://127118661424463"
       getgenv().caremel = LocalPlayer.Character.Humanoid:LoadAnimation(animation)
       getgenv().caremel.Looped = true
+      getgenv().caremel.Priority = Enum.AnimationPriority.Action4
       getgenv().caremel:Play()
 
 
