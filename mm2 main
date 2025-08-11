@@ -983,7 +983,7 @@ local letters = {
     ["s"] = "rbxassetid://122443734972375",
     ["t"] = "rbxassetid://105838262954463",
     [" "] = "rbxassetid://90569241075391",
-    ["y"] = "http://www.roblox.com/asset/?id=10714164866"
+    ["y"] = "rbxassetid:/10714164866"
 }
 
 local dance_ids = {
