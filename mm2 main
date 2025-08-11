@@ -554,7 +554,8 @@ local function cmd_loopfling(host)
           wa += 1
           if wa == 2 then
             spawn(function()
-                t_vel_ = getVelocity(game.Players[v].Character.HumanoidRootPart)
+                --t_vel_ = getVelocity(game.Players[v].Character.HumanoidRootPart)
+                t_vel_ = game.Players[v].Character.HumanoidRootPart.Velocity
                 t_vel = Vector3.new(t_vel_.X/32, 0, t_vel_.Z/32)
                 if game.Players[v].Character.HumanoidRootPart.Velocity.Magnitude <= 1 then
                   t_vel = Vector3.new(0,0,0)
@@ -1490,7 +1491,9 @@ local function main_cmds(msg, id)
       end
       if murder == LocalPlayer.Name then
         if table.find(hosts, host.UserId) then
-        stop_most_cmds()
+        task.spawn(function()
+            stop_most_cmds()
+        end)
         getgenv().loop_fling = false
           LocalPlayer.Character.Humanoid.Health = 0
           getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
@@ -1498,7 +1501,9 @@ local function main_cmds(msg, id)
           send_msg("Only hosts can respawn me when im murderer!")
         end
       else
-        stop_most_cmds()
+        task.spawn(function()
+            stop_most_cmds()
+        end)
         getgenv().loop_fling = false
         LocalPlayer.Character.Humanoid.Health = 0
         getgenv().before_fling = host.Character.HumanoidRootPart.CFrame
@@ -1544,7 +1549,9 @@ local function main_cmds(msg, id)
 	    
 	  elseif cmd[1] == "stop" then
       getgenv().loop_fling = false
-      stop_most_cmds()
+      task.spawn(function()
+          stop_most_cmds()
+      end)
       getgenv().loop_fling = false
       getgenv().loopfling_targets = {}
       task.wait(0.2)
