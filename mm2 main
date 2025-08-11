@@ -1184,12 +1184,14 @@ local function main_cmds(msg, id)
   	    send_msg("Invalid permissons.")
   	  end
 
-    elseif (cmd[1] == "allowloopfling" or cmd[1] == "allowlfling") then
+    elseif (cmd[1] == "allowloopfling" or cmd[1] == "allowlfling" or cmd[1] == "allowfling") then
       if table.find(hosts, host.UserId) then
+        send_msg("u  can use loopfling again")
         getgenv().allow_loop_fling = true
       end
-    elseif (cmd[1] == "banloopfling" or cmd[1] == "banlfling") then
+    elseif (cmd[1] == "banloopfling" or cmd[1] == "banlfling" or cmd[1] == "banfling") then
       if table.find(hosts, host.UserId) then
+        send_msg("no1 can use loopfling")
         getgenv().allow_loop_fling = false
       end
 
