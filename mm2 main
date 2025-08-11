@@ -296,6 +296,7 @@ local function cmd_bend(arg)
           	getgenv().bend = humanoid:LoadAnimation(bendAnim)
           	getgenv().bend:Play(0.1, 1, 1)
           	getgenv().bend:AdjustSpeed(1)
+            getgenv().bend.Priority = Enum.AnimationPriority.Action
           	humanoid.Died:Connect(function()
           		getgenv().bend:Stop()
           		bendAnim:Destroy()
