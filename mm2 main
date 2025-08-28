@@ -296,7 +296,7 @@ local function cmd_bend(arg)
           	getgenv().bend = humanoid:LoadAnimation(bendAnim)
           	getgenv().bend:Play(0.1, 1, 1)
           	getgenv().bend:AdjustSpeed(1)
-            getgenv().bend.Priority = Enum.AnimationPriority.Action
+            getgenv().bend.Priority = Enum.AnimationPriority.Action4
           	humanoid.Died:Connect(function()
           		getgenv().bend:Stop()
           		bendAnim:Destroy()
@@ -982,11 +982,18 @@ local letters = {
     ["m"] = "rbxassetid://98288662279156",
     ["n"] = "rbxassetid://82503474144449",
     ["o"] = "rbxassetid://101641887378951",
+    ["p"] = "rbxassetid://101283801577322",
+    ["q"] = "rbxassetid://70764209868433",
     ["r"] = "rbxassetid://134446396997637",
     ["s"] = "rbxassetid://122443734972375",
     ["t"] = "rbxassetid://105838262954463",
-    [" "] = "rbxassetid://90569241075391",
-    ["y"] = "rbxassetid:/10714164866"
+    ["u"] = "rbxassetid://135824595429758",
+    ["v"] = "rbxassetid://119340476183690",
+    ["w"] = "rbxassetid://126908006538812",
+    ["x"] = "rbxassetid://83068327805565", 
+    ["y"] = "rbxassetid://121054460098923", 
+    ["z"] = "rbxassetid://137589447206293",
+    [" "] = "rbxassetid://83970800290216",
 }
 
 local dance_ids = {
@@ -1024,16 +1031,16 @@ local function main_cmds(msg, id)
   if cmd[1] then
     local arg = cmd[1]
     if arg:sub(1, #prefix) == prefix then
-        cmd[1] = arg:sub(#prefix + 1)
+      cmd[1] = arg:sub(#prefix + 1)
     elseif cmds_pre[1] == "/e" and not table.find(banned_silent, host.UserId) then
-        cmd = {}
-        for i,v in pairs(cmds_pre) do
-          if v ~= "/e" then
-            table.insert(cmd, v)
-          end
+      cmd = {}
+      for i,v in pairs(cmds_pre) do
+        if v ~= "/e" then
+          table.insert(cmd, v)
         end
+      end
     else
-        return
+      return
     end
   	if cmd[2] == "me" then
   		cmd[2] = host.Name
@@ -1072,13 +1079,13 @@ local function main_cmds(msg, id)
         if word == "1" then
           word = "nigga"
         elseif word == "2" then
-          word = "fck"
+          word = "fuck"
         elseif word == "3" then
           word = "faggot"
         elseif word == "4" then
           word = "bitch"
         elseif word == "5" then
-          word = "die"
+          word = "kys"
         elseif word == "6" then
           word = "slag"
         elseif word == "7" then
@@ -1306,35 +1313,30 @@ local function main_cmds(msg, id)
 	  elseif cmd[1] == "forcesay" and cmd[2] then
       local target = GetPlayer(cmd[2])
   	  if target then
-        local removed = 0
-        
         banned_words = {}
-
         if LocalPlayer.Name == "deth66789" then
           banned_words = {"n0n", "nonc", "s3tke", "e9p", "e9d", "m@5t", "m@st", "w$nk", "w$nk", "w1nk", "wink", "wunk", "w@nk", "w4n", "w@n", "p@ki", "p@k", "pak", "s1y0", "s1yo", "e1p", "e1d", "ride", "edy", "epy", "juzz", "sfym", "m1lk", "cream", "assole", "asole", "badass", "slag", "slut", "syd", "smyw", "syfm", "sbau", "piss", "hoen", "π199@", "πi99@", "πl99@", "π", "99@", "paki", "tf", "paki", "defak", "wtf", "wank", "beach", "fk", "eyp", "eyd"}
         end
-
-        
         local new_msg = {}
         for _,v in pairs(cmd) do
           local flagged = false
           local word = v
           if word ~= "forcesay" and word:lower() ~= (cmd[2]:lower()) then
-              for _, banned in ipairs(banned_words) do
-                if string.find(word, banned) then
-                  flagged = true
-                  break
-                end
-              end
-              if flagged == false then
-                table.insert(new_msg, word)
-              else 
-                table.insert(new_msg, "****")
+            for _, banned in ipairs(banned_words) do
+              if string.find(word, banned) then
+                flagged = true
+                break
               end
             end
+            if flagged == false then
+              table.insert(new_msg, word)
+            else 
+              table.insert(new_msg, "****")
+            end
+          end
         end
         local yesString = table.concat(new_msg, " ")
-        local fake_msgs = {"bro", "??", "alr", "yea", "next round", "no", "why", "wym", "erm", "no", "np"}
+        local fake_msgs = {"bro", "??", "alr", "yea", "no", "why", "wym", "erm", "no", "np"}
         local starter = fake_msgs[math.random(1, #fake_msgs)]
         send_msg(starter.."                                                                                                  "..target[1]..": "..yesString)
   	  end
@@ -1348,7 +1350,7 @@ local function main_cmds(msg, id)
 	  elseif cmd[1] == "who" or cmd[1] == "roles" then
 	    cmd_who(cmd[2])
     elseif cmd[1] == "safe" or cmd[1] == "hide" then
-      LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, 1000, math.random(58,60))
+      LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(133, 2222, math.random(58,60))
 	    
 	  elseif cmd[1] == "gun" then
       stop_most_cmds()
