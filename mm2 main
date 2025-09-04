@@ -1132,7 +1132,7 @@ local function main_cmds(msg, id)
             v:Destroy()
           end
           getgenv().letter_spell = {}
-          task.wait(0.05)
+          task.wait(0.1)
 
         end
         task.wait(0.1)
