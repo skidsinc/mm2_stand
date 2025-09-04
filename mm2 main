@@ -789,13 +789,13 @@ local function cmd_float(arg)
     send_msg("Jump to go up!")
     while task.wait() and getgenv().floating == true and game.Players[target] do
       task.spawn(function()
-        LocalPlayer.Character.Humanoid.Sit = true
+        --LocalPlayer.Character.Humanoid.Sit = true
 
         local hrpc = game.Players[target].Character.HumanoidRootPart.CFrame
         local lfootc = game.Players[target].Character.LeftFoot.CFrame
         --LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[target].Character.HumanoidRootPart.CFrame * CFrame.new(0, math.random(-22,-20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
-         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, math.random(-10, 30)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
+         LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(hrpc.X, lfootc.Y, hrpc.Z) * CFrame.new(0, math.random(-10, 20)/10, 0) * CFrame.Angles(math.rad(90), 0, math.rad(180))
 
       end)
     end
@@ -1093,7 +1093,7 @@ local function main_cmds(msg, id)
         elseif word == "8" then
           word = "retard"
         end
-        local time_per_letter = 0.7
+        local time_per_letter = 0.8
 
         local charList = string.split(word, "")
         
@@ -1726,7 +1726,7 @@ game:GetService("RunService").Heartbeat:Connect(function()
         local footPosition = foot.Position
         part.Position = Vector3.new(
             footPosition.X,
-            footPosition.Y-0.65,
+            footPosition.Y-0.6,
             footPosition.Z
         )
     end
